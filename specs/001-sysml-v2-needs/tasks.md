@@ -94,12 +94,12 @@
 
 ### Implementation for US3
 
-- [ ] T028 [US3] Add `sysml_req` skinparam string to `sphinxcontrib/sysml/flow_configs.py` — style `<<requirement>>` class elements with yellow background/gold border
-- [ ] T029 [P] [US3] Add `REQ_BOX_TEMPLATE` and `REQ_FULL_TEMPLATE` to `sphinxcontrib/sysml/templates.py` — `REQ_BOX_TEMPLATE` renders one requirement as `<<requirement>>` class with `id`/`text` compartments and hyperlink; `REQ_FULL_TEMPLATE` iterates needs matching a filter expression, renders each box, then adds `..>` arrows for `satisfies`, `refines`, and `allocates` links
-- [ ] T030 [US3] Create `sphinxcontrib/sysml/directives/needsysml_req.py` — `NeedsymlReqDirective` with `required_arguments=1` (filter expression), `option_spec` for `:show-satisfy:`, `:show-refine:`, `:show-allocate:`, `:scale:`, `:align:`; `run()` renders `REQ_FULL_TEMPLATE` with the filter and show-* flags
-- [ ] T031 [US3] Register `needsysml-req` directive in `setup()` in `sphinxcontrib/sysml/__init__.py`
-- [ ] T032 [US3] Add `.. needsysml-req::` example to `tests/doc_test/basic/index.rst` using requirements with `satisfies` links defined in T014
-- [ ] T033 [P] [US3] Write `tests/test_req_directive.py` — tests: (a) builds without error, (b) `<<satisfy>>` arrow text present in generated PlantUML source (via `:save:` option), (c) filter expression respected (only matching needs appear)
+- [x] T028 [US3] Add `sysml_req` skinparam string to `sphinxcontrib/sysml/flow_configs.py` — style `<<requirement>>` class elements with yellow background/gold border
+- [x] T029 [P] [US3] Add `REQ_BOX_TEMPLATE` and `REQ_FULL_TEMPLATE` to `sphinxcontrib/sysml/templates.py` — `REQ_BOX_TEMPLATE` renders one requirement as `<<requirement>>` class with `id`/`text` compartments and hyperlink; `REQ_FULL_TEMPLATE` iterates needs matching a filter expression, renders each box, then adds `..>` arrows for `satisfies`, `refines`, and `allocates` links
+- [x] T030 [US3] Create `sphinxcontrib/sysml/directives/needsysml_req.py` — `NeedsymlReqDirective` with `required_arguments=1` (filter expression), `option_spec` for `:show-satisfy:`, `:show-refine:`, `:show-allocate:`, `:scale:`, `:align:`; `run()` renders `REQ_FULL_TEMPLATE` with the filter and show-* flags
+- [x] T031 [US3] Register `needsysml-req` directive in `setup()` in `sphinxcontrib/sysml/__init__.py`
+- [x] T032 [US3] Add `.. needsysml-req::` example to `tests/doc_test/basic/index.rst` using requirements with `satisfies` links defined in T014
+- [x] T033 [P] [US3] Write `tests/test_req_directive.py` — tests: (a) builds without error, (b) `<<satisfy>>` arrow text present in generated PlantUML source (via `:save:` option), (c) filter expression respected (only matching needs appear)
 
 **Checkpoint**: Requirements diagram with traceability arrows renders. US3 complete.
 
@@ -113,12 +113,12 @@
 
 ### Implementation for US4
 
-- [ ] T034 [US4] Add `sysml_ibd` skinparam string to `sphinxcontrib/sysml/flow_configs.py` — style component `<<Part>>` elements, `<<ibd>>` rectangle boundary
-- [ ] T035 [P] [US4] Add `BLOCK_INST_TEMPLATE` and `IBD_FULL_TEMPLATE` to `sphinxcontrib/sysml/templates.py` — `IBD_FULL_TEMPLATE` uses component diagram syntax: renders root PartDef as `rectangle` boundary, child Parts as `component` elements with `portin`/`portout` for owned Ports, then Connection needs as connector lines between ports; includes clear comment noting IBD is an approximation (no locked port placement)
-- [ ] T036 [US4] Create `sphinxcontrib/sysml/directives/needsysml_ibd.py` — `NeedsymlIbdDirective` with `required_arguments=1`, `option_spec` for `:show-ports:` (default true), `:scale:`, `:align:`; `run()` renders `IBD_FULL_TEMPLATE`
-- [ ] T037 [US4] Register `needsysml-ibd` directive in `setup()` in `sphinxcontrib/sysml/__init__.py`
-- [ ] T038 [US4] Add `.. needsysml-ibd::` example and `connection` needs to `tests/doc_test/basic/index.rst`
-- [ ] T039 [P] [US4] Write `tests/test_ibd_directive.py` — tests: (a) builds without error, (b) IBD diagram contains expected part names
+- [x] T034 [US4] Add `sysml_ibd` skinparam string to `sphinxcontrib/sysml/flow_configs.py` — style component `<<Part>>` elements, `<<ibd>>` rectangle boundary
+- [x] T035 [P] [US4] Add `BLOCK_INST_TEMPLATE` and `IBD_FULL_TEMPLATE` to `sphinxcontrib/sysml/templates.py` — `IBD_FULL_TEMPLATE` uses component diagram syntax: renders root PartDef as `rectangle` boundary, child Parts as `component` elements with `portin`/`portout` for owned Ports, then Connection needs as connector lines between ports; includes clear comment noting IBD is an approximation (no locked port placement)
+- [x] T036 [US4] Create `sphinxcontrib/sysml/directives/needsysml_ibd.py` — `NeedsymlIbdDirective` with `required_arguments=1`, `option_spec` for `:show-ports:` (default true), `:scale:`, `:align:`; `run()` renders `IBD_FULL_TEMPLATE`
+- [x] T037 [US4] Register `needsysml-ibd` directive in `setup()` in `sphinxcontrib/sysml/__init__.py`
+- [x] T038 [US4] Add `.. needsysml-ibd::` example and `connection` needs to `tests/doc_test/basic/index.rst`
+- [x] T039 [P] [US4] Write `tests/test_ibd_directive.py` — tests: (a) builds without error, (b) IBD diagram contains expected part names
 
 **Checkpoint**: IBD renders as component diagram approximation. All 5 user stories complete.
 
@@ -139,6 +139,15 @@
 - [ ] T048 Build and validate `docs/` with `sphinx-build -b html` — fix any broken refs or missing content
 - [ ] T049 [P] Add `SKILL.md` to repo root — agent-readable contract for the extension (directive options, Jinja helpers, config keys), following the `sphinx-need-svg/SKILL.md` pattern
 - [ ] T050 Run `quickstart.md` steps manually in a clean venv; fix any discrepancies between docs and implementation
+
+### sphinx-need-svg Integration (optional rendering path)
+
+- [ ] T051 Add `sphinx_need_svg` detection to `sphinxcontrib/sysml/__init__.py` — use `importlib.util.find_spec("sphinx_need_svg")` in `setup()`; set a module-level `_HAS_NEED_SVG` flag; only register SVG directives when True
+- [ ] T052 [P] Create `sphinxcontrib/sysml/directives/needsysml_svg.py` — implement `NeedsymlSvgDirective(SphinxDirective)` that uses `sphinx_need_svg.jinja_context.SvgJinjaContext` to render an SVG BDD: iterates PartDef + owned Parts via `filter()`, draws `<rect>` blocks with `<a href="{{ ref(need.id) }}">` links, outputs via `nodes.raw("", svg_markup, format="html")`
+- [ ] T053 Register `needsysml-bdd-svg` directive in `setup()` only when `_HAS_NEED_SVG` is True; emit a Sphinx info note (not warning) when the directive is used but `sphinx_need_svg` is not installed
+- [ ] T054 [P] Write `tests/test_svg_directive.py` — tests: (a) directive is absent when `sphinx_need_svg` not importable (mock `find_spec` to return None), (b) when available, HTML output contains inline `<svg` with `<a href` links pointing to correct need anchors
+- [ ] T055 [P] Add `.. needsysml-bdd-svg::` example to `tests/doc_test/full_example/index.rst` alongside the PlantUML BDD for visual comparison
+- [ ] T056 [P] Add `docs/directives/needsysml_svg.rst` — documents the SVG rendering path, when to use it vs PlantUML, and the `sphinx-need-svg` install requirement
 
 ---
 
@@ -166,7 +175,7 @@
 Within Phase 3 (US1): T015 and T016 can run in parallel (different test files).
 Within Phase 4 (US2+US5): T020 and T021 (templates) can run in parallel with T022 (directive skeleton).
 Within Phase 5 (US3): T029 (templates) can run in parallel with T030 (directive).
-Within Phase 7 (Polish): All docs tasks (T042–T047) can run in parallel.
+Within Phase 7 (Polish): All docs tasks (T042–T047) can run in parallel. SVG integration tasks T052, T054, T055, T056 can all run in parallel after T051 (detection flag) is done.
 Phases 5 and 6 can run in parallel with each other once Phase 3 is complete.
 
 ---
@@ -207,8 +216,8 @@ Task T027: Write tests/test_flow_configs.py
 
 ## Notes
 
-- Total tasks: **50**
-- US1: 4 tasks | US2+US5: 10 tasks | US3: 6 tasks | US4: 6 tasks | Setup: 6 | Foundational: 7 | Polish: 11
+- Total tasks: **56**
+- US1: 4 tasks | US2+US5: 10 tasks | US3: 6 tasks | US4: 6 tasks | Setup: 6 | Foundational: 7 | Polish: 17 (11 + 6 SVG)
 - [P] tasks = different files, safe to run in parallel
 - Commit after each phase checkpoint
 - `add_field` compatibility shim (T009) is critical — test against both sphinx-needs < 6 and ≥ 6 if possible

@@ -120,3 +120,12 @@ Diagrams
    :depth: 2
    :scale: 80%
    :align: center
+
+.. needsysml-req:: type == 'Requirement'
+   :show-satisfy: true
+   :show-refine: true
+   :align: center
+
+.. needsysml-ibd:: PD-001
+   :show-ports: true
+   :align: center

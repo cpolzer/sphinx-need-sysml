@@ -98,7 +98,11 @@ def setup(app: Sphinx) -> dict:
 
     # Register diagram directives
     from sphinxcontrib.sysml.directives.needsysml_bdd import NeedsymlBddDirective
+    from sphinxcontrib.sysml.directives.needsysml_ibd import NeedsymlIbdDirective
+    from sphinxcontrib.sysml.directives.needsysml_req import NeedsymlReqDirective
     app.add_directive("needsysml-bdd", NeedsymlBddDirective)
+    app.add_directive("needsysml-ibd", NeedsymlIbdDirective)
+    app.add_directive("needsysml-req", NeedsymlReqDirective)
 
     return {
         "version": VERSION,
