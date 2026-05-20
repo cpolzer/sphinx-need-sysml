@@ -1,3 +1,9 @@
+## v0.2.4 (2026-05-20)
+
+### Fix
+
+- add Pillow dependency for PlantUML scaling support
+
 ## v0.2.3 (2026-05-20)
 
 ### Fix
