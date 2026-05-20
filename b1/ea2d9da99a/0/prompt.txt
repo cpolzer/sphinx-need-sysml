@@ -1,1 +1,1 @@
-can we add a CONTRIBUTORS.md and a MIT License?
+contributors should have directions for developers: how to locally develop, what is the ci flow
