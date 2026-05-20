@@ -1,0 +1,1 @@
+i have reconfigured pypi - lets commit the latest changes directly to main
