@@ -21,9 +21,20 @@ class TestFieldsRegistration:
     """Verify all 15 SysML v2 extra fields are registered."""
 
     EXPECTED_FIELDS = [
-        "abstract", "owned_by", "multiplicity", "direction", "conjugated",
-        "definition", "satisfies", "refines", "allocates", "req_text",
-        "source_port", "target_port", "is_initial", "is_final",
+        "abstract",
+        "owned_by",
+        "multiplicity",
+        "direction",
+        "conjugated",
+        "definition",
+        "satisfies",
+        "refines",
+        "allocates",
+        "req_text",
+        "source_port",
+        "target_port",
+        "is_initial",
+        "is_final",
     ]
 
     def test_fields_on_need_data(self, built_app):

@@ -1,6 +1,22 @@
 """SysML v2 extra field definitions for sphinx-needs registration."""
 
-SYSML_FIELDS = [
+from typing import TypedDict
+
+
+class _FieldSchema(TypedDict):
+    type: str
+
+
+class _FieldBase(TypedDict):
+    name: str
+    description: str
+
+
+class FieldDef(_FieldBase, total=False):
+    schema: _FieldSchema
+
+
+SYSML_FIELDS: list[FieldDef] = [
     {
         "name": "abstract",
         "description": "Whether this element is abstract (no direct instantiation)",

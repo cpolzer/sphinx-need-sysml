@@ -40,7 +40,9 @@ class TestBddDirective:
         # Override conf.py to use non-SVG output
         conf = tmproot / "conf.py"
         content = conf.read_text()
-        content = content.replace('plantuml_output_format = "svg"', 'plantuml_output_format = "png"')
+        content = content.replace(
+            'plantuml_output_format = "svg"', 'plantuml_output_format = "png"'
+        )
         conf.write_text(content)
 
         app = make_app(srcdir=tmproot)

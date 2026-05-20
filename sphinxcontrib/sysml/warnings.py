@@ -1,7 +1,7 @@
 """Warning emission helpers for sphinxcontrib-sysml."""
 
-import sphinx
-from packaging.version import Version
+import logging
+
 from sphinx.application import Sphinx
 
 _PLANTUML_WARNING_EMITTED = False
@@ -19,17 +19,13 @@ def warn_plantuml_format(app: Sphinx) -> None:
     fmt = getattr(app.config, "plantuml_output_format", None)
     if fmt != "svg":
         _PLANTUML_WARNING_EMITTED = True
-        log = _get_logger(app)
-        log.warning(
+        _get_logger().warning(
             "sphinxcontrib-sysml: PlantUML hyperlinks require "
             "plantuml_output_format = 'svg'. Set this in conf.py for clickable diagrams."
         )
 
 
-def _get_logger(app: Sphinx):
-    sphinx_version = Version(sphinx.__version__)
-    if sphinx_version >= Version("1.6"):
-        from sphinx.util import logging
-        return logging.getLogger(__name__)
-    import logging
-    return logging.getLogger(__name__)
+def _get_logger() -> logging.Logger:
+    from sphinx.util import logging as sphinx_logging
+
+    return sphinx_logging.getLogger(__name__)  # type: ignore[return-value]

@@ -77,23 +77,21 @@ extend-select = [
 packages = ["sphinxcontrib.sysml"]
 strict = true
 show_error_codes = true
-exclude = [
-  "^sphinxcontrib/sysml/__init__\\.py$",
-  "^sphinxcontrib/sysml/config\\.py$",
-  "^sphinxcontrib/sysml/fields\\.py$",
-  "^sphinxcontrib/sysml/templates\\.py$",
-  "^sphinxcontrib/sysml/flow_configs\\.py$",
-  "^sphinxcontrib/sysml/directives/",
-  "^sphinxcontrib/sysml/warnings\\.py$",
-]
-disallow_any_unimported = true
-disallow_any_expr = true
-disallow_any_decorated = true
 disallow_any_generics = true
-disallow_any_explicit = true
 disallow_subclassing_any = true
 disallow_untyped_calls = true
 disallow_untyped_defs = true
+
+[[tool.mypy.overrides]]
+module = [
+  "sphinx_needs",
+  "sphinx_needs.*",
+  "docutils",
+  "docutils.*",
+  "sphinx_need_svg",
+  "sphinx_need_svg.*",
+]
+ignore_missing_imports = true
 
 [tool.ruff]
 target-version = "py310"

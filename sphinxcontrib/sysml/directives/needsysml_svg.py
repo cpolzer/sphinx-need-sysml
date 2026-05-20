@@ -1,5 +1,7 @@
 """Needsyml SVG BDD directive — renders inline SVG using sphinx-need-svg."""
 
+from typing import Any
+
 from docutils import nodes
 from docutils.parsers.rst import directives
 from sphinx.application import Sphinx
@@ -22,7 +24,7 @@ class NeedsymlBddSvgDirective(SphinxDirective):
         "align": directives.unchanged,
     }
 
-    def run(self):
+    def run(self) -> list[Any]:
         root_id = self.arguments[0]
         align = self.options.get("align", "center")
 

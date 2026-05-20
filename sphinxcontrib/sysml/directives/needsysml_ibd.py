@@ -1,5 +1,7 @@
 """Needsyml IBD directive — wraps needuml with pre-baked IBD template."""
 
+from typing import Any
+
 from docutils.parsers.rst import directives
 from docutils.statemachine import StringList
 from sphinx.application import Sphinx
@@ -27,7 +29,7 @@ class NeedsymlIbdDirective(SphinxDirective):
         "align": directives.unchanged,
     }
 
-    def run(self):
+    def run(self) -> list[Any]:
         root_id = self.arguments[0]
         scale = self.options.get("scale")
         align = self.options.get("align", "center")
@@ -54,7 +56,7 @@ class NeedsymlIbdDirective(SphinxDirective):
             state_machine=self.state_machine,
         )
 
-        return needuml.run()
+        return needuml.run()  # type: ignore[no-any-return]
 
 
 def setup(app: Sphinx) -> None:

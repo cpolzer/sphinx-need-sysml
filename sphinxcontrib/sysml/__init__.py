@@ -2,9 +2,9 @@
 
 import importlib.util
 import inspect
+import logging
+from collections.abc import Mapping
 
-import sphinx
-from packaging.version import Version
 from sphinx.application import Sphinx
 from sphinx.config import Config
 from sphinx_needs.api import add_need_type
@@ -21,12 +21,13 @@ _HAS_NEED_SVG = importlib.util.find_spec("sphinx_need_svg") is not None
 try:
     from sphinx_needs.api import add_field as _add_field
 
-    def _register_field(name: str, description: str, schema: dict | None = None) -> None:
+    def _register_field(
+        name: str, description: str, schema: Mapping[str, object] | None = None
+    ) -> None:
         try:
             _add_field(name, description, schema=schema)
         except Exception:
-            log = _get_logger()
-            log.debug(f"Field '{name}' already registered, skipping")
+            _get_logger().debug(f"Field '{name}' already registered, skipping")
 
 except ImportError:
     from sphinx_needs.api import add_extra_option as _add_extra_option
@@ -35,8 +36,10 @@ except ImportError:
         "description" in inspect.signature(_add_extra_option).parameters
     )
 
-    def _register_field(name: str, description: str, schema: dict | None = None) -> None:
-        kwargs = {}
+    def _register_field(
+        name: str, description: str, schema: Mapping[str, object] | None = None
+    ) -> None:
+        kwargs: dict[str, object] = {}
         if _add_extra_option_supports_description:
             kwargs["description"] = description
         if schema is not None:
@@ -44,17 +47,13 @@ except ImportError:
         try:
             _add_extra_option(None, name, **kwargs)
         except Exception:
-            log = _get_logger()
-            log.debug(f"Field '{name}' already registered, skipping")
+            _get_logger().debug(f"Field '{name}' already registered, skipping")
 
 
-def _get_logger():
-    sphinx_version = Version(sphinx.__version__)
-    if sphinx_version >= Version("1.6"):
-        from sphinx.util import logging
-        return logging.getLogger(__name__)
-    import logging
-    return logging.getLogger(__name__)
+def _get_logger() -> logging.Logger:
+    from sphinx.util import logging as sphinx_logging
+
+    return sphinx_logging.getLogger(__name__)  # type: ignore[return-value]
 
 
 def _register_types_and_fields(app: Sphinx, config: Config) -> None:
@@ -88,10 +87,11 @@ def _register_flow_configs(app: Sphinx) -> None:
 def _warn_plantuml_format(app: Sphinx) -> None:
     """Emit warning if plantuml_output_format is not svg when diagram directives are used."""
     from sphinxcontrib.sysml.warnings import warn_plantuml_format
+
     warn_plantuml_format(app)
 
 
-def setup(app: Sphinx) -> dict:
+def setup(app: Sphinx) -> dict[str, object]:
     """Sphinx extension entry point."""
     app.setup_extension("sphinx_needs")
 
@@ -103,6 +103,7 @@ def setup(app: Sphinx) -> dict:
     from sphinxcontrib.sysml.directives.needsysml_bdd import NeedsymlBddDirective
     from sphinxcontrib.sysml.directives.needsysml_ibd import NeedsymlIbdDirective
     from sphinxcontrib.sysml.directives.needsysml_req import NeedsymlReqDirective
+
     app.add_directive("needsysml-bdd", NeedsymlBddDirective)
     app.add_directive("needsysml-ibd", NeedsymlIbdDirective)
     app.add_directive("needsysml-req", NeedsymlReqDirective)
@@ -110,6 +111,7 @@ def setup(app: Sphinx) -> dict:
     # Register SVG directive only when sphinx-need-svg is available
     if _HAS_NEED_SVG:
         from sphinxcontrib.sysml.directives.needsysml_svg import NeedsymlBddSvgDirective
+
         app.add_directive("needsysml-bdd-svg", NeedsymlBddSvgDirective)
 
     return {

@@ -1,5 +1,7 @@
 """Needsyml requirements diagram directive — wraps needuml with pre-baked REQ template."""
 
+from typing import Any
+
 from docutils.parsers.rst import directives
 from docutils.statemachine import StringList
 from sphinx.application import Sphinx
@@ -26,7 +28,7 @@ class NeedsymlReqDirective(SphinxDirective):
         "align": directives.unchanged,
     }
 
-    def run(self):
+    def run(self) -> list[Any]:
         filter_expr = self.arguments[0]
         show_satisfy = self.options.get("show-satisfy", "true").lower() == "true"
         show_refine = self.options.get("show-refine", "true").lower() == "true"
@@ -61,7 +63,7 @@ class NeedsymlReqDirective(SphinxDirective):
             state_machine=self.state_machine,
         )
 
-        return needuml.run()
+        return needuml.run()  # type: ignore[no-any-return]
 
 
 def setup(app: Sphinx) -> None:
