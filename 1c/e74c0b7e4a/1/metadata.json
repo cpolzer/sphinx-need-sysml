@@ -1,0 +1,39 @@
+{
+  "cli_version": "0.6.2",
+  "checkpoint_id": "1ce74c0b7e4a",
+  "session_id": "ses_1ba93b190ffeGu7Au41Wef54YI",
+  "strategy": "manual-commit",
+  "created_at": "2026-05-20T14:26:25.257502046Z",
+  "branch": "main",
+  "checkpoints_count": 1,
+  "files_touched": [],
+  "agent": "OpenCode",
+  "model": "qwen3.6-plus",
+  "turn_id": "7265f0999877",
+  "token_usage": {
+    "input_tokens": 912,
+    "cache_creation_tokens": 643990,
+    "cache_read_tokens": 11534139,
+    "output_tokens": 29409,
+    "api_call_count": 154
+  },
+  "session_metrics": {
+    "turn_count": 11
+  },
+  "prompt_attributions": [
+    {
+      "checkpoint_number": 2,
+      "user_lines_added": 27,
+      "user_lines_removed": 2,
+      "agent_lines_added": 0,
+      "agent_lines_removed": 0,
+      "user_added_per_file": {
+        ".claude/settings.local.json": 25,
+        "sphinxcontrib/sysml/templates.py": 2
+      },
+      "user_removed_per_file": {
+        "sphinxcontrib/sysml/templates.py": 2
+      }
+    }
+  ]
+}
