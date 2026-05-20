@@ -1,0 +1,668 @@
+{
+  "cli_version": "0.6.2",
+  "checkpoint_id": "86fffc5c9010",
+  "session_id": "ee5f5543-9f88-4838-b7fd-7e9ec9bf1398",
+  "strategy": "manual-commit",
+  "created_at": "2026-05-20T22:50:56.120682198Z",
+  "branch": "002-full-sysml-diagrams",
+  "checkpoints_count": 20,
+  "files_touched": [
+    ".specify/feature.json",
+    "CHANGELOG.md",
+    "CLAUDE.md",
+    "docs/directives/need_types.rst",
+    "docs/directives/needsysml_act.rst",
+    "docs/directives/needsysml_pkg.rst",
+    "docs/directives/needsysml_sd.rst",
+    "docs/directives/needsysml_stm.rst",
+    "docs/directives/needsysml_uc.rst",
+    "docs/examples/vehicle_system.rst",
+    "docs/index.rst",
+    "pyproject.toml",
+    "specs/002-full-sysml-diagrams/checklists/requirements.md",
+    "specs/002-full-sysml-diagrams/contracts/sphinx-extension-api.md",
+    "specs/002-full-sysml-diagrams/data-model.md",
+    "specs/002-full-sysml-diagrams/plan.md",
+    "specs/002-full-sysml-diagrams/quickstart.md",
+    "specs/002-full-sysml-diagrams/research.md",
+    "specs/002-full-sysml-diagrams/spec.md",
+    "specs/002-full-sysml-diagrams/tasks.md",
+    "sphinxcontrib/sysml/__init__.py",
+    "sphinxcontrib/sysml/config.py",
+    "sphinxcontrib/sysml/directives/needsysml_act.py",
+    "sphinxcontrib/sysml/directives/needsysml_pkg.py",
+    "sphinxcontrib/sysml/directives/needsysml_req.py",
+    "sphinxcontrib/sysml/directives/needsysml_sd.py",
+    "sphinxcontrib/sysml/directives/needsysml_stm.py",
+    "sphinxcontrib/sysml/directives/needsysml_svg.py",
+    "sphinxcontrib/sysml/directives/needsysml_uc.py",
+    "sphinxcontrib/sysml/fields.py",
+    "sphinxcontrib/sysml/flow_configs.py",
+    "sphinxcontrib/sysml/svg_templates.py",
+    "sphinxcontrib/sysml/templates.py",
+    "sphinxcontrib/sysml/warnings.py",
+    "tests/doc_test/act/conf.py",
+    "tests/doc_test/act/index.rst",
+    "tests/doc_test/pkg/conf.py",
+    "tests/doc_test/pkg/index.rst",
+    "tests/doc_test/sd/conf.py",
+    "tests/doc_test/sd/index.rst",
+    "tests/doc_test/stm/conf.py",
+    "tests/doc_test/stm/index.rst",
+    "tests/doc_test/uc/conf.py",
+    "tests/doc_test/uc/index.rst",
+    "tests/test_act_directive.py",
+    "tests/test_fields.py",
+    "tests/test_flow_configs.py",
+    "tests/test_need_types.py",
+    "tests/test_pkg_directive.py",
+    "tests/test_req_directive.py",
+    "tests/test_sd_directive.py",
+    "tests/test_stm_directive.py",
+    "tests/test_uc_directive.py"
+  ],
+  "agent": "Claude Code",
+  "model": "claude-sonnet-4-6",
+  "turn_id": "f117b5ceec55",
+  "checkpoint_transcript_start": 70,
+  "transcript_lines_at_start": 70,
+  "token_usage": {
+    "input_tokens": 378,
+    "cache_creation_tokens": 1476474,
+    "cache_read_tokens": 84184721,
+    "output_tokens": 298896,
+    "api_call_count": 262
+  },
+  "session_metrics": {
+    "turn_count": 20
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-05-20T22:50:56.06577667Z",
+    "agent_lines": 5786,
+    "agent_removed": 231,
+    "human_added": 113,
+    "human_modified": 6,
+    "human_removed": 0,
+    "total_committed": 5905,
+    "total_lines_changed": 6136,
+    "agent_percentage": 98.0606258148631,
+    "metric_version": 2
+  },
+  "prompt_attributions": [
+    {
+      "checkpoint_number": 1,
+      "user_lines_added": 27,
+      "user_lines_removed": 0,
+      "agent_lines_added": 0,
+      "agent_lines_removed": 0,
+      "user_added_per_file": {
+        ".claude/settings.local.json": 27
+      }
+    },
+    {
+      "checkpoint_number": 2,
+      "user_lines_added": 34,
+      "user_lines_removed": 0,
+      "agent_lines_added": 421,
+      "agent_lines_removed": 217,
+      "user_added_per_file": {
+        ".claude/settings.local.json": 34
+      }
+    },
+    {
+      "checkpoint_number": 3,
+      "user_lines_added": 35,
+      "user_lines_removed": 0,
+      "agent_lines_added": 421,
+      "agent_lines_removed": 217,
+      "user_added_per_file": {
+        ".claude/settings.local.json": 35
+      }
+    },
+    {
+      "checkpoint_number": 4,
+      "user_lines_added": 2078,
+      "user_lines_removed": 1978,
+      "agent_lines_added": 463,
+      "agent_lines_removed": 254,
+      "user_added_per_file": {
+        ".claude/settings.local.json": 35,
+        ".claude/skills/speckit-analyze/SKILL.md": 260,
+        ".claude/skills/speckit-checklist/SKILL.md": 372,
+        ".claude/skills/speckit-clarify/SKILL.md": 254,
+        ".claude/skills/speckit-constitution/SKILL.md": 157,
+        ".claude/skills/speckit-implement/SKILL.md": 210,
+        ".claude/skills/speckit-plan/SKILL.md": 152,
+        ".claude/skills/speckit-specify/SKILL.md": 330,
+        ".claude/skills/speckit-tasks/SKILL.md": 202,
+        ".claude/skills/speckit-taskstoissues/SKILL.md": 106
+      },
+      "user_removed_per_file": {
+        ".opencode/command/speckit.analyze.md": 249,
+        ".opencode/command/speckit.checklist.md": 361,
+        ".opencode/command/speckit.clarify.md": 247,
+        ".opencode/command/speckit.constitution.md": 150,
+        ".opencode/command/speckit.implement.md": 199,
+        ".opencode/command/speckit.plan.md": 149,
+        ".opencode/command/speckit.specify.md": 327,
+        ".opencode/command/speckit.tasks.md": 200,
+        ".opencode/command/speckit.taskstoissues.md": 96
+      }
+    },
+    {
+      "checkpoint_number": 5,
+      "user_lines_added": 2078,
+      "user_lines_removed": 1978,
+      "agent_lines_added": 729,
+      "agent_lines_removed": 255,
+      "user_added_per_file": {
+        ".claude/settings.local.json": 35,
+        ".claude/skills/speckit-analyze/SKILL.md": 260,
+        ".claude/skills/speckit-checklist/SKILL.md": 372,
+        ".claude/skills/speckit-clarify/SKILL.md": 254,
+        ".claude/skills/speckit-constitution/SKILL.md": 157,
+        ".claude/skills/speckit-implement/SKILL.md": 210,
+        ".claude/skills/speckit-plan/SKILL.md": 152,
+        ".claude/skills/speckit-specify/SKILL.md": 330,
+        ".claude/skills/speckit-tasks/SKILL.md": 202,
+        ".claude/skills/speckit-taskstoissues/SKILL.md": 106
+      },
+      "user_removed_per_file": {
+        ".opencode/command/speckit.analyze.md": 249,
+        ".opencode/command/speckit.checklist.md": 361,
+        ".opencode/command/speckit.clarify.md": 247,
+        ".opencode/command/speckit.constitution.md": 150,
+        ".opencode/command/speckit.implement.md": 199,
+        ".opencode/command/speckit.plan.md": 149,
+        ".opencode/command/speckit.specify.md": 327,
+        ".opencode/command/speckit.tasks.md": 200,
+        ".opencode/command/speckit.taskstoissues.md": 96
+      }
+    },
+    {
+      "checkpoint_number": 6,
+      "user_lines_added": 2079,
+      "user_lines_removed": 1978,
+      "agent_lines_added": 729,
+      "agent_lines_removed": 255,
+      "user_added_per_file": {
+        ".claude/settings.local.json": 36,
+        ".claude/skills/speckit-analyze/SKILL.md": 260,
+        ".claude/skills/speckit-checklist/SKILL.md": 372,
+        ".claude/skills/speckit-clarify/SKILL.md": 254,
+        ".claude/skills/speckit-constitution/SKILL.md": 157,
+        ".claude/skills/speckit-implement/SKILL.md": 210,
+        ".claude/skills/speckit-plan/SKILL.md": 152,
+        ".claude/skills/speckit-specify/SKILL.md": 330,
+        ".claude/skills/speckit-tasks/SKILL.md": 202,
+        ".claude/skills/speckit-taskstoissues/SKILL.md": 106
+      },
+      "user_removed_per_file": {
+        ".opencode/command/speckit.analyze.md": 249,
+        ".opencode/command/speckit.checklist.md": 361,
+        ".opencode/command/speckit.clarify.md": 247,
+        ".opencode/command/speckit.constitution.md": 150,
+        ".opencode/command/speckit.implement.md": 199,
+        ".opencode/command/speckit.plan.md": 149,
+        ".opencode/command/speckit.specify.md": 327,
+        ".opencode/command/speckit.tasks.md": 200,
+        ".opencode/command/speckit.taskstoissues.md": 96
+      }
+    },
+    {
+      "checkpoint_number": 7,
+      "user_lines_added": 2079,
+      "user_lines_removed": 1978,
+      "agent_lines_added": 747,
+      "agent_lines_removed": 255,
+      "user_added_per_file": {
+        ".claude/settings.local.json": 36,
+        ".claude/skills/speckit-analyze/SKILL.md": 260,
+        ".claude/skills/speckit-checklist/SKILL.md": 372,
+        ".claude/skills/speckit-clarify/SKILL.md": 254,
+        ".claude/skills/speckit-constitution/SKILL.md": 157,
+        ".claude/skills/speckit-implement/SKILL.md": 210,
+        ".claude/skills/speckit-plan/SKILL.md": 152,
+        ".claude/skills/speckit-specify/SKILL.md": 330,
+        ".claude/skills/speckit-tasks/SKILL.md": 202,
+        ".claude/skills/speckit-taskstoissues/SKILL.md": 106
+      },
+      "user_removed_per_file": {
+        ".opencode/command/speckit.analyze.md": 249,
+        ".opencode/command/speckit.checklist.md": 361,
+        ".opencode/command/speckit.clarify.md": 247,
+        ".opencode/command/speckit.constitution.md": 150,
+        ".opencode/command/speckit.implement.md": 199,
+        ".opencode/command/speckit.plan.md": 149,
+        ".opencode/command/speckit.specify.md": 327,
+        ".opencode/command/speckit.tasks.md": 200,
+        ".opencode/command/speckit.taskstoissues.md": 96
+      }
+    },
+    {
+      "checkpoint_number": 8,
+      "user_lines_added": 2079,
+      "user_lines_removed": 1978,
+      "agent_lines_added": 751,
+      "agent_lines_removed": 255,
+      "user_added_per_file": {
+        ".claude/settings.local.json": 36,
+        ".claude/skills/speckit-analyze/SKILL.md": 260,
+        ".claude/skills/speckit-checklist/SKILL.md": 372,
+        ".claude/skills/speckit-clarify/SKILL.md": 254,
+        ".claude/skills/speckit-constitution/SKILL.md": 157,
+        ".claude/skills/speckit-implement/SKILL.md": 210,
+        ".claude/skills/speckit-plan/SKILL.md": 152,
+        ".claude/skills/speckit-specify/SKILL.md": 330,
+        ".claude/skills/speckit-tasks/SKILL.md": 202,
+        ".claude/skills/speckit-taskstoissues/SKILL.md": 106
+      },
+      "user_removed_per_file": {
+        ".opencode/command/speckit.analyze.md": 249,
+        ".opencode/command/speckit.checklist.md": 361,
+        ".opencode/command/speckit.clarify.md": 247,
+        ".opencode/command/speckit.constitution.md": 150,
+        ".opencode/command/speckit.implement.md": 199,
+        ".opencode/command/speckit.plan.md": 149,
+        ".opencode/command/speckit.specify.md": 327,
+        ".opencode/command/speckit.tasks.md": 200,
+        ".opencode/command/speckit.taskstoissues.md": 96
+      }
+    },
+    {
+      "checkpoint_number": 9,
+      "user_lines_added": 2079,
+      "user_lines_removed": 1978,
+      "agent_lines_added": 753,
+      "agent_lines_removed": 255,
+      "user_added_per_file": {
+        ".claude/settings.local.json": 36,
+        ".claude/skills/speckit-analyze/SKILL.md": 260,
+        ".claude/skills/speckit-checklist/SKILL.md": 372,
+        ".claude/skills/speckit-clarify/SKILL.md": 254,
+        ".claude/skills/speckit-constitution/SKILL.md": 157,
+        ".claude/skills/speckit-implement/SKILL.md": 210,
+        ".claude/skills/speckit-plan/SKILL.md": 152,
+        ".claude/skills/speckit-specify/SKILL.md": 330,
+        ".claude/skills/speckit-tasks/SKILL.md": 202,
+        ".claude/skills/speckit-taskstoissues/SKILL.md": 106
+      },
+      "user_removed_per_file": {
+        ".opencode/command/speckit.analyze.md": 249,
+        ".opencode/command/speckit.checklist.md": 361,
+        ".opencode/command/speckit.clarify.md": 247,
+        ".opencode/command/speckit.constitution.md": 150,
+        ".opencode/command/speckit.implement.md": 199,
+        ".opencode/command/speckit.plan.md": 149,
+        ".opencode/command/speckit.specify.md": 327,
+        ".opencode/command/speckit.tasks.md": 200,
+        ".opencode/command/speckit.taskstoissues.md": 96
+      }
+    },
+    {
+      "checkpoint_number": 10,
+      "user_lines_added": 2079,
+      "user_lines_removed": 1978,
+      "agent_lines_added": 754,
+      "agent_lines_removed": 255,
+      "user_added_per_file": {
+        ".claude/settings.local.json": 36,
+        ".claude/skills/speckit-analyze/SKILL.md": 260,
+        ".claude/skills/speckit-checklist/SKILL.md": 372,
+        ".claude/skills/speckit-clarify/SKILL.md": 254,
+        ".claude/skills/speckit-constitution/SKILL.md": 157,
+        ".claude/skills/speckit-implement/SKILL.md": 210,
+        ".claude/skills/speckit-plan/SKILL.md": 152,
+        ".claude/skills/speckit-specify/SKILL.md": 330,
+        ".claude/skills/speckit-tasks/SKILL.md": 202,
+        ".claude/skills/speckit-taskstoissues/SKILL.md": 106
+      },
+      "user_removed_per_file": {
+        ".opencode/command/speckit.analyze.md": 249,
+        ".opencode/command/speckit.checklist.md": 361,
+        ".opencode/command/speckit.clarify.md": 247,
+        ".opencode/command/speckit.constitution.md": 150,
+        ".opencode/command/speckit.implement.md": 199,
+        ".opencode/command/speckit.plan.md": 149,
+        ".opencode/command/speckit.specify.md": 327,
+        ".opencode/command/speckit.tasks.md": 200,
+        ".opencode/command/speckit.taskstoissues.md": 96
+      }
+    },
+    {
+      "checkpoint_number": 11,
+      "user_lines_added": 2192,
+      "user_lines_removed": 1978,
+      "agent_lines_added": 756,
+      "agent_lines_removed": 255,
+      "user_added_per_file": {
+        ".claude/settings.local.json": 36,
+        ".claude/skills/speckit-analyze/SKILL.md": 260,
+        ".claude/skills/speckit-checklist/SKILL.md": 372,
+        ".claude/skills/speckit-clarify/SKILL.md": 254,
+        ".claude/skills/speckit-constitution/SKILL.md": 157,
+        ".claude/skills/speckit-implement/SKILL.md": 210,
+        ".claude/skills/speckit-plan/SKILL.md": 152,
+        ".claude/skills/speckit-specify/SKILL.md": 330,
+        ".claude/skills/speckit-tasks/SKILL.md": 202,
+        ".claude/skills/speckit-taskstoissues/SKILL.md": 106,
+        "specs/002-full-sysml-diagrams/plan.md": 113
+      },
+      "user_removed_per_file": {
+        ".opencode/command/speckit.analyze.md": 249,
+        ".opencode/command/speckit.checklist.md": 361,
+        ".opencode/command/speckit.clarify.md": 247,
+        ".opencode/command/speckit.constitution.md": 150,
+        ".opencode/command/speckit.implement.md": 199,
+        ".opencode/command/speckit.plan.md": 149,
+        ".opencode/command/speckit.specify.md": 327,
+        ".opencode/command/speckit.tasks.md": 200,
+        ".opencode/command/speckit.taskstoissues.md": 96
+      }
+    },
+    {
+      "checkpoint_number": 12,
+      "user_lines_added": 2079,
+      "user_lines_removed": 1978,
+      "agent_lines_added": 2159,
+      "agent_lines_removed": 255,
+      "user_added_per_file": {
+        ".claude/settings.local.json": 36,
+        ".claude/skills/speckit-analyze/SKILL.md": 260,
+        ".claude/skills/speckit-checklist/SKILL.md": 372,
+        ".claude/skills/speckit-clarify/SKILL.md": 254,
+        ".claude/skills/speckit-constitution/SKILL.md": 157,
+        ".claude/skills/speckit-implement/SKILL.md": 210,
+        ".claude/skills/speckit-plan/SKILL.md": 152,
+        ".claude/skills/speckit-specify/SKILL.md": 330,
+        ".claude/skills/speckit-tasks/SKILL.md": 202,
+        ".claude/skills/speckit-taskstoissues/SKILL.md": 106
+      },
+      "user_removed_per_file": {
+        ".opencode/command/speckit.analyze.md": 249,
+        ".opencode/command/speckit.checklist.md": 361,
+        ".opencode/command/speckit.clarify.md": 247,
+        ".opencode/command/speckit.constitution.md": 150,
+        ".opencode/command/speckit.implement.md": 199,
+        ".opencode/command/speckit.plan.md": 149,
+        ".opencode/command/speckit.specify.md": 327,
+        ".opencode/command/speckit.tasks.md": 200,
+        ".opencode/command/speckit.taskstoissues.md": 96
+      }
+    },
+    {
+      "checkpoint_number": 13,
+      "user_lines_added": 2079,
+      "user_lines_removed": 1978,
+      "agent_lines_added": 2551,
+      "agent_lines_removed": 255,
+      "user_added_per_file": {
+        ".claude/settings.local.json": 36,
+        ".claude/skills/speckit-analyze/SKILL.md": 260,
+        ".claude/skills/speckit-checklist/SKILL.md": 372,
+        ".claude/skills/speckit-clarify/SKILL.md": 254,
+        ".claude/skills/speckit-constitution/SKILL.md": 157,
+        ".claude/skills/speckit-implement/SKILL.md": 210,
+        ".claude/skills/speckit-plan/SKILL.md": 152,
+        ".claude/skills/speckit-specify/SKILL.md": 330,
+        ".claude/skills/speckit-tasks/SKILL.md": 202,
+        ".claude/skills/speckit-taskstoissues/SKILL.md": 106
+      },
+      "user_removed_per_file": {
+        ".opencode/command/speckit.analyze.md": 249,
+        ".opencode/command/speckit.checklist.md": 361,
+        ".opencode/command/speckit.clarify.md": 247,
+        ".opencode/command/speckit.constitution.md": 150,
+        ".opencode/command/speckit.implement.md": 199,
+        ".opencode/command/speckit.plan.md": 149,
+        ".opencode/command/speckit.specify.md": 327,
+        ".opencode/command/speckit.tasks.md": 200,
+        ".opencode/command/speckit.taskstoissues.md": 96
+      }
+    },
+    {
+      "checkpoint_number": 14,
+      "user_lines_added": 2079,
+      "user_lines_removed": 1978,
+      "agent_lines_added": 2551,
+      "agent_lines_removed": 255,
+      "user_added_per_file": {
+        ".claude/settings.local.json": 36,
+        ".claude/skills/speckit-analyze/SKILL.md": 260,
+        ".claude/skills/speckit-checklist/SKILL.md": 372,
+        ".claude/skills/speckit-clarify/SKILL.md": 254,
+        ".claude/skills/speckit-constitution/SKILL.md": 157,
+        ".claude/skills/speckit-implement/SKILL.md": 210,
+        ".claude/skills/speckit-plan/SKILL.md": 152,
+        ".claude/skills/speckit-specify/SKILL.md": 330,
+        ".claude/skills/speckit-tasks/SKILL.md": 202,
+        ".claude/skills/speckit-taskstoissues/SKILL.md": 106
+      },
+      "user_removed_per_file": {
+        ".opencode/command/speckit.analyze.md": 249,
+        ".opencode/command/speckit.checklist.md": 361,
+        ".opencode/command/speckit.clarify.md": 247,
+        ".opencode/command/speckit.constitution.md": 150,
+        ".opencode/command/speckit.implement.md": 199,
+        ".opencode/command/speckit.plan.md": 149,
+        ".opencode/command/speckit.specify.md": 327,
+        ".opencode/command/speckit.tasks.md": 200,
+        ".opencode/command/speckit.taskstoissues.md": 96
+      }
+    },
+    {
+      "checkpoint_number": 15,
+      "user_lines_added": 2079,
+      "user_lines_removed": 1978,
+      "agent_lines_added": 2557,
+      "agent_lines_removed": 255,
+      "user_added_per_file": {
+        ".claude/settings.local.json": 36,
+        ".claude/skills/speckit-analyze/SKILL.md": 260,
+        ".claude/skills/speckit-checklist/SKILL.md": 372,
+        ".claude/skills/speckit-clarify/SKILL.md": 254,
+        ".claude/skills/speckit-constitution/SKILL.md": 157,
+        ".claude/skills/speckit-implement/SKILL.md": 210,
+        ".claude/skills/speckit-plan/SKILL.md": 152,
+        ".claude/skills/speckit-specify/SKILL.md": 330,
+        ".claude/skills/speckit-tasks/SKILL.md": 202,
+        ".claude/skills/speckit-taskstoissues/SKILL.md": 106
+      },
+      "user_removed_per_file": {
+        ".opencode/command/speckit.analyze.md": 249,
+        ".opencode/command/speckit.checklist.md": 361,
+        ".opencode/command/speckit.clarify.md": 247,
+        ".opencode/command/speckit.constitution.md": 150,
+        ".opencode/command/speckit.implement.md": 199,
+        ".opencode/command/speckit.plan.md": 149,
+        ".opencode/command/speckit.specify.md": 327,
+        ".opencode/command/speckit.tasks.md": 200,
+        ".opencode/command/speckit.taskstoissues.md": 96
+      }
+    },
+    {
+      "checkpoint_number": 16,
+      "user_lines_added": 2079,
+      "user_lines_removed": 1978,
+      "agent_lines_added": 2557,
+      "agent_lines_removed": 255,
+      "user_added_per_file": {
+        ".claude/settings.local.json": 36,
+        ".claude/skills/speckit-analyze/SKILL.md": 260,
+        ".claude/skills/speckit-checklist/SKILL.md": 372,
+        ".claude/skills/speckit-clarify/SKILL.md": 254,
+        ".claude/skills/speckit-constitution/SKILL.md": 157,
+        ".claude/skills/speckit-implement/SKILL.md": 210,
+        ".claude/skills/speckit-plan/SKILL.md": 152,
+        ".claude/skills/speckit-specify/SKILL.md": 330,
+        ".claude/skills/speckit-tasks/SKILL.md": 202,
+        ".claude/skills/speckit-taskstoissues/SKILL.md": 106
+      },
+      "user_removed_per_file": {
+        ".opencode/command/speckit.analyze.md": 249,
+        ".opencode/command/speckit.checklist.md": 361,
+        ".opencode/command/speckit.clarify.md": 247,
+        ".opencode/command/speckit.constitution.md": 150,
+        ".opencode/command/speckit.implement.md": 199,
+        ".opencode/command/speckit.plan.md": 149,
+        ".opencode/command/speckit.specify.md": 327,
+        ".opencode/command/speckit.tasks.md": 200,
+        ".opencode/command/speckit.taskstoissues.md": 96
+      }
+    },
+    {
+      "checkpoint_number": 17,
+      "user_lines_added": 2079,
+      "user_lines_removed": 1978,
+      "agent_lines_added": 2560,
+      "agent_lines_removed": 255,
+      "user_added_per_file": {
+        ".claude/settings.local.json": 36,
+        ".claude/skills/speckit-analyze/SKILL.md": 260,
+        ".claude/skills/speckit-checklist/SKILL.md": 372,
+        ".claude/skills/speckit-clarify/SKILL.md": 254,
+        ".claude/skills/speckit-constitution/SKILL.md": 157,
+        ".claude/skills/speckit-implement/SKILL.md": 210,
+        ".claude/skills/speckit-plan/SKILL.md": 152,
+        ".claude/skills/speckit-specify/SKILL.md": 330,
+        ".claude/skills/speckit-tasks/SKILL.md": 202,
+        ".claude/skills/speckit-taskstoissues/SKILL.md": 106
+      },
+      "user_removed_per_file": {
+        ".opencode/command/speckit.analyze.md": 249,
+        ".opencode/command/speckit.checklist.md": 361,
+        ".opencode/command/speckit.clarify.md": 247,
+        ".opencode/command/speckit.constitution.md": 150,
+        ".opencode/command/speckit.implement.md": 199,
+        ".opencode/command/speckit.plan.md": 149,
+        ".opencode/command/speckit.specify.md": 327,
+        ".opencode/command/speckit.tasks.md": 200,
+        ".opencode/command/speckit.taskstoissues.md": 96
+      }
+    },
+    {
+      "checkpoint_number": 18,
+      "user_lines_added": 2086,
+      "user_lines_removed": 1978,
+      "agent_lines_added": 3783,
+      "agent_lines_removed": 266,
+      "user_added_per_file": {
+        ".claude/scheduled_tasks.lock": 1,
+        ".claude/settings.local.json": 42,
+        ".claude/skills/speckit-analyze/SKILL.md": 260,
+        ".claude/skills/speckit-checklist/SKILL.md": 372,
+        ".claude/skills/speckit-clarify/SKILL.md": 254,
+        ".claude/skills/speckit-constitution/SKILL.md": 157,
+        ".claude/skills/speckit-implement/SKILL.md": 210,
+        ".claude/skills/speckit-plan/SKILL.md": 152,
+        ".claude/skills/speckit-specify/SKILL.md": 330,
+        ".claude/skills/speckit-tasks/SKILL.md": 202,
+        ".claude/skills/speckit-taskstoissues/SKILL.md": 106
+      },
+      "user_removed_per_file": {
+        ".opencode/command/speckit.analyze.md": 249,
+        ".opencode/command/speckit.checklist.md": 361,
+        ".opencode/command/speckit.clarify.md": 247,
+        ".opencode/command/speckit.constitution.md": 150,
+        ".opencode/command/speckit.implement.md": 199,
+        ".opencode/command/speckit.plan.md": 149,
+        ".opencode/command/speckit.specify.md": 327,
+        ".opencode/command/speckit.tasks.md": 200,
+        ".opencode/command/speckit.taskstoissues.md": 96
+      }
+    },
+    {
+      "checkpoint_number": 19,
+      "user_lines_added": 2086,
+      "user_lines_removed": 1978,
+      "agent_lines_added": 3783,
+      "agent_lines_removed": 266,
+      "user_added_per_file": {
+        ".claude/scheduled_tasks.lock": 1,
+        ".claude/settings.local.json": 42,
+        ".claude/skills/speckit-analyze/SKILL.md": 260,
+        ".claude/skills/speckit-checklist/SKILL.md": 372,
+        ".claude/skills/speckit-clarify/SKILL.md": 254,
+        ".claude/skills/speckit-constitution/SKILL.md": 157,
+        ".claude/skills/speckit-implement/SKILL.md": 210,
+        ".claude/skills/speckit-plan/SKILL.md": 152,
+        ".claude/skills/speckit-specify/SKILL.md": 330,
+        ".claude/skills/speckit-tasks/SKILL.md": 202,
+        ".claude/skills/speckit-taskstoissues/SKILL.md": 106
+      },
+      "user_removed_per_file": {
+        ".opencode/command/speckit.analyze.md": 249,
+        ".opencode/command/speckit.checklist.md": 361,
+        ".opencode/command/speckit.clarify.md": 247,
+        ".opencode/command/speckit.constitution.md": 150,
+        ".opencode/command/speckit.implement.md": 199,
+        ".opencode/command/speckit.plan.md": 149,
+        ".opencode/command/speckit.specify.md": 327,
+        ".opencode/command/speckit.tasks.md": 200,
+        ".opencode/command/speckit.taskstoissues.md": 96
+      }
+    },
+    {
+      "checkpoint_number": 20,
+      "user_lines_added": 2092,
+      "user_lines_removed": 1978,
+      "agent_lines_added": 5725,
+      "agent_lines_removed": 265,
+      "user_added_per_file": {
+        ".claude/scheduled_tasks.lock": 1,
+        ".claude/settings.local.json": 48,
+        ".claude/skills/speckit-analyze/SKILL.md": 260,
+        ".claude/skills/speckit-checklist/SKILL.md": 372,
+        ".claude/skills/speckit-clarify/SKILL.md": 254,
+        ".claude/skills/speckit-constitution/SKILL.md": 157,
+        ".claude/skills/speckit-implement/SKILL.md": 210,
+        ".claude/skills/speckit-plan/SKILL.md": 152,
+        ".claude/skills/speckit-specify/SKILL.md": 330,
+        ".claude/skills/speckit-tasks/SKILL.md": 202,
+        ".claude/skills/speckit-taskstoissues/SKILL.md": 106
+      },
+      "user_removed_per_file": {
+        ".opencode/command/speckit.analyze.md": 249,
+        ".opencode/command/speckit.checklist.md": 361,
+        ".opencode/command/speckit.clarify.md": 247,
+        ".opencode/command/speckit.constitution.md": 150,
+        ".opencode/command/speckit.implement.md": 199,
+        ".opencode/command/speckit.plan.md": 149,
+        ".opencode/command/speckit.specify.md": 327,
+        ".opencode/command/speckit.tasks.md": 200,
+        ".opencode/command/speckit.taskstoissues.md": 96
+      }
+    },
+    {
+      "checkpoint_number": 21,
+      "user_lines_added": 2092,
+      "user_lines_removed": 1978,
+      "agent_lines_added": 5943,
+      "agent_lines_removed": 268,
+      "user_added_per_file": {
+        ".claude/scheduled_tasks.lock": 1,
+        ".claude/settings.local.json": 48,
+        ".claude/skills/speckit-analyze/SKILL.md": 260,
+        ".claude/skills/speckit-checklist/SKILL.md": 372,
+        ".claude/skills/speckit-clarify/SKILL.md": 254,
+        ".claude/skills/speckit-constitution/SKILL.md": 157,
+        ".claude/skills/speckit-implement/SKILL.md": 210,
+        ".claude/skills/speckit-plan/SKILL.md": 152,
+        ".claude/skills/speckit-specify/SKILL.md": 330,
+        ".claude/skills/speckit-tasks/SKILL.md": 202,
+        ".claude/skills/speckit-taskstoissues/SKILL.md": 106
+      },
+      "user_removed_per_file": {
+        ".opencode/command/speckit.analyze.md": 249,
+        ".opencode/command/speckit.checklist.md": 361,
+        ".opencode/command/speckit.clarify.md": 247,
+        ".opencode/command/speckit.constitution.md": 150,
+        ".opencode/command/speckit.implement.md": 199,
+        ".opencode/command/speckit.plan.md": 149,
+        ".opencode/command/speckit.specify.md": 327,
+        ".opencode/command/speckit.tasks.md": 200,
+        ".opencode/command/speckit.taskstoissues.md": 96
+      }
+    }
+  ]
+}
