@@ -128,26 +128,26 @@
 
 **Purpose**: Documentation, full example, and integration test.
 
-- [ ] T040 [P] Create `tests/doc_test/full_example/conf.py` and `tests/doc_test/full_example/index.rst` — complete vehicle system example from `quickstart.md` using all three diagram types
-- [ ] T041 Create `docs/conf.py` and `docs/index.rst` — Sphinx docs project with sphinx-needs + sphinxcontrib.plantuml + sphinxcontrib.sysml in extensions; uses sphinx-immaterial theme
-- [ ] T042 [P] Create `docs/install.rst` — installation instructions mirroring `quickstart.md`
-- [ ] T043 [P] Create `docs/directives/need_types.rst` — documents all 14 need types with their fields, ID prefixes, and usage examples
-- [ ] T044 [P] Create `docs/directives/needsysml_bdd.rst` — documents `.. needsysml-bdd::` directive options and rendered output
-- [ ] T045 [P] Create `docs/directives/needsysml_ibd.rst` — documents `.. needsysml-ibd::` with IBD approximation caveat
-- [ ] T046 [P] Create `docs/directives/needsysml_req.rst` — documents `.. needsysml-req::` with filter expression examples
-- [ ] T047 [P] Create `docs/examples/vehicle_system.rst` — full worked example (vehicle system BDD + IBD + requirements)
-- [ ] T048 Build and validate `docs/` with `sphinx-build -b html` — fix any broken refs or missing content
-- [ ] T049 [P] Add `SKILL.md` to repo root — agent-readable contract for the extension (directive options, Jinja helpers, config keys), following the `sphinx-need-svg/SKILL.md` pattern
-- [ ] T050 Run `quickstart.md` steps manually in a clean venv; fix any discrepancies between docs and implementation
+- [x] T040 [P] Create `tests/doc_test/full_example/conf.py` and `tests/doc_test/full_example/index.rst` — complete vehicle system example from `quickstart.md` using all three diagram types
+- [x] T041 Create `docs/conf.py` and `docs/index.rst` — Sphinx docs project with sphinx-needs + sphinxcontrib.plantuml + sphinxcontrib.sysml in extensions; uses sphinx-immaterial theme
+- [x] T042 [P] Create `docs/install.rst` — installation instructions mirroring `quickstart.md`
+- [x] T043 [P] Create `docs/directives/need_types.rst` — documents all 14 need types with their fields, ID prefixes, and usage examples
+- [x] T044 [P] Create `docs/directives/needsysml_bdd.rst` — documents `.. needsysml-bdd::` directive options and rendered output
+- [x] T045 [P] Create `docs/directives/needsysml_ibd.rst` — documents `.. needsysml-ibd::` with IBD approximation caveat
+- [x] T046 [P] Create `docs/directives/needsysml_req.rst` — documents `.. needsysml-req::` with filter expression examples
+- [x] T047 [P] Create `docs/examples/vehicle_system.rst` — full worked example (vehicle system BDD + IBD + requirements)
+- [x] T048 Build and validate `docs/` with `sphinx-build -b html` — fix any broken refs or missing content
+- [x] T049 [P] Add `SKILL.md` to repo root — agent-readable contract for the extension (directive options, Jinja helpers, config keys), following the `sphinx-need-svg/SKILL.md` pattern
+- [x] T050 Run `quickstart.md` steps manually in a clean venv; fix any discrepancies between docs and implementation
 
 ### sphinx-need-svg Integration (optional rendering path)
 
-- [ ] T051 Add `sphinx_need_svg` detection to `sphinxcontrib/sysml/__init__.py` — use `importlib.util.find_spec("sphinx_need_svg")` in `setup()`; set a module-level `_HAS_NEED_SVG` flag; only register SVG directives when True
-- [ ] T052 [P] Create `sphinxcontrib/sysml/directives/needsysml_svg.py` — implement `NeedsymlSvgDirective(SphinxDirective)` that uses `sphinx_need_svg.jinja_context.SvgJinjaContext` to render an SVG BDD: iterates PartDef + owned Parts via `filter()`, draws `<rect>` blocks with `<a href="{{ ref(need.id) }}">` links, outputs via `nodes.raw("", svg_markup, format="html")`
-- [ ] T053 Register `needsysml-bdd-svg` directive in `setup()` only when `_HAS_NEED_SVG` is True; emit a Sphinx info note (not warning) when the directive is used but `sphinx_need_svg` is not installed
-- [ ] T054 [P] Write `tests/test_svg_directive.py` — tests: (a) directive is absent when `sphinx_need_svg` not importable (mock `find_spec` to return None), (b) when available, HTML output contains inline `<svg` with `<a href` links pointing to correct need anchors
-- [ ] T055 [P] Add `.. needsysml-bdd-svg::` example to `tests/doc_test/full_example/index.rst` alongside the PlantUML BDD for visual comparison
-- [ ] T056 [P] Add `docs/directives/needsysml_svg.rst` — documents the SVG rendering path, when to use it vs PlantUML, and the `sphinx-need-svg` install requirement
+- [x] T051 Add `sphinx_need_svg` detection to `sphinxcontrib/sysml/__init__.py` — use `importlib.util.find_spec("sphinx_need_svg")` in `setup()`; set a module-level `_HAS_NEED_SVG` flag; only register SVG directives when True
+- [x] T052 [P] Create `sphinxcontrib/sysml/directives/needsysml_svg.py` — implement `NeedsymlSvgDirective(SphinxDirective)` that uses `sphinx_need_svg.jinja_context.SvgJinjaContext` to render an SVG BDD: iterates PartDef + owned Parts via `filter()`, draws `<rect>` blocks with `<a href="{{ ref(need.id) }}">` links, outputs via `nodes.raw("", svg_markup, format="html")`
+- [x] T053 Register `needsysml-bdd-svg` directive in `setup()` only when `_HAS_NEED_SVG` is True; emit a Sphinx info note (not warning) when the directive is used but `sphinx_need_svg` is not installed
+- [x] T054 [P] Write `tests/test_svg_directive.py` — tests: (a) directive is absent when `sphinx_need_svg` not importable (mock `find_spec` to return None), (b) when available, HTML output contains inline `<svg` with `<a href` links pointing to correct need anchors
+- [x] T055 [P] Add `.. needsysml-bdd-svg::` example to `tests/doc_test/full_example/index.rst` alongside the PlantUML BDD for visual comparison
+- [x] T056 [P] Add `docs/directives/needsysml_svg.rst` — documents the SVG rendering path, when to use it vs PlantUML, and the `sphinx-need-svg` install requirement
 
 ---
 

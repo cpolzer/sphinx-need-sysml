@@ -1,5 +1,6 @@
 """Sphinx extension for SysML v2 need types and diagrams."""
 
+import importlib.util
 import inspect
 
 import sphinx
@@ -13,6 +14,9 @@ from sphinxcontrib.sysml.config import SYSML_NEED_TYPES
 from sphinxcontrib.sysml.fields import SYSML_FIELDS
 
 VERSION = "0.1.0"
+
+# Detect sphinx-need-svg availability
+_HAS_NEED_SVG = importlib.util.find_spec("sphinx_need_svg") is not None
 
 # Compatibility shim for add_field vs add_extra_option (mirrors sphinx-test-reports)
 try:
@@ -103,6 +107,14 @@ def setup(app: Sphinx) -> dict:
     app.add_directive("needsysml-bdd", NeedsymlBddDirective)
     app.add_directive("needsysml-ibd", NeedsymlIbdDirective)
     app.add_directive("needsysml-req", NeedsymlReqDirective)
+
+    # Register SVG directive only when sphinx-need-svg is available
+    if _HAS_NEED_SVG:
+        from sphinxcontrib.sysml.directives.needsysml_svg import NeedsymlBddSvgDirective
+        app.add_directive("needsysml-bdd-svg", NeedsymlBddSvgDirective)
+    else:
+        # Store flag for directive-level checks
+        app.config._sysml_has_need_svg = False
 
     return {
         "version": VERSION,
