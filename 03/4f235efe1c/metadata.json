@@ -1,0 +1,33 @@
+{
+  "cli_version": "0.6.2",
+  "checkpoint_id": "034f235efe1c",
+  "strategy": "manual-commit",
+  "branch": "001-sysml-v2-needs",
+  "checkpoints_count": 0,
+  "files_touched": [
+    "specs/001-sysml-v2-needs/tasks.md",
+    "sphinxcontrib/sysml/__init__.py",
+    "sphinxcontrib/sysml/directives/__init__.py",
+    "sphinxcontrib/sysml/directives/needsysml_bdd.py",
+    "sphinxcontrib/sysml/templates.py",
+    "tests/doc_test/basic/conf.py",
+    "tests/doc_test/basic/index.rst",
+    "tests/test_bdd_directive.py",
+    "tests/test_flow_configs.py"
+  ],
+  "sessions": [
+    {
+      "metadata": "/03/4f235efe1c/0/metadata.json",
+      "transcript": "/03/4f235efe1c/0/full.jsonl",
+      "content_hash": "/03/4f235efe1c/0/content_hash.txt",
+      "prompt": "/03/4f235efe1c/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 94,
+    "cache_creation_tokens": 226072,
+    "cache_read_tokens": 4042331,
+    "output_tokens": 39474,
+    "api_call_count": 61
+  }
+}
