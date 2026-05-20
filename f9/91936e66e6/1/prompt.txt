@@ -1,1 +1,1 @@
-lets create a bumping git commit
+lets work on the readme - the docs are sparse
