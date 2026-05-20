@@ -12,6 +12,7 @@ Sphinx extension for SysML v2 need types and diagrams via sphinx-needs and Plant
    directives/needsysml_bdd
    directives/needsysml_ibd
    directives/needsysml_req
+   directives/needsysml_svg
    examples/vehicle_system
 
 Overview

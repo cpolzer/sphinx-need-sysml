@@ -26,7 +26,7 @@ ruff format sphinxcontrib/ tests/
 mypy sphinxcontrib/sysml/
 
 # Build docs
-sphinx-build -b html docs docs/_build/html
+sphinx-build -b html -W docs docs/_build/html
 ```
 
 CI order: **lint → test → docs-build**. All must pass on PRs.

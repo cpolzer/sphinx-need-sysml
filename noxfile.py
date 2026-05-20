@@ -31,4 +31,4 @@ def lint(session):
 def docs(session):
     session.install(".[docs]")
     with session.chdir("docs"):
-        session.run("sphinx-build", "-b", "html", ".", "_build/html", external=True)
+        session.run("sphinx-build", "-b", "html", "-W", ".", "_build/html", external=True)
