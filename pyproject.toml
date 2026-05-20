@@ -55,8 +55,8 @@ dev = [
 name = "sphinxcontrib.sysml"
 
 [project.urls]
-Homepage = "https://github.com/user/sphinxcontrib-sysml"
-Repository = "https://github.com/user/sphinxcontrib-sysml.git"
+Homepage = "https://github.com/cpolzer/sphinx-need-sysml"
+Repository = "https://github.com/cpolzer/sphinx-need-sysml.git"
 Documentation = "https://sphinxcontrib-sysml.readthedocs.io/"
 
 [tool.ruff.lint]
