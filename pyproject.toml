@@ -1,0 +1,111 @@
+[build-system]
+requires = ["flit_core >=3.4,<4"]
+build-backend = "flit_core.buildapi"
+
+[project]
+name = "sphinxcontrib-sysml"
+version = "0.1.0"
+description = "Sphinx extension for SysML v2 need types and diagrams via sphinx-needs and PlantUML"
+readme = "README.rst"
+license = { file = "LICENSE" }
+authors = [{ name = "Chris", email = "chris@example.com" }]
+classifiers = [
+  "Framework :: Sphinx",
+  "Framework :: Sphinx :: Extension",
+  "Development Status :: 2 - Pre-Alpha",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Documentation",
+]
+keywords = ["sphinx", "sysml", "sysml-v2", "plantuml", "sphinx-needs"]
+requires-python = ">=3.10"
+dependencies = [
+  "sphinx>=4.0",
+  "sphinx-needs>=1.0",
+]
+
+[project.optional-dependencies]
+test = [
+  "nox>=2025.2.9",
+  "pytest>=7.0",
+  "pytest-cov",
+  "sphinxcontrib-plantuml",
+]
+docs = [
+  "sphinx-immaterial",
+  "sphinxcontrib-plantuml",
+]
+
+[dependency-groups]
+dev = [
+  "pre-commit~=3.0",
+  "nox>=2025.2.9",
+  "mypy>=1.16.0",
+  "ruff>=0.4.0",
+  "commitizen",
+]
+
+[tool.flit.module]
+name = "sphinxcontrib.sysml"
+
+[project.urls]
+Homepage = "https://github.com/user/sphinxcontrib-sysml"
+Repository = "https://github.com/user/sphinxcontrib-sysml.git"
+Documentation = "https://sphinxcontrib-sysml.readthedocs.io/"
+
+[tool.ruff.lint]
+extend-select = [
+  "B",
+  "C4",
+  "FURB",
+  "I",
+  "ICN",
+  "ISC",
+  "N",
+  "PERF",
+  "PGH",
+  "PIE",
+  "SLF",
+]
+
+[tool.mypy]
+packages = ["sphinxcontrib.sysml"]
+strict = true
+show_error_codes = true
+disallow_any_generics = true
+disallow_subclassing_any = true
+disallow_untyped_calls = true
+disallow_untyped_defs = true
+
+[[tool.mypy.overrides]]
+module = [
+  "sphinx_needs",
+  "sphinx_needs.*",
+  "docutils",
+  "docutils.*",
+  "sphinx_need_svg",
+  "sphinx_need_svg.*",
+]
+ignore_missing_imports = true
+
+[tool.ruff]
+target-version = "py310"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.commitizen]
+name = "cz_conventional_commits"
+version = "0.1.0"
+version_files = [
+  "pyproject.toml:^version",
+  "sphinxcontrib/sysml/__init__.py:VERSION",
+]
+tag_format = "v$version"
+update_changelog_on_bump = true
+changelog_file = "CHANGELOG.md"
