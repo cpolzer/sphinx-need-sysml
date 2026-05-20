@@ -1,0 +1,67 @@
+{
+  "cli_version": "0.6.2",
+  "checkpoint_id": "f991936e66e6",
+  "session_id": "ses_1ba93b190ffeGu7Au41Wef54YI",
+  "strategy": "manual-commit",
+  "created_at": "2026-05-20T12:47:05.997335259Z",
+  "branch": "main",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "README.rst",
+    "pyproject.toml"
+  ],
+  "agent": "OpenCode",
+  "model": "qwen3.6-plus",
+  "turn_id": "af47292e82c8",
+  "token_usage": {
+    "input_tokens": 12,
+    "cache_creation_tokens": 1369,
+    "cache_read_tokens": 47255,
+    "output_tokens": 199,
+    "api_call_count": 2
+  },
+  "session_metrics": {
+    "turn_count": 1
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-05-20T12:47:05.995601506Z",
+    "agent_lines": 0,
+    "agent_removed": 0,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 4,
+    "total_committed": 0,
+    "total_lines_changed": 4,
+    "agent_percentage": 0,
+    "metric_version": 2
+  },
+  "prompt_attributions": [
+    {
+      "checkpoint_number": 1,
+      "user_lines_added": 300,
+      "user_lines_removed": 5,
+      "agent_lines_added": 0,
+      "agent_lines_removed": 0,
+      "user_added_per_file": {
+        ".claude/settings.local.json": 21,
+        "README.rst": 277,
+        "pyproject.toml": 1,
+        "uv.lock": 1
+      },
+      "user_removed_per_file": {
+        "README.rst": 4,
+        "uv.lock": 1
+      }
+    },
+    {
+      "checkpoint_number": 2,
+      "user_lines_added": 21,
+      "user_lines_removed": 0,
+      "agent_lines_added": 279,
+      "agent_lines_removed": 5,
+      "user_added_per_file": {
+        ".claude/settings.local.json": 21
+      }
+    }
+  ]
+}
