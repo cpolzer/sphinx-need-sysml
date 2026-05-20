@@ -1,0 +1,51 @@
+{
+  "cli_version": "0.6.2",
+  "checkpoint_id": "b1ea2d9da99a",
+  "session_id": "ses_1bb5e7b42ffeX99h1cxJ3MsI0r",
+  "strategy": "manual-commit",
+  "created_at": "2026-05-20T10:10:13.15921571Z",
+  "branch": "001-sysml-v2-needs",
+  "checkpoints_count": 0,
+  "files_touched": [
+    "CONTRIBUTORS.md"
+  ],
+  "agent": "OpenCode",
+  "model": "qwen3.6-plus",
+  "turn_id": "6ef2dd2ab349",
+  "checkpoint_transcript_start": 173,
+  "transcript_lines_at_start": 173,
+  "token_usage": {
+    "input_tokens": 24,
+    "cache_creation_tokens": 150170,
+    "cache_read_tokens": 449126,
+    "output_tokens": 1197,
+    "api_call_count": 5
+  },
+  "session_metrics": {
+    "turn_count": 6
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-05-20T10:10:13.133207816Z",
+    "agent_lines": 137,
+    "agent_removed": 3,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 137,
+    "total_lines_changed": 140,
+    "agent_percentage": 100,
+    "metric_version": 2
+  },
+  "prompt_attributions": [
+    {
+      "checkpoint_number": 1,
+      "user_lines_added": 15,
+      "user_lines_removed": 0,
+      "agent_lines_added": 0,
+      "agent_lines_removed": 0,
+      "user_added_per_file": {
+        ".claude/settings.local.json": 15
+      }
+    }
+  ]
+}

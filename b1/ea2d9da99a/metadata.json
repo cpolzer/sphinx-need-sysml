@@ -1,0 +1,25 @@
+{
+  "cli_version": "0.6.2",
+  "checkpoint_id": "b1ea2d9da99a",
+  "strategy": "manual-commit",
+  "branch": "001-sysml-v2-needs",
+  "checkpoints_count": 0,
+  "files_touched": [
+    "CONTRIBUTORS.md"
+  ],
+  "sessions": [
+    {
+      "metadata": "/b1/ea2d9da99a/0/metadata.json",
+      "transcript": "/b1/ea2d9da99a/0/full.jsonl",
+      "content_hash": "/b1/ea2d9da99a/0/content_hash.txt",
+      "prompt": "/b1/ea2d9da99a/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 24,
+    "cache_creation_tokens": 150170,
+    "cache_read_tokens": 449126,
+    "output_tokens": 1197,
+    "api_call_count": 5
+  }
+}
