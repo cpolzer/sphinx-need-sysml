@@ -5,8 +5,5 @@ extensions = [
     "sphinxcontrib.sysml",
 ]
 
-needs_extra_options = [
-    "abstract", "owned_by", "multiplicity", "direction", "conjugated",
-    "definition", "satisfies", "refines", "allocates", "req_text",
-    "source_port", "target_port", "is_initial", "is_final",
-]
+# Allow hyphenated IDs like PD-001, R-001, etc.
+needs_id_regex = "^[A-Z0-9_-]+"

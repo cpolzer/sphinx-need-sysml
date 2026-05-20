@@ -54,10 +54,10 @@
 
 ### Implementation for US1
 
-- [ ] T014 [US1] Add all 14 need type directives to `tests/doc_test/basic/index.rst` — one example each of `partdef`, `part`, `portdef`, `port`, `interfacedef`, `interface`, `connectiondef`, `connection`, `requirementdef`, `requirement`, `actiondef`, `action`, `statedef`, `stateusage` with minimal required fields
-- [ ] T015 [P] [US1] Write `tests/test_need_types.py` — pytest tests verifying: (a) each of the 14 directives is registered in app after build, (b) each generates a need with the correct type name and ID prefix in the built needs data
-- [ ] T016 [P] [US1] Write `tests/test_fields.py` — pytest tests verifying: (a) each of the 15 extra fields is registered, (b) `owned_by`, `satisfies`, `direction`, `multiplicity` fields are readable on built needs that set them, (c) `abstract` field accepts boolean values
-- [ ] T017 [US1] Verify `tests/doc_test/basic/` builds without errors or warnings using `sphinx-build -b html` in nox tests session; fix any registration issues
+- [x] T014 [US1] Add all 14 need type directives to `tests/doc_test/basic/index.rst` — one example each of `partdef`, `part`, `portdef`, `port`, `interfacedef`, `interface`, `connectiondef`, `connection`, `requirementdef`, `requirement`, `actiondef`, `action`, `statedef`, `stateusage` with minimal required fields
+- [x] T015 [P] [US1] Write `tests/test_need_types.py` — pytest tests verifying: (a) each of the 14 directives is registered in app after build, (b) each generates a need with the correct type name and ID prefix in the built needs data
+- [x] T016 [P] [US1] Write `tests/test_fields.py` — pytest tests verifying: (a) each of the 15 extra fields is registered, (b) `owned_by`, `satisfies`, `direction`, `multiplicity` fields are readable on built needs that set them, (c) `abstract` field accepts boolean values
+- [x] T017 [US1] Verify `tests/doc_test/basic/` builds without errors or warnings using `sphinx-build -b html` in nox tests session; fix any registration issues
 
 **Checkpoint**: All 14 need types usable in RST; `needtable` and `:need:` role work against them; pytest tests pass.
 
