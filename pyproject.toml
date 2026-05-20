@@ -48,6 +48,7 @@ dev = [
   "mypy>=1.16.0",
   "ruff>=0.4.0",
   "commitizen",
+  "detect-secrets",
 ]
 
 [tool.flit.module]
