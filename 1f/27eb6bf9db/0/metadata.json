@@ -1,0 +1,55 @@
+{
+  "cli_version": "0.6.2",
+  "checkpoint_id": "1f27eb6bf9db",
+  "session_id": "ses_1bb5e7b42ffeX99h1cxJ3MsI0r",
+  "strategy": "manual-commit",
+  "created_at": "2026-05-20T10:20:17.290871166Z",
+  "branch": "001-sysml-v2-needs",
+  "checkpoints_count": 0,
+  "files_touched": [
+    "pyproject.toml",
+    ".github/workflows/ci.yml",
+    ".github/workflows/release.yaml",
+    ".github/workflows/coverage.yaml",
+    ".readthedocs.yaml"
+  ],
+  "agent": "OpenCode",
+  "model": "qwen3.6-plus",
+  "turn_id": "df1c93fc6c0b",
+  "checkpoint_transcript_start": 181,
+  "transcript_lines_at_start": 181,
+  "token_usage": {
+    "input_tokens": 60,
+    "cache_creation_tokens": 166330,
+    "cache_read_tokens": 1440248,
+    "output_tokens": 3971,
+    "api_call_count": 11
+  },
+  "session_metrics": {
+    "turn_count": 7
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-05-20T10:20:17.264213359Z",
+    "agent_lines": 329,
+    "agent_removed": 2,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 329,
+    "total_lines_changed": 331,
+    "agent_percentage": 100,
+    "metric_version": 2
+  },
+  "prompt_attributions": [
+    {
+      "checkpoint_number": 1,
+      "user_lines_added": 15,
+      "user_lines_removed": 0,
+      "agent_lines_added": 0,
+      "agent_lines_removed": 0,
+      "user_added_per_file": {
+        ".claude/settings.local.json": 15
+      }
+    }
+  ]
+}

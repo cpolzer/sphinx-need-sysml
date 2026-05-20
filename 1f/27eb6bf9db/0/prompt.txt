@@ -1,0 +1,1 @@
+contributors should have directions for developers: how to locally develop, what is the ci flow
