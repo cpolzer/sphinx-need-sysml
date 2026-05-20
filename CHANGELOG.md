@@ -1,3 +1,9 @@
+## v0.2.3 (2026-05-20)
+
+### Fix
+
+- fail docs build on warnings and fix missing toctree entry
+
 ## v0.2.2 (2026-05-20)
 
 ### Fix
