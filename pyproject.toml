@@ -8,7 +8,7 @@ version = "0.2.0"
 description = "Sphinx extension for SysML v2 need types and diagrams via sphinx-needs and PlantUML"
 readme = "README.rst"
 license = { file = "LICENSE" }
-authors = [{ name = "Chris", email = "chris@example.com" }]
+authors = [{ name = "cpolzer", email = "coders@hai-fai.de" }]
 classifiers = [
   "Framework :: Sphinx",
   "Framework :: Sphinx :: Extension",
