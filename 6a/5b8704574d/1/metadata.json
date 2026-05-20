@@ -1,0 +1,45 @@
+{
+  "cli_version": "0.6.2",
+  "checkpoint_id": "6a5b8704574d",
+  "session_id": "ses_1bb5e7b42ffeX99h1cxJ3MsI0r",
+  "strategy": "manual-commit",
+  "created_at": "2026-05-20T09:34:54.956858598Z",
+  "branch": "001-sysml-v2-needs",
+  "checkpoints_count": 0,
+  "files_touched": [
+    "specs/001-sysml-v2-needs/tasks.md",
+    "sphinxcontrib/sysml/__init__.py",
+    "sphinxcontrib/sysml/directives/needsysml_ibd.py",
+    "sphinxcontrib/sysml/directives/needsysml_req.py",
+    "tests/doc_test/basic/index.rst",
+    "tests/test_ibd_directive.py",
+    "tests/test_req_directive.py"
+  ],
+  "agent": "OpenCode",
+  "model": "qwen3.6-plus",
+  "turn_id": "e3e94bc1d8f6",
+  "checkpoint_transcript_start": 97,
+  "transcript_lines_at_start": 97,
+  "token_usage": {
+    "input_tokens": 186,
+    "cache_creation_tokens": 14784,
+    "cache_read_tokens": 3556654,
+    "output_tokens": 8188,
+    "api_call_count": 32
+  },
+  "session_metrics": {
+    "turn_count": 1
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-05-20T09:34:54.938458817Z",
+    "agent_lines": 7,
+    "agent_removed": 3,
+    "human_added": 215,
+    "human_modified": 12,
+    "human_removed": 0,
+    "total_committed": 234,
+    "total_lines_changed": 237,
+    "agent_percentage": 4.219409282700422,
+    "metric_version": 2
+  }
+}
