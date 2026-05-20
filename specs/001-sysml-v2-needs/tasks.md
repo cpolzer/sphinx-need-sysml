@@ -17,12 +17,12 @@
 
 **Purpose**: Project skeleton — nothing works yet, but the package is installable.
 
-- [ ] T001 Create `pyproject.toml` with flit build backend, project metadata, dependencies (`sphinx-needs>=1.0`, `sphinx>=4.0`), optional deps (`sphinxcontrib-plantuml`, `sphinx-need-svg`), and dev/test extras
-- [ ] T002 Create `sphinxcontrib/__init__.py` (namespace package — empty, with namespace declaration)
-- [ ] T003 Create `sphinxcontrib/sysml/__init__.py` with stub `setup(app)` returning `{"version": "0.1.0", "parallel_read_safe": True}`
-- [ ] T004 [P] Create `noxfile.py` with `tests`, `lint`, and `docs` sessions following `sphinx-test-reports` nox conventions
-- [ ] T005 [P] Add ruff and mypy config sections to `pyproject.toml` mirroring `sphinx-test-reports` settings
-- [ ] T006 [P] Create `.gitignore` for Python project (dist/, __pycache__, .venv/, *.egg-info, docs/_build/)
+- [x] T001 Create `pyproject.toml` with flit build backend, project metadata, dependencies (`sphinx-needs>=1.0`, `sphinx>=4.0`), optional deps (`sphinxcontrib-plantuml`, `sphinx-need-svg`), and dev/test extras
+- [x] T002 Create `sphinxcontrib/__init__.py` (namespace package — empty, with namespace declaration)
+- [x] T003 Create `sphinxcontrib/sysml/__init__.py` with stub `setup(app)` returning `{"version": "0.1.0", "parallel_read_safe": True}`
+- [x] T004 [P] Create `noxfile.py` with `tests`, `lint`, and `docs` sessions following `sphinx-test-reports` nox conventions
+- [x] T005 [P] Add ruff and mypy config sections to `pyproject.toml` mirroring `sphinx-test-reports` settings
+- [x] T006 [P] Create `.gitignore` for Python project (dist/, __pycache__, .venv/, *.egg-info, docs/_build/)
 
 **Checkpoint**: `pip install -e .` succeeds and `python -c "import sphinxcontrib.sysml"` works.
 
