@@ -1,1 +1,1 @@
-i have reconfigured pypi - lets commit the latest changes directly to main
+lets create a bumping git commit
