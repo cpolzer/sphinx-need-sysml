@@ -7,7 +7,7 @@ name = "sphinxcontrib-sysml"
 version = "0.1.0"
 description = "Sphinx extension for SysML v2 need types and diagrams via sphinx-needs and PlantUML"
 readme = "README.rst"
-license = { text = "MIT" }
+license = { file = "LICENSE" }
 authors = [{ name = "Chris", email = "chris@example.com" }]
 classifiers = [
   "Framework :: Sphinx",
@@ -42,7 +42,13 @@ docs = [
 ]
 
 [dependency-groups]
-dev = ["pre-commit~=3.0", "nox>=2025.2.9", "mypy>=1.16.0", "ruff>=0.4.0"]
+dev = [
+  "pre-commit~=3.0",
+  "nox>=2025.2.9",
+  "mypy>=1.16.0",
+  "ruff>=0.4.0",
+  "commitizen",
+]
 
 [tool.flit.module]
 name = "sphinxcontrib.sysml"
@@ -88,3 +94,20 @@ disallow_any_explicit = true
 disallow_subclassing_any = true
 disallow_untyped_calls = true
 disallow_untyped_defs = true
+
+[tool.ruff]
+target-version = "py310"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.commitizen]
+name = "cz_conventional_commits"
+version = "0.1.0"
+version_files = [
+  "pyproject.toml:^version",
+  "sphinxcontrib/sysml/__init__.py:VERSION",
+]
+tag_format = "v$version"
+update_changelog_on_bump = true
+changelog_file = "CHANGELOG.md"
