@@ -1,0 +1,47 @@
+{
+  "cli_version": "0.6.2",
+  "checkpoint_id": "02a252e4ade8",
+  "session_id": "ses_1bb5e7b42ffeX99h1cxJ3MsI0r",
+  "strategy": "manual-commit",
+  "created_at": "2026-05-20T10:46:07.493568327Z",
+  "branch": "001-sysml-v2-needs",
+  "checkpoints_count": 1,
+  "files_touched": [],
+  "agent": "OpenCode",
+  "model": "qwen3.6-plus",
+  "turn_id": "885b5bb35121",
+  "checkpoint_transcript_start": 245,
+  "transcript_lines_at_start": 245,
+  "token_usage": {
+    "input_tokens": 96,
+    "cache_creation_tokens": 179316,
+    "cache_read_tokens": 2919095,
+    "output_tokens": 2322,
+    "api_call_count": 17
+  },
+  "session_metrics": {
+    "turn_count": 17
+  },
+  "prompt_attributions": [
+    {
+      "checkpoint_number": 1,
+      "user_lines_added": 15,
+      "user_lines_removed": 0,
+      "agent_lines_added": 0,
+      "agent_lines_removed": 0,
+      "user_added_per_file": {
+        ".claude/settings.local.json": 15
+      }
+    },
+    {
+      "checkpoint_number": 2,
+      "user_lines_added": 15,
+      "user_lines_removed": 0,
+      "agent_lines_added": 34,
+      "agent_lines_removed": 6,
+      "user_added_per_file": {
+        ".claude/settings.local.json": 15
+      }
+    }
+  ]
+}
