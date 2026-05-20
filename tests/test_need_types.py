@@ -1,14 +1,13 @@
 """Tests for SysML v2 need type registration."""
 
 import pytest
-from sphinx.application import Sphinx
 
 
 @pytest.fixture()
 def built_app(make_app, tmp_path):
     """Build the basic test project and return the Sphinx app."""
-    from pathlib import Path
     import shutil
+    from pathlib import Path
 
     srcdir = Path(__file__).parent / "doc_test" / "basic"
     tmproot = tmp_path / "basic"

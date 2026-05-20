@@ -29,7 +29,6 @@ class NeedsymlIbdDirective(SphinxDirective):
 
     def run(self):
         root_id = self.arguments[0]
-        show_ports = self.options.get("show-ports", "true").lower() == "true"
         scale = self.options.get("scale")
         align = self.options.get("align", "center")
 

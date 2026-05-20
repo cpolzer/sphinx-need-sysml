@@ -28,15 +28,8 @@ class NeedsymlBddDirective(SphinxDirective):
     def run(self):
         root_id = self.arguments[0]
         depth = self.options.get("depth", "2")
-        custom_filter = self.options.get("filter")
         scale = self.options.get("scale")
         align = self.options.get("align", "center")
-
-        # Build the filter expression for child parts
-        if custom_filter:
-            child_filter = custom_filter
-        else:
-            child_filter = f"type == 'Part' and owned_by == '{root_id}'"
 
         # Render the BDD template with context variables
         content = BDD_FULL_TEMPLATE.replace("{root_id}", root_id).replace(

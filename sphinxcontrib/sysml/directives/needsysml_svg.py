@@ -5,8 +5,6 @@ from docutils.parsers.rst import directives
 from sphinx.application import Sphinx
 from sphinx.util.docutils import SphinxDirective
 
-from sphinxcontrib.sysml.templates import BDD_FULL_TEMPLATE
-
 
 class NeedsymlBddSvgDirective(SphinxDirective):
     """Generate a Block Definition Diagram as inline SVG.
@@ -26,14 +24,7 @@ class NeedsymlBddSvgDirective(SphinxDirective):
 
     def run(self):
         root_id = self.arguments[0]
-        depth = self.options.get("depth", "2")
-        custom_filter = self.options.get("filter")
         align = self.options.get("align", "center")
-
-        if custom_filter:
-            child_filter = custom_filter
-        else:
-            child_filter = f"type == 'Part' and owned_by == '{root_id}'"
 
         # Build SVG content using sphinx-need-svg's Jinja context
         from sphinx_need_svg.jinja_context import render_jinja_svg

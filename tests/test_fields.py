@@ -1,8 +1,9 @@
 """Tests for SysML v2 extra field registration."""
 
-import pytest
-from pathlib import Path
 import shutil
+from pathlib import Path
+
+import pytest
 
 
 @pytest.fixture()
@@ -27,7 +28,7 @@ class TestFieldsRegistration:
 
     def test_fields_on_need_data(self, built_app):
         """Fields are accessible on need objects after build."""
-        needs = built_app.env._needs_all_needs
+        needs = built_app.env._needs_all_needs  # noqa: SLF001
         pd001 = needs.get("PD-001")
         assert pd001 is not None, "PD-001 not found in needs data"
         # Verify our custom fields exist on the need object
@@ -36,21 +37,21 @@ class TestFieldsRegistration:
 
     def test_owned_by_field_readable(self, built_app):
         """The owned_by field is readable on needs that set it."""
-        needs = built_app.env._needs_all_needs
+        needs = built_app.env._needs_all_needs  # noqa: SLF001
         p001 = needs.get("P-001")
         assert p001 is not None
         assert p001.get("owned_by") == "PD-001"
 
     def test_satisfies_field_readable(self, built_app):
         """The satisfies field is readable on needs that set it."""
-        needs = built_app.env._needs_all_needs
+        needs = built_app.env._needs_all_needs  # noqa: SLF001
         r001 = needs.get("R-001")
         assert r001 is not None
         assert r001.get("satisfies") == "PD-001"
 
     def test_direction_field_readable(self, built_app):
         """The direction field is readable on port needs."""
-        needs = built_app.env._needs_all_needs
+        needs = built_app.env._needs_all_needs  # noqa: SLF001
         po001 = needs.get("PO-001")
         assert po001 is not None
         assert po001.get("direction") == "in"

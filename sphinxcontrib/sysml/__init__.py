@@ -4,7 +4,6 @@ import importlib.util
 import inspect
 
 import sphinx
-import sphinx_needs
 from packaging.version import Version
 from sphinx.application import Sphinx
 from sphinx.config import Config
@@ -112,9 +111,6 @@ def setup(app: Sphinx) -> dict:
     if _HAS_NEED_SVG:
         from sphinxcontrib.sysml.directives.needsysml_svg import NeedsymlBddSvgDirective
         app.add_directive("needsysml-bdd-svg", NeedsymlBddSvgDirective)
-    else:
-        # Store flag for directive-level checks
-        app.config._sysml_has_need_svg = False
 
     return {
         "version": VERSION,
