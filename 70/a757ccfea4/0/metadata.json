@@ -1,0 +1,39 @@
+{
+  "cli_version": "0.6.2",
+  "checkpoint_id": "70a757ccfea4",
+  "session_id": "ses_1ba93b190ffeGu7Au41Wef54YI",
+  "strategy": "manual-commit",
+  "created_at": "2026-05-20T13:42:04.574999122Z",
+  "branch": "main",
+  "checkpoints_count": 1,
+  "files_touched": [],
+  "agent": "OpenCode",
+  "model": "qwen3.6-plus",
+  "turn_id": "8629b36b119f",
+  "token_usage": {
+    "input_tokens": 342,
+    "cache_creation_tokens": 282662,
+    "cache_read_tokens": 2446426,
+    "output_tokens": 11715,
+    "api_call_count": 59
+  },
+  "session_metrics": {
+    "turn_count": 7
+  },
+  "prompt_attributions": [
+    {
+      "checkpoint_number": 2,
+      "user_lines_added": 112,
+      "user_lines_removed": 90,
+      "agent_lines_added": 0,
+      "agent_lines_removed": 0,
+      "user_added_per_file": {
+        ".claude/settings.local.json": 21,
+        "docs/examples/vehicle_system.rst": 91
+      },
+      "user_removed_per_file": {
+        "docs/examples/vehicle_system.rst": 90
+      }
+    }
+  ]
+}
