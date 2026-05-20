@@ -34,13 +34,13 @@
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete.
 
-- [ ] T007 Create `sphinxcontrib/sysml/config.py` — define `SYSML_NEED_TYPES` list of dicts (directive, title, prefix, color, style) for all 14 types from data-model.md
-- [ ] T008 Create `sphinxcontrib/sysml/fields.py` — define `SYSML_FIELDS` list of dicts (name, description, schema) for all 15 fields from data-model.md
-- [ ] T009 Add `add_field` / `add_extra_option` compatibility shim to `sphinxcontrib/sysml/__init__.py` matching the exact pattern from `sphinx-test-reports/sphinxcontrib/test_reports/test_reports.py`
-- [ ] T010 Implement `_register_types_and_fields(app, config)` in `sphinxcontrib/sysml/__init__.py` — calls `add_need_type` for each entry in `SYSML_NEED_TYPES` and the shim for each entry in `SYSML_FIELDS`; connect to `config-inited` event in `setup()`
-- [ ] T011 Create `sphinxcontrib/sysml/warnings.py` — implement `warn_plantuml_format(app)` that emits a Sphinx warning if `plantuml_output_format != "svg"` (checks via `getattr(app.config, "plantuml_output_format", None)`)
-- [ ] T012 Create `tests/conftest.py` — Sphinx app fixture using `sphinx.testing.app` that loads a minimal doc_test project with `sphinxcontrib.sysml` in extensions
-- [ ] T013 Create `tests/doc_test/basic/conf.py` and `tests/doc_test/basic/index.rst` — minimal Sphinx project with `sphinx_needs` + `sphinxcontrib.sysml` in extensions (no plantuml required)
+- [x] T007 Create `sphinxcontrib/sysml/config.py` — define `SYSML_NEED_TYPES` list of dicts (directive, title, prefix, color, style) for all 14 types from data-model.md
+- [x] T008 Create `sphinxcontrib/sysml/fields.py` — define `SYSML_FIELDS` list of dicts (name, description, schema) for all 15 fields from data-model.md
+- [x] T009 Add `add_field` / `add_extra_option` compatibility shim to `sphinxcontrib/sysml/__init__.py` matching the exact pattern from `sphinx-test-reports/sphinxcontrib/test_reports/test_reports.py`
+- [x] T010 Implement `_register_types_and_fields(app, config)` in `sphinxcontrib/sysml/__init__.py` — calls `add_need_type` for each entry in `SYSML_NEED_TYPES` and the shim for each entry in `SYSML_FIELDS`; connect to `config-inited` event in `setup()`
+- [x] T011 Create `sphinxcontrib/sysml/warnings.py` — implement `warn_plantuml_format(app)` that emits a Sphinx warning if `plantuml_output_format != "svg"` (checks via `getattr(app.config, "plantuml_output_format", None)`)
+- [x] T012 Create `tests/conftest.py` — Sphinx app fixture using `sphinx.testing.app` that loads a minimal doc_test project with `sphinxcontrib.sysml` in extensions
+- [x] T013 Create `tests/doc_test/basic/conf.py` and `tests/doc_test/basic/index.rst` — minimal Sphinx project with `sphinx_needs` + `sphinxcontrib.sysml` in extensions (no plantuml required)
 
 **Checkpoint**: `pytest tests/` passes with zero tests collected (fixtures work, no errors on import).
 
