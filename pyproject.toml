@@ -35,10 +35,12 @@ test = [
   "pytest>=7.0",
   "pytest-cov",
   "sphinxcontrib-plantuml",
+  "Pillow",
 ]
 docs = [
   "sphinx-immaterial",
   "sphinxcontrib-plantuml",
+  "Pillow",
 ]
 
 [dependency-groups]
