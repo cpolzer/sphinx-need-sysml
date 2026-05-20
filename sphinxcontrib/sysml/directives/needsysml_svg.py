@@ -1,4 +1,15 @@
-"""Needsyml SVG BDD directive — renders inline SVG using sphinx-need-svg."""
+"""Needsyml SVG directives — render diagrams as inline SVG via sphinx-need-svg.
+
+We build a pre-baked Jinja template (root, children-from-filter, layout)
+and hand it off to sphinx-need-svg's ``Needsvg`` placeholder node so that
+rendering happens at ``doctree-resolved`` time. Doing the render in our
+own ``run()`` would call ``SphinxNeedsData.get_needs_view()`` mid-parse,
+which freezes the needs registry and breaks every later directive.
+
+Hosts the BDD-svg directive (existing) and the IBD-svg directive
+(promotion of the raw-needsvg workaround that used to live in
+``docs/examples/vehicle_system.rst``).
+"""
 
 from typing import Any
 
@@ -7,13 +18,60 @@ from docutils.parsers.rst import directives
 from sphinx.application import Sphinx
 from sphinx.util.docutils import SphinxDirective
 
+from sphinxcontrib.sysml.svg_templates import (
+    BDD_SVG_TEMPLATE,
+    IBD_SVG_TEMPLATE,
+)
+
+
+def _emit_needsvg_node(
+    directive: SphinxDirective,
+    content: str,
+    width: str,
+    align: str,
+) -> list[Any]:
+    """Stash the template into env.needsvg_all_data and return placeholder nodes.
+
+    Shared by every ``needsysml-*-svg`` directive — keeps the deferred
+    rendering plumbing in one place.
+    """
+    from sphinx_need_svg.directives.needsvg import Needsvg
+
+    env = directive.env
+    serial = env.new_serialno("needsvg")
+    targetid = f"needsvg-{env.docname}-{serial}"
+
+    if not hasattr(env, "needsvg_all_data"):
+        env.needsvg_all_data = {}
+
+    env.needsvg_all_data[targetid] = {
+        "docname": env.docname,
+        "lineno": directive.lineno,
+        "content": content,
+        "options": {
+            "width": width,
+            "height": "auto",
+            "align": align,
+            "debug": False,
+        },
+    }
+
+    targetnode = nodes.target("", "", ids=[targetid])
+    node = Needsvg("")
+    node["targetid"] = targetid
+    return [targetnode, node]
+
+
+def _substitute(template: str, root_id: str, filter_expr: str | None = None) -> str:
+    """Substitute the two placeholder tokens into an SVG Jinja template."""
+    out = template.replace("__ROOT_ID__", root_id)
+    if filter_expr is not None:
+        out = out.replace("__FILTER_EXPR__", filter_expr.replace('"', '\\"'))
+    return out
+
 
 class NeedsymlBddSvgDirective(SphinxDirective):
-    """Generate a Block Definition Diagram as inline SVG.
-
-    Uses ``sphinx-need-svg``'s ``SvgJinjaContext`` to render a BDD
-    with native SVG hyperlinks — works without PlantUML.
-    """
+    """Generate a Block Definition Diagram as inline SVG."""
 
     required_arguments = 1
     optional_arguments = 0
@@ -22,46 +80,46 @@ class NeedsymlBddSvgDirective(SphinxDirective):
         "depth": directives.unchanged,
         "filter": directives.unchanged,
         "align": directives.unchanged,
+        "width": directives.unchanged,
     }
 
     def run(self) -> list[Any]:
         root_id = self.arguments[0]
         align = self.options.get("align", "center")
+        width = self.options.get("width", "100%")
+        filter_expr = self.options.get(
+            "filter", f"type == 'PartDef' and owned_by == '{root_id}'"
+        )
+        content = _substitute(BDD_SVG_TEMPLATE, root_id, filter_expr)
+        return _emit_needsvg_node(self, content, width, align)
 
-        # Build SVG content using sphinx-need-svg's Jinja context
-        from sphinx_need_svg.jinja_context import render_jinja_svg
 
-        # SVG BDD template — uses needsvg's flow() for blocks
-        svg_template = """\
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400">
-  <style>
-    .partdef { fill: #DDEEFF; stroke: #336699; stroke-width: 2; }
-    .part { fill: #BBDDFF; stroke: #336699; stroke-width: 1; }
-    .label { font-family: sans-serif; font-size: 12px; }
-    .id-label { font-family: monospace; font-size: 10px; fill: #666; }
-    .composition { stroke: #333; stroke-width: 2; }
-  </style>
-  {% set root = needs.get(root_id) %}
-  {% if root %}
-  {{ flow(root_id) }}
-  {% set children = filter("type == 'Part' and owned_by == '" + root_id + "'") %}
-  {% for child in children %}
-  {{ flow(child.id) }}
-  {% endfor %}
-  {% endif %}
-</svg>"""
+class NeedsymlIbdSvgDirective(SphinxDirective):
+    """Generate an Internal Block Diagram as inline SVG.
 
-        content = svg_template.replace("{root_id}", root_id)
-        svg_markup, _ = render_jinja_svg(content, self.env.app)
+    Promotion of the raw-needsvg IBD template that previously lived in
+    ``docs/examples/vehicle_system.rst``. Renders the root PartDef's owned
+    Parts with their owned Ports inside a dashed system-boundary rectangle.
+    """
 
-        # Wrap in a container for alignment
-        wrapper_attrs = {"style": f"text-align: {align}; margin: 1em 0;"}
-        wrapper = nodes.container("", **wrapper_attrs)
-        wrapper += nodes.raw("", svg_markup, format="html")
+    required_arguments = 1
+    optional_arguments = 0
+    final_argument_whitespace = True
+    option_spec = {
+        "show-ports": directives.unchanged,
+        "align": directives.unchanged,
+        "width": directives.unchanged,
+    }
 
-        return [wrapper]
+    def run(self) -> list[Any]:
+        root_id = self.arguments[0]
+        align = self.options.get("align", "center")
+        width = self.options.get("width", "100%")
+        content = _substitute(IBD_SVG_TEMPLATE, root_id)
+        return _emit_needsvg_node(self, content, width, align)
 
 
 def setup(app: Sphinx) -> None:
-    """Register the needsysml-bdd-svg directive."""
+    """Register the SVG directives (BDD + IBD)."""
     app.add_directive("needsysml-bdd-svg", NeedsymlBddSvgDirective)
+    app.add_directive("needsysml-ibd-svg", NeedsymlIbdSvgDirective)

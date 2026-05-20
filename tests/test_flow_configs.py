@@ -35,6 +35,15 @@ class TestFlowConfigs:
         flow_configs = flow_app.config.needs_flow_configs
         assert "sysml_req" in flow_configs
 
+    @pytest.mark.parametrize(
+        "key",
+        ["sysml_stm", "sysml_act", "sysml_sd", "sysml_uc", "sysml_pkg", "sysml_par"],
+    )
+    def test_feature_002_flow_config_keys_exist(self, flow_app, key):
+        """All six feature-002 flow config keys are registered."""
+        flow_configs = flow_app.config.needs_flow_configs
+        assert key in flow_configs, f"flow config key '{key}' missing"
+
     def test_user_override_preserved(self, make_app, tmp_path):
         """User-defined flow config keys are not overwritten."""
         srcdir = Path(__file__).parent / "doc_test" / "basic"

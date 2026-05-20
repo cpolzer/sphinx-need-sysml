@@ -1,8 +1,11 @@
 Need Types
 ==========
 
-sphinxcontrib-sysml registers 14 SysML v2 need types with sphinx-needs.
-Each type has a unique ID prefix, color, and style.
+sphinxcontrib-sysml registers 27 SysML need types with sphinx-needs: 14
+structural / behavioral / requirement types from the initial release,
+plus 13 additional types added in feature 002 to support state-machine,
+activity, sequence, use case, package, parametric, and allocation
+diagrams. Each type has a unique ID prefix, color, and style.
 
 Structural Types
 ----------------
@@ -92,6 +95,127 @@ Requirement Types
      - Requirement
      - ``R-``
      - A requirement usage/instance
+
+New in v0.3 — State-Machine
+---------------------------
+
+.. list-table::
+   :header-rows: 1
+
+   * - Directive
+     - Title
+     - ID Prefix
+     - Description
+   * - ``transition``
+     - Transition
+     - ``TRANS-``
+     - A directed transition between two states
+
+New in v0.3 — Activity
+----------------------
+
+.. list-table::
+   :header-rows: 1
+
+   * - Directive
+     - Title
+     - ID Prefix
+     - Description
+   * - ``controlflow``
+     - ControlFlow
+     - ``CTRLFLOW-``
+     - A control-flow edge between two actions
+   * - ``objectflow``
+     - ObjectFlow
+     - ``OBJFLOW-``
+     - A data-flow edge between two actions
+
+New in v0.3 — Package
+---------------------
+
+.. list-table::
+   :header-rows: 1
+
+   * - Directive
+     - Title
+     - ID Prefix
+     - Description
+   * - ``package``
+     - Package
+     - ``PKG-``
+     - A package container
+   * - ``dependency``
+     - Dependency
+     - ``DEP-``
+     - A directed package dependency
+
+New in v0.3 — Use Case
+----------------------
+
+.. list-table::
+   :header-rows: 1
+
+   * - Directive
+     - Title
+     - ID Prefix
+     - Description
+   * - ``usecase``
+     - UseCase
+     - ``USECASE-``
+     - A user-facing use case
+   * - ``actor``
+     - Actor
+     - ``ACTOR-``
+     - An external actor
+
+New in v0.3 — Sequence
+----------------------
+
+.. list-table::
+   :header-rows: 1
+
+   * - Directive
+     - Title
+     - ID Prefix
+     - Description
+   * - ``lifeline``
+     - Lifeline
+     - ``LIFELINE-``
+     - A sequence-diagram lifeline
+   * - ``message``
+     - Message
+     - ``MSG-``
+     - A message between two lifelines
+
+New in v0.3 — Parametric (v1.1 diagrams pending)
+------------------------------------------------
+
+The element types below register in v0.3 so models can declare them,
+but the rendered parametric diagram ships with v0.4.
+
+.. list-table::
+   :header-rows: 1
+
+   * - Directive
+     - Title
+     - ID Prefix
+     - Description
+   * - ``constraintblock``
+     - ConstraintBlock
+     - ``CONSTRAINT-``
+     - A mathematical constraint definition
+   * - ``constraintparameter``
+     - ConstraintParameter
+     - ``PARAM-``
+     - A typed slot on a ConstraintBlock
+   * - ``valueproperty``
+     - ValueProperty
+     - ``VALUE-``
+     - A quantitative attribute of a part
+   * - ``bindingconnector``
+     - BindingConnector
+     - ``BIND-``
+     - A binding between a parameter and a value property
 
 Extra Fields
 ------------

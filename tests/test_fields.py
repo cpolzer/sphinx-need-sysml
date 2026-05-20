@@ -21,6 +21,7 @@ class TestFieldsRegistration:
     """Verify all 15 SysML v2 extra fields are registered."""
 
     EXPECTED_FIELDS = [
+        # Feature 001
         "abstract",
         "owned_by",
         "multiplicity",
@@ -34,6 +35,46 @@ class TestFieldsRegistration:
         "target_port",
         "is_initial",
         "is_final",
+        # Feature 002 — state-machine
+        "pseudo_kind",
+        "from_state",
+        "to_state",
+        "trigger",
+        "guard",
+        "effect",
+        # Feature 002 — activity
+        "from_action",
+        "to_action",
+        "object_type",
+        "partition",
+        "activity_kind",
+        # Feature 002 — package
+        "parent_package",
+        "kind",
+        "source",
+        "target",
+        # Feature 002 — use case
+        "subject",
+        "extends",
+        "includes",
+        "generalizes",
+        "interacts_with",
+        # Feature 002 — sequence
+        "represents",
+        "from_lifeline",
+        "to_lifeline",
+        "message_kind",
+        "fragment_group",
+        "fragment_kind",
+        "fragment_guard",
+        # Feature 002 — parametric
+        "expression",
+        "parameters",
+        "value_type",
+        "default_value",
+        "unit",
+        "source_parameter",
+        "target_value",
     ]
 
     def test_fields_on_need_data(self, built_app):

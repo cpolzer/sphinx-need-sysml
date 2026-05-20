@@ -17,10 +17,11 @@ class NeedsymlReqDirective(SphinxDirective):
     ``REQ_FULL_TEMPLATE`` body.
     """
 
-    required_arguments = 1
-    optional_arguments = 0
+    required_arguments = 0
+    optional_arguments = 1
     final_argument_whitespace = True
     option_spec = {
+        "filter": directives.unchanged,
         "show-satisfy": directives.unchanged,
         "show-refine": directives.unchanged,
         "show-allocate": directives.unchanged,
@@ -29,7 +30,12 @@ class NeedsymlReqDirective(SphinxDirective):
     }
 
     def run(self) -> list[Any]:
-        filter_expr = self.arguments[0]
+        # Resolution order: positional argument (legacy) → :filter: option →
+        # default 'type == "Requirement"'.
+        if self.arguments:
+            filter_expr = self.arguments[0]
+        else:
+            filter_expr = self.options.get("filter", "type == 'Requirement'")
         show_satisfy = self.options.get("show-satisfy", "true").lower() == "true"
         show_refine = self.options.get("show-refine", "true").lower() == "true"
         show_allocate = self.options.get("show-allocate", "true").lower() == "true"
