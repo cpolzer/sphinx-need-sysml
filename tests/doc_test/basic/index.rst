@@ -112,3 +112,11 @@ Requirement Types
    :allocates:
 
    Brake distance requirement.
+
+Diagrams
+--------
+
+.. needsysml-bdd:: PD-001
+   :depth: 2
+   :scale: 80%
+   :align: center

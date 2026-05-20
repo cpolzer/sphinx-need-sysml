@@ -82,12 +82,23 @@ def _register_flow_configs(app: Sphinx) -> None:
     app.config.needs_flow_configs = {**SYSML_FLOW_CONFIGS, **existing}
 
 
+def _warn_plantuml_format(app: Sphinx) -> None:
+    """Emit warning if plantuml_output_format is not svg when diagram directives are used."""
+    from sphinxcontrib.sysml.warnings import warn_plantuml_format
+    warn_plantuml_format(app)
+
+
 def setup(app: Sphinx) -> dict:
     """Sphinx extension entry point."""
     app.setup_extension("sphinx_needs")
 
     app.connect("config-inited", _register_types_and_fields)
     app.connect("builder-inited", _register_flow_configs)
+    app.connect("builder-inited", _warn_plantuml_format)
+
+    # Register diagram directives
+    from sphinxcontrib.sysml.directives.needsysml_bdd import NeedsymlBddDirective
+    app.add_directive("needsysml-bdd", NeedsymlBddDirective)
 
     return {
         "version": VERSION,

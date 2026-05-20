@@ -71,16 +71,16 @@
 
 ### Implementation for US2 + US5
 
-- [ ] T018 [US2] Create `sphinxcontrib/sysml/flow_configs.py` — define `SYSML_FLOW_CONFIGS` dict with `sysml_bdd` skinparam string (class `<<PartDef>>` background/border colors, `hide empty members` default off, `left to right direction` as optional)
-- [ ] T019 [US2] Implement `_register_flow_configs(app)` in `sphinxcontrib/sysml/__init__.py` — merges `SYSML_FLOW_CONFIGS` into `app.config.needs_flow_configs` at `builder-inited`, user keys take precedence; connect event in `setup()`
-- [ ] T020 [P] [US2] Create `sphinxcontrib/sysml/templates.py` — implement `BLOCK_DEF_TEMPLATE` string: Jinja2 snippet that renders a single `PartDef` need as a PlantUML class with `<<PartDef>>` stereotype, compartments for owned Ports and attribute values, and `[[{docname}.html#{id}{{{title}}}]]` hyperlink syntax using `ref()`
-- [ ] T021 [P] [US2] Add `BDD_FULL_TEMPLATE` to `sphinxcontrib/sysml/templates.py` — complete Jinja2 `@startuml/@enduml` body that: renders the root PartDef via `BLOCK_DEF_TEMPLATE`, uses `filter("type == 'Part' and owned_by == '{root_id}'")`to find child Parts, renders each child with a composition arrow `root_id *-- child_id`, supports `:depth:` parameter
-- [ ] T022 [US2] Create `sphinxcontrib/sysml/directives/__init__.py` (empty)
-- [ ] T023 [US2] Create `sphinxcontrib/sysml/directives/needsysml_bdd.py` — implement `NeedsymlBddDirective(SphinxDirective)` with `required_arguments=1`, `option_spec` for `:depth:`, `:filter:`, `:scale:`, `:align:`; `run()` method that creates a `Needuml` node with content set to `BDD_FULL_TEMPLATE` rendered with the given need ID and depth
-- [ ] T024 [US2] Register `needsysml-bdd` directive and connect `plantuml_output_format` warning check in `setup()` in `sphinxcontrib/sysml/__init__.py`
-- [ ] T025 [US2] Add `plantuml_output_format = "svg"` to `tests/doc_test/basic/conf.py` and add a `.. needsysml-bdd::` example to `tests/doc_test/basic/index.rst` using the `PD-` need defined in T014
-- [ ] T026 [P] [US2] Write `tests/test_bdd_directive.py` — tests verifying: (a) directive builds without error, (b) HTML output contains `<object` element (SVG rendered), (c) a warning is emitted if `plantuml_output_format` is not `svg`
-- [ ] T027 [P] [US2] Write `tests/test_flow_configs.py` — test that `sysml_bdd` key exists in `app.config.needs_flow_configs` after build, and that user-defined key is not overwritten
+- [x] T018 [US2] Create `sphinxcontrib/sysml/flow_configs.py` — define `SYSML_FLOW_CONFIGS` dict with `sysml_bdd` skinparam string (class `<<PartDef>>` background/border colors, `hide empty members` default off, `left to right direction` as optional)
+- [x] T019 [US2] Implement `_register_flow_configs(app)` in `sphinxcontrib/sysml/__init__.py` — merges `SYSML_FLOW_CONFIGS` into `app.config.needs_flow_configs` at `builder-inited`, user keys take precedence; connect event in `setup()`
+- [x] T020 [P] [US2] Create `sphinxcontrib/sysml/templates.py` — implement `BLOCK_DEF_TEMPLATE` string: Jinja2 snippet that renders a single `PartDef` need as a PlantUML class with `<<PartDef>>` stereotype, compartments for owned Ports and attribute values, and `[[{docname}.html#{id}{{{title}}}]]` hyperlink syntax using `ref()`
+- [x] T021 [P] [US2] Add `BDD_FULL_TEMPLATE` to `sphinxcontrib/sysml/templates.py` — complete Jinja2 `@startuml/@enduml` body that: renders the root PartDef via `BLOCK_DEF_TEMPLATE`, uses `filter("type == 'Part' and owned_by == '{root_id}'")`to find child Parts, renders each child with a composition arrow `root_id *-- child_id`, supports `:depth:` parameter
+- [x] T022 [US2] Create `sphinxcontrib/sysml/directives/__init__.py` (empty)
+- [x] T023 [US2] Create `sphinxcontrib/sysml/directives/needsysml_bdd.py` — implement `NeedsymlBddDirective(SphinxDirective)` with `required_arguments=1`, `option_spec` for `:depth:`, `:filter:`, `:scale:`, `:align:`; `run()` method that creates a `Needuml` node with content set to `BDD_FULL_TEMPLATE` rendered with the given need ID and depth
+- [x] T024 [US2] Register `needsysml-bdd` directive and connect `plantuml_output_format` warning check in `setup()` in `sphinxcontrib/sysml/__init__.py`
+- [x] T025 [US2] Add `plantuml_output_format = "svg"` to `tests/doc_test/basic/conf.py` and add a `.. needsysml-bdd::` example to `tests/doc_test/basic/index.rst` using the `PD-` need defined in T014
+- [x] T026 [P] [US2] Write `tests/test_bdd_directive.py` — tests verifying: (a) directive builds without error, (b) HTML output contains `<object` element (SVG rendered), (c) a warning is emitted if `plantuml_output_format` is not `svg`
+- [x] T027 [P] [US2] Write `tests/test_flow_configs.py` — test that `sysml_bdd` key exists in `app.config.needs_flow_configs` after build, and that user-defined key is not overwritten
 
 **Checkpoint**: `.. needsysml-bdd:: PD-001` renders a clickable SVG BDD in HTML. US2 and US5 complete.
 
