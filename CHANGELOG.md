@@ -1,3 +1,9 @@
+## v0.2.2 (2026-05-20)
+
+### Fix
+
+- correct PyPI project URLs to cpolzer/sphinx-need-sysml
+
 ## v0.2.1 (2026-05-20)
 
 ### Fix

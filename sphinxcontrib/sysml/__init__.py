@@ -12,7 +12,7 @@ from sphinx_needs.api import add_need_type
 from sphinxcontrib.sysml.config import SYSML_NEED_TYPES
 from sphinxcontrib.sysml.fields import SYSML_FIELDS
 
-VERSION = "0.2.1"
+VERSION = "0.2.2"
 
 # Detect sphinx-need-svg availability
 _HAS_NEED_SVG = importlib.util.find_spec("sphinx_need_svg") is not None
