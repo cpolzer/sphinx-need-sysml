@@ -35,11 +35,13 @@ test = [
   "pytest>=7.0",
   "pytest-cov",
   "sphinxcontrib-plantuml",
+  "sphinx-need-svg",
   "Pillow",
 ]
 docs = [
   "sphinx-immaterial",
   "sphinxcontrib-plantuml",
+  "sphinx-need-svg",
   "Pillow",
 ]
 

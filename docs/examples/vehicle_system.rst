@@ -259,6 +259,46 @@ Rendered result:
    :scale: 80%
    :align: center
 
+SVG Block Definition Diagram
+----------------------------
+
+The same diagram rendered as inline SVG using ``sphinx-need-svg``.
+This produces native SVG with reliable clickable links in all browsers:
+
+.. code-block:: rst
+
+   .. needsvg::
+      :align: center
+
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400">
+        {% set root_id = "PD-001" %}
+        {% set root = needs.get(root_id) %}
+        {% if root %}
+        {{ flow(root_id) }}
+        {% set children = filter("type == 'PartDef' and owned_by == '" + root_id + "'") %}
+        {% for child in children %}
+        {{ flow(child.id) }}
+        {% endfor %}
+        {% endif %}
+      </svg>
+
+Rendered result:
+
+.. needsvg::
+   :align: center
+
+   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400">
+     {% set root_id = "PD-001" %}
+     {% set root = needs.get(root_id) %}
+     {% if root %}
+     {{ flow(root_id) }}
+     {% set children = filter("type == 'PartDef' and owned_by == '" + root_id + "'") %}
+     {% for child in children %}
+     {{ flow(child.id) }}
+     {% endfor %}
+     {% endif %}
+   </svg>
+
 Requirements Diagram
 --------------------
 
