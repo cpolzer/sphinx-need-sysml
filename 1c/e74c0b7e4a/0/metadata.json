@@ -1,0 +1,53 @@
+{
+  "cli_version": "0.6.2",
+  "checkpoint_id": "1ce74c0b7e4a",
+  "session_id": "ee5f5543-9f88-4838-b7fd-7e9ec9bf1398",
+  "strategy": "manual-commit",
+  "created_at": "2026-05-20T14:26:22.980752748Z",
+  "branch": "main",
+  "checkpoints_count": 0,
+  "files_touched": [
+    "docs/directives/need_types.rst",
+    "docs/directives/needsysml_req.rst",
+    "docs/examples/vehicle_system.rst",
+    "sphinxcontrib/sysml/fields.py",
+    "sphinxcontrib/sysml/templates.py",
+    "tests/doc_test/basic/index.rst",
+    "tests/doc_test/full_example/index.rst",
+    "tests/test_fields.py"
+  ],
+  "agent": "Claude Code",
+  "model": "claude-sonnet-4-6",
+  "turn_id": "3be39527eca7",
+  "token_usage": {
+    "input_tokens": 16,
+    "cache_creation_tokens": 46306,
+    "cache_read_tokens": 418760,
+    "output_tokens": 6186,
+    "api_call_count": 12
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-05-20T14:26:22.976492975Z",
+    "agent_lines": 0,
+    "agent_removed": 0,
+    "human_added": 0,
+    "human_modified": 22,
+    "human_removed": 5,
+    "total_committed": 0,
+    "total_lines_changed": 27,
+    "agent_percentage": 0,
+    "metric_version": 2
+  },
+  "prompt_attributions": [
+    {
+      "checkpoint_number": 1,
+      "user_lines_added": 21,
+      "user_lines_removed": 0,
+      "agent_lines_added": 0,
+      "agent_lines_removed": 0,
+      "user_added_per_file": {
+        ".claude/settings.local.json": 21
+      }
+    }
+  ]
+}
