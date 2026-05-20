@@ -1,0 +1,17 @@
+how is our development flow handled? are we using UV?
+
+---
+
+ok, we are working on adding precommit hooks, so pipeline errors are caught locally
+
+---
+
+2
+
+---
+
+but then what does that mean for our actual code we deliver? all mypy checks ignored?
+
+---
+
+yes

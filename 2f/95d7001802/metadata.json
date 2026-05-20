@@ -1,0 +1,25 @@
+{
+  "cli_version": "0.6.2",
+  "checkpoint_id": "2f95d7001802",
+  "strategy": "manual-commit",
+  "branch": "001-sysml-v2-needs",
+  "checkpoints_count": 5,
+  "files_touched": [
+    ".pre-commit-config.yaml"
+  ],
+  "sessions": [
+    {
+      "metadata": "/2f/95d7001802/0/metadata.json",
+      "transcript": "/2f/95d7001802/0/full.jsonl",
+      "content_hash": "/2f/95d7001802/0/content_hash.txt",
+      "prompt": "/2f/95d7001802/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 71,
+    "cache_creation_tokens": 88512,
+    "cache_read_tokens": 3690884,
+    "output_tokens": 34930,
+    "api_call_count": 59
+  }
+}
