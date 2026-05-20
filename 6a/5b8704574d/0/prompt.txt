@@ -1,0 +1,686 @@
+/speckit-plan
+
+---
+
+<task-notification>
+<task-id>a95b964af0e558781</task-id>
+<tool-use-id>toolu_01LQdpuSBy87rfPR1VusSLPz</tool-use-id>
+<output-file>/tmp/claude-1000/-home-chris-develop-open-source-sphinx-need-sysml/26eddaf4-71d2-4d91-ba3c-95417ad51c44/tasks/a95b964af0e558781.output</output-file>
+<status>completed</status>
+<summary>Agent "Research PlantUML hyperlink syntax and sphinx-needs need type registration API" completed</summary>
+<result>I now have all the information needed for a comprehensive answer. Let me compile everything.
+
+---
+
+# Part 1: PlantUML Hyperlink/URL Syntax
+
+## Core Syntax
+
+The fundamental syntax uses double square brackets appended directly to element names. The full grammar is:
+
+```
+[[url{optional tooltip}optional label]]
+```
+
+Concrete forms:
+- `[[http://example.com]]` — bare URL, no visible label
+- `[[http://example.com This is the label]]` — URL with visible label (space-separated after URL)
+- `[[http://example.com{Hover tooltip text}]]` — URL with tooltip only
+- `[[http://example.com{Hover tooltip} Click here]]` — URL, tooltip, and label together
+
+## Class Diagrams
+
+On the class entity itself:
+```plantuml
+class Foo2 [[http://www.example.com/Foo2]]
+class Foo3 [[http://www.example.com/Foo3{tooltip for Foo3}]]
+```
+
+Fields and methods require three square brackets (not two) because the double bracket is already used inside class body syntax:
+```plantuml
+class Foo {
+  -field1 [[[http://www.example.com/field1]]]
+  +method() [[[http://www.example.com/method{method tooltip}]]]
+}
+```
+
+Notes also accept links, either at the start (applies to full note) or inline (applies to that word/phrase only):
+```plantuml
+note left of Foo
+  [[http://example.com Go here]]
+end note
+```
+
+## Component Diagrams
+
+Component diagrams use the same double-bracket syntax directly:
+```plantuml
+component Comp1 [[http://www.example.com]]
+[Another Component] [[http://www.example.com{tip}]]
+```
+
+This is confirmed working in component diagrams. The syntax is consistent across most PlantUML diagram types (class, component, use case, deployment, sequence, activity).
+
+## Same-Page Sphinx HTML Anchors
+
+Using bare fragment identifiers works syntactically:
+```plantuml
+class MyElement [[#my-anchor-id]]
+```
+
+However, there is a documented, well-known problem with this. When PlantUML generates SVG, the `&lt;a href="#anchor"&gt;` in the SVG is resolved relative to the SVG file itself, not relative to the containing HTML page. This means if the SVG is served as a standalone file (loaded via `&lt;img&gt;` or `&lt;object&gt;`), the anchor `#anchor` resolves within the SVG file, not the HTML page — and it silently does nothing or navigates incorrectly.
+
+The `skinparam topurl` setting can prefix all relative URLs:
+```plantuml
+skinparam topurl https://mysite.com/docs/mypage.html
+```
+Then `[[#my-anchor-id]]` becomes `https://mysite.com/docs/mypage.html#my-anchor-id`.
+
+The only reliable approach for same-page anchors in Sphinx is to use the full absolute URL including the page path and fragment, e.g. `[[../mypage.html#my-anchor-id]]`, or to use `skinparam topurl` to inject the page prefix. This is only practical if the URL structure is fixed and known at diagram-write time.
+
+## SVG vs PNG vs PDF
+
+**SVG:** Hyperlinks are embedded as native `&lt;a xlink:href="..."&gt;` elements inside the SVG markup. They work when the SVG is inline in HTML or served via `&lt;object type="image/svg+xml"&gt;`. They do NOT work when loaded via `&lt;img src="..."&gt;` — the browser sandboxes `&lt;img&gt;`-embedded SVGs and disallows navigation from them.
+
+The sphinx-contrib/plantuml extension controls this with its `plantuml_output_format` config. When set to `svg` it produces an `&lt;object&gt;` tag where links work. When set to `svg_img` it uses `&lt;img&gt;` where links are dead.
+
+The `svgLinkTarget` skinparam controls the `target` attribute: default is `_top` (whole window navigation). Set it to `_blank` for new-tab behavior.
+
+**PNG:** PNG itself cannot carry hyperlinks. PlantUML generates a separate image map file (`.cmapx`) alongside the PNG. To have clickable PNGs in HTML you must generate both the PNG and the `.cmapx` map file, then wire them together with `&lt;img usemap="#..."&gt;` and embed the `&lt;map&gt;` element. The sphinx-contrib/plantuml extension does NOT do this automatically — it only generates the PNG without the map. Clickable PNGs require manual plumbing outside standard Sphinx usage.
+
+**PDF:** Links in PDF output from PlantUML are not functional. There is an open Asciidoctor/PlantUML issue (#1521) confirming anchor links in PlantUML diagrams do not survive PDF conversion — they render visually but are not clickable in the PDF.
+
+## Summary Table
+
+| Format | Links Work | Notes |
+|---|---|---|
+| SVG via `&lt;object&gt;` | Yes | Default with sphinx-contrib/plantuml `svg` format |
+| SVG via `&lt;img&gt;` | No | Browser sandboxes navigation from img-embedded SVG |
+| SVG inline in HTML | Yes | Best reliability |
+| PNG | Only with .cmapx | Requires extra manual setup |
+| PDF | No | Not supported |
+| Same-page anchors | Unreliable | Use absolute URL or `skinparam topurl` |
+
+---
+
+# Part 2: sphinx-needs API for Registering Need Types and Fields
+
+All findings are from `/home/chris/develop/open_source/sphinx-test-reports/.venv/lib/python3.13/site-packages/sphinx_needs/api/configuration.py`.
+
+## `add_need_type` — Exact Signature
+
+```python
+def add_need_type(
+    app: Sphinx,
+    directive: str,
+    title: str,
+    prefix: str,
+    color: str = "#ffffff",
+    style: str = "node",
+) -&gt; None:
+```
+
+Parameters:
+- `app` — the Sphinx application object
+- `directive` — the RST directive name users will write, e.g. `"story"` (no leading dot)
+- `title` — human-readable long name, e.g. `"User Story"`
+- `prefix` — auto-ID prefix string, e.g. `"US_"`
+- `color` — hex color for needflow PlantUML nodes, default `"#ffffff"`
+- `style` — PlantUML node style for needflow, default `"node"` (other values: `"folder"`, `"cloud"`, `"rectangle"`, `"database"`, etc.)
+
+There is no `directive` parameter accepting a custom directive class. The function always registers `sphinx_needs.directives.need.NeedDirective` via `app.add_directive(directive, NeedDirective)`. There is no way through this API to inject a custom directive class — that must be done by calling `app.add_directive()` separately and overriding the registration.
+
+Raises `NeedsApiConfigException` if the directive name already exists.
+
+## `add_field` vs `add_extra_option`
+
+**`add_extra_option` is deprecated.** It emits a `DeprecationWarning` and delegates to the same internal call as `add_field`.
+
+**Current API — `add_field`:**
+
+```python
+def add_field(
+    name: str,
+    /,
+    description: str,
+    *,
+    schema: FieldSchemaTypes | None = None,
+    nullable: bool | None = None,
+    default: None | Any = None,
+    predicates: None | list[tuple[str, Any]] = None,
+    parse_variants: bool | None = None,
+    parse_dynamic_functions: bool | None = None,
+) -&gt; None:
+```
+
+Key points:
+- `name` is positional-only (the `/` separator), no `app` parameter — unlike `add_extra_option` which still took `app` as first arg
+- `description` is a required positional parameter
+- `schema` accepts a `FieldSchemaTypes` dict, which is one of: `{"type": "string"}`, `{"type": "integer"}`, `{"type": "number"}`, `{"type": "boolean"}`, or `{"type": "array", "items": {...}}`
+- Unlike `add_extra_option`, `add_field` also accepts `default` and `predicates`
+
+**Old API — `add_extra_option` (deprecated, still functional):**
+
+```python
+def add_extra_option(
+    app: Sphinx,
+    name: str,
+    *,
+    description: str = "Added by add_extra_option API",
+    schema: FieldSchemaTypes | None = None,
+    nullable: bool | None = None,
+    parse_variants: bool | None = None,
+    parse_dynamic_functions: bool | None = None,
+) -&gt; None:
+```
+
+## How sphinx-test-reports Calls These APIs
+
+The relevant file is `/home/chris/develop/open_source/sphinx-test-reports/sphinxcontrib/test_reports/test_reports.py`.
+
+The pattern used is a compatibility shim that selects `add_field` if available (sphinx-needs &gt;= 6.0 in practice) and falls back to `add_extra_option`:
+
+```python
+try:
+    from sphinx_needs.api import add_field as _add_field
+
+    def _register_field(app, name, schema=None):
+        description = FIELD_DESCRIPTIONS.get(name, name)
+        try:
+            _add_field(name, description, schema=schema)
+        except Exception:
+            pass  # already registered
+
+except ImportError:
+    from sphinx_needs.api import add_extra_option as _add_extra_option
+
+    def _register_field(app, name, schema=None):
+        try:
+            _add_extra_option(app, name, description=..., schema=schema)
+        except Exception:
+            pass
+```
+
+The `setup(app)` function connects two config-inited events. The actual API calls happen in `sphinx_needs_update` which is wired to `config-inited`:
+
+```python
+app.connect("config-inited", sphinx_needs_update)
+```
+
+And inside `sphinx_needs_update`:
+```python
+# Fields (version-gated on sphinx-needs &gt;= 6.0 for schema support):
+_register_field(app, "result", schema={"type": "string"})
+_register_field(app, "cases", schema={"type": "integer"})
+
+# Need types — unpacked from a 5-element list [title, prefix, color, style]:
+add_need_type(app, *app.config.tr_file[1:])
+# Equivalent to: add_need_type(app, "testsuite", "Test-Suite", "TS_", "#cccccc", "folder")
+```
+
+The config values define need type params as lists, and `[1:]` slicing drops the directive name (which was at `[0]`), passing `title, prefix, color, style` positionally.
+
+## Working Example — Registering a Need Type with Extra Fields
+
+```python
+from sphinx_needs.api import add_need_type, add_field
+from sphinx.application import Sphinx
+
+def setup(app: Sphinx):
+    app.connect("config-inited", register_needs)
+    return {"version": "1.0", "parallel_read_safe": True}
+
+def register_needs(app: Sphinx, config) -&gt; None:
+    # Register custom fields (must be called at config-inited, before builder-inited)
+    add_field("component", "Component this requirement belongs to",
+              schema={"type": "string"})
+    add_field("safety_level", "Functional safety level (ASIL)",
+              schema={"type": "string", "enum": ["QM", "ASIL-A", "ASIL-B", "ASIL-C", "ASIL-D"]})
+    add_field("review_status", "Review status",
+              schema={"type": "string"})
+    add_field("effort_days", "Estimated implementation effort in days",
+              schema={"type": "integer", "minimum": 0})
+
+    # Register the need type itself
+    # directive, title, prefix, color, style
+    add_need_type(app, "sysreq", "System Requirement", "SREQ_", "#4da6ff", "rectangle")
+    add_need_type(app, "hwreq",  "Hardware Requirement", "HWREQ_", "#ff9933", "node")
+```
+
+Important sequencing note: `add_field` must be called during or before `config-inited` (not `builder-inited`) for the fields to be available to all directives. `add_need_type` is also safe to call at `config-inited`. The sphinx-test-reports code calls both from a `config-inited` handler.
+
+---
+
+Sources:
+- [PlantUML Link with optional label](https://plantuml.com/link)
+- [PlantUML SVG documentation](https://plantuml.com/svg)
+- [PlantUML Class Diagram syntax](https://plantuml.com/class-diagram)
+- [PlantUML Component Diagram syntax](https://plantuml.com/component-diagram)
+- [Hyperlink in component diagram — PlantUML Q&amp;A](https://forum.plantuml.net/2682/hyperlink-in-component-diagram)
+- [PlantUML anchor hyperlink within page — Doxygen issue #7421](https://github.com/doxygen/doxygen/issues/7421)
+- [Anchor links in plantuml not working after PDF — asciidoctor-pdf issue #1521](https://github.com/asciidoctor/asciidoctor-pdf/issues/1521)
+- [How skinparam topurl works — PlantUML Forum](https://forum.plantuml.net/13179/how-the-skinparam-topurl-works-url-links)
+- [sphinx-contrib/plantuml on GitHub](https://github.com/sphinx-contrib/plantuml)</result>
+<usage><total_tokens>32003</total_tokens><tool_uses>16</tool_uses><duration_ms>166633</duration_ms></usage>
+</task-notification>
+
+---
+
+<task-notification>
+<task-id>a6f5a67763527805c</task-id>
+<tool-use-id>REDACTED</tool-use-id>
+<output-file>/tmp/claude-1000/-home-chris-develop-open-source-sphinx-need-sysml/26eddaf4-71d2-4d91-ba3c-95417ad51c44/tasks/a6f5a67763527805c.output</output-file>
+<status>completed</status>
+<summary>Agent "Research PlantUML SysML notation" completed</summary>
+<result>Now I have enough information to compile a thorough, accurate research response. Let me synthesize everything found.
+
+---
+
+## PlantUML and SysML: Comprehensive Research Findings
+
+---
+
+### 1. Does PlantUML Have Native SysML v2 Support?
+
+No. PlantUML has no native SysML v2 (or SysML v1) diagram type. There is no built-in `@startsysml` diagram mode, no dedicated SysML diagram parser, and no official SysML entry in the PlantUML standard library (`!include &lt;SysML&gt;` does not resolve to anything). The GitHub issues tracking this — [Issue #118 in plantuml/plantuml](https://github.com/plantuml/plantuml/issues/118) and [Issue #16 in plantuml/backlog](https://github.com/plantuml/backlog/issues/16) — have been open since 2013 without resolution.
+
+The only SysML v2 + PlantUML integration that exists is the [OMG SysML v2 Pilot Implementation](https://github.com/Systems-Modeling/SysML-v2-Pilot-Implementation), which ships a plugin package (`org.omg.sysml.plantuml.feature`) that uses PlantUML as a rendering backend for its Eclipse environment. This translates SysML v2 textual notation into PlantUML code. It is not something you invoke directly in a .puml file. The visualization is explicitly described in the project README as "limited quality" and only covers three view types:
+
+- Tree views (analogous to BDD)
+- Interconnection views (analogous to IBD)
+- State machine views
+
+This is a code-generation pipeline, not hand-writable SysML PlantUML syntax.
+
+---
+
+### 2. SysML v1 vs v2 Concepts in PlantUML Terms
+
+PlantUML has no awareness of the distinction between SysML v1 and SysML v2. There is no enforcement or semantic meaning applied to any SysML stereotype you write. However, the stereotype annotation syntax (`&lt;&lt;block&gt;&gt;`, `&lt;&lt;requirement&gt;&gt;`, `&lt;&lt;port&gt;&gt;` etc.) works purely as a display label in class diagrams. You can write them freely, and they render visually, but PlantUML does not apply any SysML-specific layout rules, compartment structures, or arrow semantics automatically.
+
+What maps to what:
+
+| SysML Concept | PlantUML Approximation |
+|---|---|
+| `&lt;&lt;block&gt;&gt;` type | `class Foo &lt;&lt;block&gt;&gt;` |
+| `&lt;&lt;part&gt;&gt;` property | listed inside a class body with `~partName : Type` or via composition `Foo *-- Bar` |
+| `&lt;&lt;port&gt;&gt;` | `class Foo { +portName : Signal }` with manual separator or via component `portin`/`portout` keywords |
+| `&lt;&lt;requirement&gt;&gt;` | `class Req1 &lt;&lt;requirement&gt;&gt; { id = "1.1" \n text = "..." }` |
+| `&lt;&lt;satisfy&gt;&gt;` dependency | `SomeBlock ..&gt; Req1 : &lt;&lt;satisfy&gt;&gt;` |
+| `&lt;&lt;deriveReqt&gt;&gt;` | `Req2 ..&gt; Req1 : &lt;&lt;deriveReqt&gt;&gt;` |
+| `&lt;&lt;trace&gt;&gt;` | `Element ..&gt; Req1 : &lt;&lt;trace&gt;&gt;` |
+| `&lt;&lt;verify&gt;&gt;` | `TestCase ..&gt; Req1 : &lt;&lt;verify&gt;&gt;` |
+| BDD composition (black diamond) | `System *-- Engine` |
+| BDD aggregation (open diamond) | `System o-- Sensor` |
+| Generalization | `SpecialBlock &lt;|-- BaseBlock` |
+| Realization / implementation | `Block ..|&gt; Interface` |
+
+---
+
+### 3. No Official SysML Include Library
+
+There is no `!include &lt;SysML&gt;` in the PlantUML standard library. The official stdlib contains: C4, AWS, Azure, ArchiMate, Kubernetes, tupadr3, Material icons, Office, and others — no SysML. The community-maintained [plantuml-stdlib GitHub organisation](https://github.com/plantuml-stdlib) also has no SysML entry.
+
+You can build your own macro file and include it, using `!include ./SysML.iuml` or a raw GitHub URL. Several community projects have done this informally but none is widely adopted or maintained as an official standard. For skinparam-based block styling, the approach is:
+
+```plantuml
+skinparam class&lt;&lt;block&gt;&gt; {
+    BackgroundColor LightSteelBlue
+    BorderColor DarkSlateBlue
+    FontStyle Bold
+}
+skinparam class&lt;&lt;requirement&gt;&gt; {
+    BackgroundColor LightYellow
+    BorderColor DarkGoldenrod
+}
+```
+
+Note: there must be no space between `class` and `&lt;&lt;block&gt;&gt;` in skinparam declarations.
+
+---
+
+### 4. Block Definition Diagram (BDD) — Best PlantUML Approximation
+
+Use `@startuml` with class diagram syntax. The `*--` composition arrow (filled diamond) is the direct equivalent of BDD composition. Custom separators (`--`, `==`, `..`) create named compartments inside the block shape.
+
+```plantuml
+@startuml BDD_Vehicle_System
+
+skinparam class&lt;&lt;block&gt;&gt; {
+    BackgroundColor LightSteelBlue
+    BorderColor Navy
+}
+skinparam class&lt;&lt;valueType&gt;&gt; {
+    BackgroundColor LightGreen
+    BorderColor DarkGreen
+}
+
+title Block Definition Diagram: Vehicle System
+
+class VehicleSystem &lt;&lt;block&gt;&gt; {
+    == Attributes ==
+    + mass : kg
+    + maxSpeed : km/h
+    -- Parts (for reference) --
+    + engine : Engine
+    + wheels : Wheel[4]
+    -- Ports --
+    + fuelIn : FuelPort
+    + controlBus : CANPort
+}
+
+class Engine &lt;&lt;block&gt;&gt; {
+    == Attributes ==
+    + displacement : cm3
+    + power : kW
+    -- Ports --
+    + fuelIn : FuelPort
+    + driveShaft : MechanicalPort
+}
+
+class Wheel &lt;&lt;block&gt;&gt; {
+    == Attributes ==
+    + diameter : mm
+    + compound : String
+}
+
+class ElectricMotor &lt;&lt;block&gt;&gt; {
+    == Attributes ==
+    + voltage : V
+    + torque : Nm
+}
+
+class FuelPort &lt;&lt;block&gt;&gt; {
+    + flowRate : L/s
+}
+
+class MechanicalPort &lt;&lt;block&gt;&gt; {
+    + torque : Nm
+}
+
+' Composition: VehicleSystem owns Engine (1 engine)
+VehicleSystem *--&gt; "1" Engine : engine
+
+' Composition: VehicleSystem owns 4 Wheels
+VehicleSystem *--&gt; "4" Wheel : wheels
+
+' Generalization: ElectricMotor specializes Engine
+Engine &lt;|-- ElectricMotor
+
+@enduml
+```
+
+Key limitations:
+- There is no SysML-style "bdd" frame label. You work around this with a `title` or by wrapping in a `frame` (not available in class diagrams; use `package` or `namespace` instead).
+- The block shape does not auto-segregate "parts", "attributes", "ports", and "operations" into automatically labelled compartments the way a real SysML tool does. You must write the section headers manually using `== Attributes ==` and `-- Parts --` separators.
+- Multiplicity on composition is done with `"4"` label notation rather than UML's formal multiplicities at the diamond end.
+
+---
+
+### 5. Internal Block Diagram (IBD) — Best PlantUML Approximation
+
+IBD is harder. The real SysML IBD shows block instances inside a context boundary, with ports on the edges and connectors between internal ports. PlantUML's component diagram with `portin`/`portout` and nesting is the closest approach, but port placement is not controllable (known GitHub issues [#1766](https://github.com/plantuml/plantuml/issues/1766) and [#1602](https://github.com/plantuml/plantuml/issues/1602)). The object diagram can show instances but has no port syntax.
+
+Best approximation using component diagram:
+
+```plantuml
+@startuml IBD_VehicleSystem
+
+title Internal Block Diagram: VehicleSystem [vehicle : VehicleSystem]
+
+skinparam component&lt;&lt;block&gt;&gt; {
+    BackgroundColor LightSteelBlue
+    BorderColor Navy
+}
+skinparam rectangle {
+    BackgroundColor AliceBlue
+    BorderColor Navy
+    BorderThickness 2
+}
+
+' Context boundary representing the VehicleSystem block instance
+rectangle "vehicle : VehicleSystem" &lt;&lt;ibd&gt;&gt; {
+
+    component "engine : Engine" &lt;&lt;block&gt;&gt; as engine {
+        portin  fuelIn_e   as "fuelIn"
+        portout driveOut   as "driveShaft"
+        portout canOut_e   as "canBus"
+    }
+
+    component "wheel1 : Wheel" &lt;&lt;block&gt;&gt; as w1 {
+        portin  driveIn1   as "driveIn"
+    }
+
+    component "wheel2 : Wheel" &lt;&lt;block&gt;&gt; as w2 {
+        portin  driveIn2   as "driveIn"
+    }
+
+    component "controller : ECU" &lt;&lt;block&gt;&gt; as ecu {
+        portout canOut_c   as "canBus"
+    }
+
+    ' Boundary ports (on the outer block)
+    portin  sysCanIn   as "[canBus]"
+    portin  sysFuelIn  as "[fuelIn]"
+}
+
+' Internal connectors
+driveOut --&gt; driveIn1 : driveConnector1
+driveOut --&gt; driveIn2 : driveConnector2
+canOut_e --&gt; sysCanIn
+canOut_c --&gt; canOut_e
+
+sysFuelIn --&gt; fuelIn_e
+
+@enduml
+```
+
+Key limitations:
+- Ports appear floating around the component boundary, not locked to specific edges (top/bottom/left/right). The `portin`/`portout` keywords are hints that PlantUML may or may not honor, depending on layout engine direction.
+- True IBD notation requires ports visually on block boundaries with connector lines threading between them. PlantUML's component diagram approximates this but cannot guarantee correct port edge placement.
+- There is no `ibd` frame keyword. The `rectangle` construct is the nearest container.
+- An alternative (arguably more readable, less accurate) approach is to use a plain sequence diagram for flow or a deployment diagram with `node` nesting.
+
+Alternative using deployment diagram for simpler IBDs:
+
+```plantuml
+@startuml IBD_Simple_Deployment
+
+title ibd [VehicleSystem] vehicle
+
+node "vehicle : VehicleSystem" {
+    node "engine : Engine" as eng
+    node "ecu : ECU" as ecu
+    node "wheel1 : Wheel" as w1
+    node "wheel2 : Wheel" as w2
+}
+
+eng --&gt; w1 : driveShaft
+eng --&gt; w2 : driveShaft
+ecu --&gt; eng : canBus
+
+@enduml
+```
+
+---
+
+### 6. Requirements Diagram — Best PlantUML Approximation
+
+SysML requirements diagrams use boxes with `&lt;&lt;requirement&gt;&gt;` stereotype containing `id` and `text` compartments, connected by `&lt;&lt;derive&gt;&gt;`, `&lt;&lt;satisfy&gt;&gt;`, `&lt;&lt;verify&gt;&gt;`, `&lt;&lt;refine&gt;&gt;`, and `&lt;&lt;trace&gt;&gt;` dependency arrows (dashed with open arrowhead).
+
+In PlantUML, a dashed open-arrowhead dependency is `..&gt;`. Stereotyped labels go on the arrow as `: &lt;&lt;satisfy&gt;&gt;`.
+
+```plantuml
+@startuml REQ_BrakeSystem
+
+skinparam class&lt;&lt;requirement&gt;&gt; {
+    BackgroundColor LightYellow
+    BorderColor DarkGoldenrod
+    FontStyle Italic
+}
+skinparam class&lt;&lt;block&gt;&gt; {
+    BackgroundColor LightSteelBlue
+    BorderColor Navy
+}
+
+title Requirements Diagram: Brake System
+
+class "REQ-001\nVehicle Safety" &lt;&lt;requirement&gt;&gt; as REQ001 {
+    id = "REQ-001"
+    text = "The vehicle shall stop\nwithin 50m from 100km/h"
+    priority = High
+}
+
+class "REQ-001.1\nBrake Performance" &lt;&lt;requirement&gt;&gt; as REQ001_1 {
+    id = "REQ-001.1"
+    text = "The brake system shall\ndecelerate at &gt;= 8 m/s2"
+    priority = High
+}
+
+class "REQ-001.2\nBrake Reliability" &lt;&lt;requirement&gt;&gt; as REQ001_2 {
+    id = "REQ-001.2"
+    text = "Brake system MTBF\nshall exceed 100,000 km"
+    priority = Medium
+}
+
+class "REQ-002\nABS Function" &lt;&lt;requirement&gt;&gt; as REQ002 {
+    id = "REQ-002"
+    text = "ABS shall prevent\nwheel lockup"
+    priority = High
+}
+
+class "BrakeSystem" &lt;&lt;block&gt;&gt; as BS {
+    + brakePressure : Pa
+    + absEnabled : Boolean
+}
+
+class "BrakeTestCase" &lt;&lt;testCase&gt;&gt; as BTC {
+    + testId = "TC-001"
+    + procedure = "Emergency stop"
+}
+
+' Requirement containment / derivation
+REQ001 ..&gt; REQ001_1 : &lt;&lt;deriveReqt&gt;&gt;
+REQ001 ..&gt; REQ001_2 : &lt;&lt;deriveReqt&gt;&gt;
+REQ001 ..&gt; REQ002   : &lt;&lt;deriveReqt&gt;&gt;
+
+' Design satisfies requirement
+BS ..&gt; REQ001_1 : &lt;&lt;satisfy&gt;&gt;
+BS ..&gt; REQ002   : &lt;&lt;satisfy&gt;&gt;
+
+' Test verifies requirement
+BTC ..&gt; REQ001  : &lt;&lt;verify&gt;&gt;
+
+' Trace from higher-level
+REQ001_1 ..&gt; REQ001 : &lt;&lt;trace&gt;&gt;
+
+@enduml
+```
+
+Key limitations:
+- PlantUML does not enforce the official SysML requirements box layout (which typically shows `id` and `text` as fixed named compartments with specific formatting). You replicate this using manual attribute declarations inside the class body.
+- There is no automatic hierarchical containment visual (a requirement box drawn inside another requirement box). You must use `package` or `namespace` nesting, or only use arrow notation.
+- The dashed dependency arrow `..&gt;` with a stereotype label is syntactically valid and renders correctly, making this the most faithful approximation of any SysML diagram type in vanilla PlantUML.
+
+Containment using package nesting (alternative for hierarchy):
+
+```plantuml
+@startuml REQ_Nested
+
+package "REQ-001 : Vehicle Safety" &lt;&lt;requirement&gt;&gt; {
+    class "REQ-001.1\nBrake Performance" &lt;&lt;requirement&gt;&gt; as R1 {
+        id = "REQ-001.1"
+        text = "Deceleration &gt;= 8 m/s2"
+    }
+    class "REQ-001.2\nBrake Reliability" &lt;&lt;requirement&gt;&gt; as R2 {
+        id = "REQ-001.2"
+        text = "MTBF &gt; 100,000 km"
+    }
+}
+
+class "BrakeSubsystem" &lt;&lt;block&gt;&gt; as BS
+
+BS ..&gt; R1 : &lt;&lt;satisfy&gt;&gt;
+BS ..&gt; R2 : &lt;&lt;satisfy&gt;&gt;
+
+@enduml
+```
+
+---
+
+### 7. Summary of What PlantUML Supports and What It Does Not
+
+| Feature | PlantUML Support | Quality |
+|---|---|---|
+| `&lt;&lt;stereotype&gt;&gt;` labels on any element | Yes, class/component/object diagrams | Full |
+| Composition arrow (filled diamond) | Yes: `*--` | Full |
+| Aggregation arrow (open diamond) | Yes: `o--` | Full |
+| Generalization | Yes: `&lt;|--` | Full |
+| Dependency with stereotype label | Yes: `..&gt; : &lt;&lt;satisfy&gt;&gt;` | Full |
+| Realization | Yes: `..|&gt;` | Full |
+| Named compartments with separators | Yes: `-- Name --`, `== Name ==` | Full |
+| Stereotype-specific skinparam | Yes: `skinparam class&lt;&lt;block&gt;&gt;` | Full |
+| Nested components with ports | Yes: `portin`/`portout` in component diagram | Partial (no edge control) |
+| IBD context boundary frame | Approximation via `rectangle` or `node` | Weak |
+| BDD diagram frame with "bdd" label | No native frame type; use `title` | None |
+| Native SysML v1 diagram mode | None | None |
+| Native SysML v2 diagram mode | None | None |
+| `!include &lt;SysML&gt;` standard library | Does not exist | None |
+| Auto-segregated block compartments (parts/attrs/ports/ops) | None, must be done manually | None |
+| Locked port placement on block edges | Not reliably achievable | Weak |
+| Requirement containment boxes (nested visually) | Only via `package` nesting | Partial |
+| SysML flow ports / item flows | No native concept; approximate with arrows labeled with flow type | Weak |
+
+---
+
+### Key Practical Takeaway
+
+For a Sphinx-based documentation project aiming to produce SysML-style diagrams with PlantUML:
+
+- Requirements diagrams are the most faithfully achievable: class diagram + `&lt;&lt;requirement&gt;&gt;` stereotype + `..&gt;` arrows with stereotype labels renders recognizably as a SysML req diagram.
+- BDDs are achievable at the block type / composition level, but you lose the automatic named compartments and the formal "bdd" frame notation.
+- IBDs are the weakest area: PlantUML's component diagram gets the connectivity right but cannot produce proper port-on-boundary diagrams. For IBDs, a deployment diagram with `node` nesting or a simplified component diagram is the practical best option.
+- No standard library or include file exists — any SysML styling must be defined inline or in a custom include file per-project.
+
+Sources:
+- [SysML support Issue #118 - plantuml/plantuml GitHub](https://github.com/plantuml/plantuml/issues/118)
+- [SysML support Issue #16 - plantuml/backlog GitHub](https://github.com/plantuml/backlog/issues/16)
+- [SYSML Block Definition Diagram, Internal Block Diagram - PlantUML Q&amp;A Forum](https://forum.plantuml.net/378/sysml-block-defintion-diagram-internal-block-diagram)
+- [Add support for SysML Diagram Generation - PlantUML Q&amp;A Forum](https://forum.plantuml.net/5893/add-support-for-sysml-diagram-generation)
+- [Connections with port for SysML - PlantUML Forum](https://forum.plantuml.net/2353/connections-with-port-for-sysml)
+- [Class Diagram syntax and features - plantuml.com](https://plantuml.com/class-diagram)
+- [Component Diagram syntax and features - plantuml.com](https://plantuml.com/component-diagram)
+- [SysML v2 Pilot Implementation - Systems-Modeling GitHub](https://github.com/Systems-Modeling/SysML-v2-Pilot-Implementation)
+- [SysML2PlantUMLText.java - Systems-Modeling GitHub](https://github.com/Systems-Modeling/SysML-v2-Pilot-Implementation/blob/master/org.omg.sysml.plantuml/src/org/omg/sysml/plantuml/SysML2PlantUMLText.java)
+- [plantuml/plantuml-stdlib - GitHub](https://github.com/plantuml/plantuml-stdlib)
+- [PlantUML Language Reference Guide 1.2025.0 PDF](https://pdf.plantuml.net/PlantUML_Language_Reference_Guide_en.pdf)
+- [Practical tip: Textual requirements with PlantUML - SE-Trends](https://www.se-trends.de/en/tip-textual-requirements-with-plantuml/)
+- [Introduce port placement instructions to component diagrams Issue #1766](https://github.com/plantuml/plantuml/issues/1766)
+- [SysML FAQ: What is a Block Definition Diagram (BDD)?](https://sysml.org/sysml-faq/what-is-block-definition-diagram.html)
+- [SysML FAQ: What is an Internal Block Diagram (IBD)?](https://sysml.org/sysml-faq/what-is-internal-block-diagram.html)</result>
+<usage><total_tokens>35439</total_tokens><tool_uses>29</tool_uses><duration_ms>256753</duration_ms></usage>
+</task-notification>
+
+---
+
+since svg was mentioned. would our sphinx-need-svg extension help? /home/chris/develop/open_source/sphinx-need-svg or https://github.com/cpolzer/sphinx-need-svg
+
+---
+
+could it replace plantuml??
+
+---
+
+yes
+
+---
+
+/speckit-tasks
+
+---
+
+can we check our last plan? is sphinx-need-svg mentioned/used there?
+
+---
+
+add it to the polishing
