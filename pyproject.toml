@@ -4,7 +4,7 @@ build-backend = "flit_core.buildapi"
 
 [project]
 name = "sphinxcontrib-sysml"
-version = "0.2.0"
+version = "0.2.1"
 description = "Sphinx extension for SysML v2 need types and diagrams via sphinx-needs and PlantUML"
 readme = "README.rst"
 license = { file = "LICENSE" }
@@ -102,7 +102,7 @@ testpaths = ["tests"]
 
 [tool.commitizen]
 name = "cz_conventional_commits"
-version = "0.2.0"
+version = "0.2.1"
 version_files = [
   "pyproject.toml:^version",
   "sphinxcontrib/sysml/__init__.py:VERSION",
