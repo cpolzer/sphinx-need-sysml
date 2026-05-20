@@ -130,31 +130,28 @@ Requirements
    :id: R-001
    :owned_by: RD-001
    :definition: RD-001
-   :req_text: The vehicle shall stop within 50m from 100km/h.
    :satisfies: PD-001
    :status: open
 
-   Braking distance requirement.
+   The vehicle shall stop within 50m from 100km/h.
 
 .. requirement:: Engine Power
    :id: R-002
    :owned_by: RD-001
    :definition: RD-001
-   :req_text: Engine shall produce at least 150kW.
    :satisfies: PD-002
    :status: accepted
 
-   Minimum engine power requirement.
+   Engine shall produce at least 150kW.
 
 .. requirement:: Fuel Efficiency
    :id: R-003
    :owned_by: RD-001
    :definition: RD-001
-   :req_text: Vehicle shall achieve 6L/100km combined cycle.
    :satisfies: PD-001, PD-002
    :status: open
 
-   Fuel efficiency requirement.
+   Vehicle shall achieve 6L/100km combined cycle.
 
 Actions
 -------

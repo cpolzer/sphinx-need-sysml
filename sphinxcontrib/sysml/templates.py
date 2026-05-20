@@ -38,9 +38,9 @@ REQ_BOX_TEMPLATE = """\
 class "{{ need.id }}\\n{{ need.title }}" <<requirement>> [[{{ ref(need.id) }|{{ need.title }}]] {
     == id ==
     {{ need.id }}
-{% if need.req_text %}
+{% if need.content %}
     == text ==
-    {{ need.req_text }}
+    {{ need.content }}
 {% endif %}
 }
 """

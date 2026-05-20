@@ -131,9 +131,6 @@ All need types share the following extra fields:
    * - ``allocates``
      - string
      - Comma-separated need IDs allocated to this element
-   * - ``req_text``
-     - string
-     - Formal requirement statement text
    * - ``source_port``
      - string
      - Need ID of the source Port for a connection

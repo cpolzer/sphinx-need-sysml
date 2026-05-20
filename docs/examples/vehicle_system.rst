@@ -210,35 +210,41 @@ Define requirements and link them to structural elements:
 
    .. requirement:: Braking Distance
       :id: R-001
-      :req_text: The vehicle shall stop within 50m from 100km/h.
       :satisfies: PD-001
+
+      The vehicle shall stop within 50m from 100km/h.
 
    .. requirement:: Engine Power
       :id: R-002
-      :req_text: Engine shall produce at least 150kW.
       :satisfies: PD-002
+
+      Engine shall produce at least 150kW.
 
    .. requirement:: Fuel Efficiency
       :id: R-003
-      :req_text: Vehicle shall achieve 6L/100km combined cycle.
       :satisfies: PD-001, PD-002
+
+      Vehicle shall achieve 6L/100km combined cycle.
 
 Live needs:
 
 .. requirement:: Braking Distance
    :id: R-001
-   :req_text: The vehicle shall stop within 50m from 100km/h.
    :satisfies: PD-001
+
+   The vehicle shall stop within 50m from 100km/h.
 
 .. requirement:: Engine Power
    :id: R-002
-   :req_text: Engine shall produce at least 150kW.
    :satisfies: PD-002
+
+   Engine shall produce at least 150kW.
 
 .. requirement:: Fuel Efficiency
    :id: R-003
-   :req_text: Vehicle shall achieve 6L/100km combined cycle.
    :satisfies: PD-001, PD-002
+
+   Vehicle shall achieve 6L/100km combined cycle.
 
 Block Definition Diagram
 ------------------------

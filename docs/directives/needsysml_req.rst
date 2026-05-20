@@ -58,13 +58,15 @@ Example
 
    .. requirement:: Braking Distance
       :id: R-001
-      :req_text: The vehicle shall stop within 50m from 100km/h.
       :satisfies: PD-001
+
+      The vehicle shall stop within 50m from 100km/h.
 
    .. requirement:: Engine Power
       :id: R-002
-      :req_text: Engine shall produce at least 150kW.
       :satisfies: PD-002
+
+      Engine shall produce at least 150kW.
 
    .. needsysml-req:: type == 'Requirement'
       :show-satisfy: true

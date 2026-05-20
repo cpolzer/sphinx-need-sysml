@@ -106,12 +106,11 @@ Requirement Types
    :id: R-001
    :owned_by: RD-001
    :definition: RD-001
-   :req_text: Decelerate >= 8 m/s2
    :satisfies: PD-001
    :refines:
    :allocates:
 
-   Brake distance requirement.
+   Decelerate >= 8 m/s2
 
 Diagrams
 --------

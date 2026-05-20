@@ -63,11 +63,6 @@ SYSML_FIELDS: list[FieldDef] = [
         "schema": {"type": "string"},
     },
     {
-        "name": "req_text",
-        "description": "Formal requirement statement text",
-        "schema": {"type": "string"},
-    },
-    {
         "name": "source_port",
         "description": "Need ID of the source Port for a connection",
         "schema": {"type": "string"},

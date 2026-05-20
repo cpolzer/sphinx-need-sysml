@@ -30,7 +30,6 @@ class TestFieldsRegistration:
         "satisfies",
         "refines",
         "allocates",
-        "req_text",
         "source_port",
         "target_port",
         "is_initial",
