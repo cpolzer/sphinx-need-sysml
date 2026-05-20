@@ -1,0 +1,13 @@
+name: "Setup PlantUML"
+description: "Install PlantUML jar, JRE, and Graphviz"
+
+runs:
+  using: "composite"
+  steps:
+    - run: |
+        sudo apt-get install -y default-jre graphviz
+        curl -L https://github.com/plantuml/plantuml/releases/download/v1.2025.2/plantuml-1.2025.2.jar -o /usr/local/bin/plantuml.jar
+        echo '#!/bin/sh' | sudo tee /usr/local/bin/plantuml > /dev/null
+        echo 'java -jar /usr/local/bin/plantuml.jar "$@"' | sudo tee -a /usr/local/bin/plantuml > /dev/null
+        sudo chmod +x /usr/local/bin/plantuml
+      shell: bash
