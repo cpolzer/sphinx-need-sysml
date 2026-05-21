@@ -1,5 +1,6 @@
 """Tests for the needsysml-sd directive (PlantUML + SVG variants)."""
 
+import re
 import shutil
 from pathlib import Path
 
@@ -23,6 +24,31 @@ class TestSdDirective:
     def test_sd_builds_without_error(self, sd_app):
         """The fixture builds cleanly."""
         assert sd_app is not None
+
+    def test_sd_plantuml_renders_without_errors(self, sd_app):
+        """PlantUML diagram renders without syntax errors.
+
+        Checks the rendered HTML for common PlantUML error indicators:
+        - 'Syntax Error' text in plantuml output
+        - 'ERROR' text in plantuml output
+        - Tiny plantuml images (10x10px indicates failed rendering)
+        """
+        html = (Path(sd_app.outdir) / "index.html").read_text(encoding="utf-8")
+
+        # Check for error text in plantuml sections
+        error_patterns = [
+            r'class="plantuml"[^>]*>.*?Syntax Error',
+            r'class="plantuml"[^>]*>.*?ERROR',
+        ]
+        for pattern in error_patterns:
+            match = re.search(pattern, html, re.DOTALL | re.IGNORECASE)
+            assert not match, f"PlantUML error found in HTML: {match.group(0)[:200]}"
+
+        # Check for tiny plantuml images (failed renders are often 10x10px)
+        tiny_img = re.search(
+            r'<img[^>]*plantuml[^>]*style="width:\s*10px[^>]*>', html, re.IGNORECASE
+        )
+        assert not tiny_img, "Found 10px PlantUML image (indicates render failure)"
 
     def test_sd_root_id_in_rendered_html(self, sd_app):
         """The interaction-definition ID appears in the rendered HTML."""

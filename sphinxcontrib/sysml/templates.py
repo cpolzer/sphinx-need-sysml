@@ -231,15 +231,18 @@ rectangle "{{ s }}" {
 SD_FULL_TEMPLATE = """\
 @startuml
 {% set root_id = "{root_id}" %}
-{% set lifelines = filter("type == 'Lifeline' and definition == '" + root_id + "'") | list %}
-{% set messages = filter("type == 'Message'") | list %}
+{% set lifelines = filter("type == 'lifeline' and definition == '" + root_id + "'") | list %}
+{% set messages = filter("type == 'message'") | list %}
 {% set lifeline_ids = lifelines | map(attribute='id') | list %}
 {% set state = namespace(group=None) %}
 {% for ll in lifelines %}
-participant "{{ ll.title }}" as {{ ll.id }} [[{{ ref(ll.id) }}]]
+participant "{{ ll.title }}"
 {% endfor %}
 {% for m in messages %}
 {% if m.from_lifeline in lifeline_ids and m.to_lifeline in lifeline_ids %}
+{% set from_ll = lifelines | selectattr('id', 'equalto', m.from_lifeline) | first %}
+{% set to_ll = lifelines | selectattr('id', 'equalto', m.to_lifeline) | first %}
+{% if from_ll and to_ll %}
 {% if (m.fragment_group or '') != (state.group or '') %}
 {% if state.group %}end
 {% endif %}
@@ -248,7 +251,8 @@ participant "{{ ll.title }}" as {{ ll.id }} [[{{ ref(ll.id) }}]]
 {% set state.group = m.fragment_group %}
 {% endif %}
 {% set arrow = '->' if (m.message_kind or 'sync') == 'sync' else ('->>' if m.message_kind == 'async' else '-->') %}
-{{ m.from_lifeline }} {{ arrow }} {{ m.to_lifeline }} : {{ m.title }}
+"{{ from_ll.title }}" {{ arrow }} "{{ to_ll.title }}" : {{ m.title }}
+{% endif %}
 {% endif %}
 {% endfor %}
 {% if state.group %}end{% endif %}
