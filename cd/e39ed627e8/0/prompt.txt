@@ -166,3 +166,7 @@ check again, the package diagram shows needsvg error: cannot use 'sphinx_needs.n
 ---
 
 new error: svg links are not valid, should they not link to hashtags?
+
+---
+
+yes
