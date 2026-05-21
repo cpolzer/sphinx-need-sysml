@@ -5,6 +5,9 @@
   "branch": "003-svg-helper-cleanup",
   "checkpoints_count": 2,
   "files_touched": [
+    "docs/examples/vehicle_system.rst",
+    "pyproject.toml",
+    "sphinxcontrib/sysml/svg_templates.py",
     "uv.lock"
   ],
   "sessions": [
@@ -13,13 +16,19 @@
       "transcript": "/20/f223aaa98d/0/full.jsonl",
       "content_hash": "/20/f223aaa98d/0/content_hash.txt",
       "prompt": "/20/f223aaa98d/0/prompt.txt"
+    },
+    {
+      "metadata": "/20/f223aaa98d/1/metadata.json",
+      "transcript": "/20/f223aaa98d/1/full.jsonl",
+      "content_hash": "/20/f223aaa98d/1/content_hash.txt",
+      "prompt": ""
     }
   ],
   "token_usage": {
-    "input_tokens": 661,
-    "cache_creation_tokens": 2024929,
-    "cache_read_tokens": 155686681,
-    "output_tokens": 429099,
-    "api_call_count": 481
+    "input_tokens": 949,
+    "cache_creation_tokens": 2100232,
+    "cache_read_tokens": 158278919,
+    "output_tokens": 443545,
+    "api_call_count": 530
   }
 }
