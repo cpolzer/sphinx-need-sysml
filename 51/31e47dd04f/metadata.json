@@ -1,0 +1,23 @@
+{
+  "cli_version": "0.6.2",
+  "checkpoint_id": "5131e47dd04f",
+  "strategy": "manual-commit",
+  "branch": "003-svg-helper-cleanup",
+  "checkpoints_count": 1,
+  "files_touched": null,
+  "sessions": [
+    {
+      "metadata": "/51/31e47dd04f/0/metadata.json",
+      "transcript": "/51/31e47dd04f/0/full.jsonl",
+      "content_hash": "/51/31e47dd04f/0/content_hash.txt",
+      "prompt": "/51/31e47dd04f/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 5270,
+    "cache_creation_tokens": 2248099,
+    "cache_read_tokens": 63705853,
+    "output_tokens": 162862,
+    "api_call_count": 477
+  }
+}
