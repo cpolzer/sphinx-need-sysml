@@ -1486,6 +1486,21 @@ wheels = [
 ]
 
 [[package]]
+name = "sphinx-need-svg"
+version = "0.3.1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "sphinx", version = "8.1.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
+    { name = "sphinx", version = "9.0.4", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version == '3.11.*'" },
+    { name = "sphinx", version = "9.1.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.12'" },
+    { name = "sphinx-needs" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/c3/ef/718c2ea29a129a57e028e9db1b9f809b24cb647e6d18b1ba6eecad4e90d3/sphinx_need_svg-0.3.1.tar.gz", hash = "sha256:e09a16a2f38a014213facf86a5bd92547174eb72258c524b2e0710535b51033c", size = 191203, upload-time = "2026-05-21T09:45:16.167Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/a8/59/62dd8f835265cb028a94c72248f06da6aa65b33eb33205ef4ac1a61df664/sphinx_need_svg-0.3.1-py3-none-any.whl", hash = "sha256:310a1aafcf0e0e72e80d713d11b76f45406a5448abe786cc025bd6119c9f056e", size = 9305, upload-time = "2026-05-21T09:45:14.819Z" },
+]
+
+[[package]]
 name = "sphinx-needs"
 version = "8.1.0"
 source = { registry = "https://pypi.org/simple" }
@@ -1588,7 +1603,7 @@ wheels = [
 
 [[package]]
 name = "sphinxcontrib-sysml"
-version = "0.2.3"
+version = "0.3.0"
 source = { editable = "." }
 dependencies = [
     { name = "sphinx", version = "8.1.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
@@ -1601,6 +1616,7 @@ dependencies = [
 docs = [
     { name = "pillow" },
     { name = "sphinx-immaterial" },
+    { name = "sphinx-need-svg" },
     { name = "sphinxcontrib-plantuml" },
 ]
 test = [
@@ -1608,6 +1624,7 @@ test = [
     { name = "pillow" },
     { name = "pytest" },
     { name = "pytest-cov" },
+    { name = "sphinx-need-svg" },
     { name = "sphinxcontrib-plantuml" },
 ]
 
@@ -1630,6 +1647,8 @@ requires-dist = [
     { name = "pytest-cov", marker = "extra == 'test'" },
     { name = "sphinx", specifier = ">=4.0" },
     { name = "sphinx-immaterial", marker = "extra == 'docs'" },
+    { name = "sphinx-need-svg", marker = "extra == 'docs'", specifier = ">=0.3.1" },
+    { name = "sphinx-need-svg", marker = "extra == 'test'", specifier = ">=0.3.1" },
     { name = "sphinx-needs", specifier = ">=1.0" },
     { name = "sphinxcontrib-plantuml", marker = "extra == 'docs'" },
     { name = "sphinxcontrib-plantuml", marker = "extra == 'test'" },

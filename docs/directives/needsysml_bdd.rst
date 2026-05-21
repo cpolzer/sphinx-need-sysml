@@ -29,7 +29,7 @@ Options
 
 ``:filter: <expression>``
    Override the default child filter expression. By default, the directive
-   selects needs matching ``type == 'Part' and owned_by == '<root-id>'``.
+   selects needs matching ``type == 'part' and owned_by == '<root-id>'``.
 
 ``:scale: <N>%``
    Scale the rendered diagram (e.g., ``80%``).
@@ -93,7 +93,7 @@ For full control, use ``.. needuml::`` directly with the ``sysml_bdd`` config:
 
       @startuml
       {{ uml("PD-001") }}
-      {% for part in filter("type == 'Part' and owned_by == 'PD-001'") %}
+      {% for part in filter("type == 'part' and owned_by == 'PD-001'") %}
       {{ uml(part.id) }}
       PD-001 *-- {{ part.id }}
       {% endfor %}

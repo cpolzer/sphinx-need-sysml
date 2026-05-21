@@ -102,4 +102,102 @@ SYSML_NEED_TYPES = [
         "color": "#FFEEAA",
         "style": "node",
     },
+    # === New in feature 002-full-sysml-diagrams ===
+    # State-machine
+    {
+        "directive": "transition",
+        "title": "Transition",
+        "prefix": "TRANS-",
+        "color": "#EEDDDD",
+        "style": "node",
+    },
+    # Activity
+    {
+        "directive": "controlflow",
+        "title": "ControlFlow",
+        "prefix": "CTRLFLOW-",
+        "color": "#DDEEEE",
+        "style": "node",
+    },
+    {
+        "directive": "objectflow",
+        "title": "ObjectFlow",
+        "prefix": "OBJFLOW-",
+        "color": "#CCEEDD",
+        "style": "node",
+    },
+    # Package
+    {
+        "directive": "package",
+        "title": "Package",
+        "prefix": "PKG-",
+        "color": "#EEEEFF",
+        "style": "folder",
+    },
+    {
+        "directive": "dependency",
+        "title": "Dependency",
+        "prefix": "DEP-",
+        "color": "#DDDDDD",
+        "style": "node",
+    },
+    # Use case
+    {
+        "directive": "usecase",
+        "title": "UseCase",
+        "prefix": "USECASE-",
+        "color": "#FFEEDD",
+        "style": "node",
+    },
+    {
+        "directive": "actor",
+        "title": "Actor",
+        "prefix": "ACTOR-",
+        "color": "#EEEECC",
+        "style": "actor",
+    },
+    # Parametric
+    {
+        "directive": "constraintblock",
+        "title": "ConstraintBlock",
+        "prefix": "CONSTRAINT-",
+        "color": "#FFF0DC",
+        "style": "node",
+    },
+    {
+        "directive": "constraintparameter",
+        "title": "ConstraintParameter",
+        "prefix": "PARAM-",
+        "color": "#FFE8C8",
+        "style": "node",
+    },
+    {
+        "directive": "valueproperty",
+        "title": "ValueProperty",
+        "prefix": "VALUE-",
+        "color": "#E8F4FF",
+        "style": "node",
+    },
+    {
+        "directive": "bindingconnector",
+        "title": "BindingConnector",
+        "prefix": "BIND-",
+        "color": "#D8E8FF",
+        "style": "node",
+    },
+    # Sequence
+    {
+        "directive": "lifeline",
+        "title": "Lifeline",
+        "prefix": "LIFELINE-",
+        "color": "#E0E8F0",
+        "style": "node",
+    },
+    {
+        "directive": "message",
+        "title": "Message",
+        "prefix": "MSG-",
+        "color": "#D0E0F0",
+        "style": "node",
+    },
 ]

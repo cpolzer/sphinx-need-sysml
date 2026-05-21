@@ -209,7 +209,7 @@ Block Definition Diagram
 Requirements Diagram
 ~~~~~~~~~~~~~~~~~~~~
 
-.. needsysml-req:: type == 'Requirement'
+.. needsysml-req:: type == 'requirement'
    :show-satisfy: true
    :show-refine: true
    :align: center
@@ -232,5 +232,5 @@ Need Table
 ~~~~~~~~~~
 
 .. needtable::
-   :filter: type == 'Requirement' and satisfies != ""
+   :filter: type == 'requirement' and satisfies != ""
    :columns: id, title, satisfies, status

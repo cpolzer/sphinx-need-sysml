@@ -13,6 +13,13 @@ Sphinx extension for SysML v2 need types and diagrams via sphinx-needs and Plant
    directives/needsysml_ibd
    directives/needsysml_req
    directives/needsysml_svg
+   directives/needsysml_stm
+   directives/needsysml_act
+   directives/needsysml_sd
+   directives/needsysml_uc
+   directives/needsysml_pkg
+   directives/needsysml_par
+   directives/needsysml_alloc
    examples/vehicle_system
 
 Overview
@@ -42,3 +49,8 @@ Quick Example
 
 See :doc:`install` for setup instructions and :doc:`examples/vehicle_system`
 for a complete worked example.
+
+References
+----------
+
+- `SysML v2 Diagram Tutorial <https://sysml.org/tutorials/sysml-diagram-tutorial/>`_ — Official OMG tutorial covering all SysML v2 diagram types.

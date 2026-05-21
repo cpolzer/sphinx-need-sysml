@@ -18,9 +18,10 @@ def built_app(make_app, tmp_path):
 
 
 class TestNeedTypesRegistration:
-    """Verify all 14 SysML v2 need types are registered."""
+    """Verify all 27 SysML v2 need types are registered (14 from feature 001 + 13 from 002)."""
 
     EXPECTED_TYPES = [
+        # Feature 001
         ("partdef", "PartDef", "PD-"),
         ("part", "Part", "P-"),
         ("portdef", "PortDef", "POD-"),
@@ -35,6 +36,25 @@ class TestNeedTypesRegistration:
         ("stateusage", "StateUsage", "SU-"),
         ("requirementdef", "RequirementDef", "RD-"),
         ("requirement", "Requirement", "R-"),
+        # Feature 002 — state-machine
+        ("transition", "Transition", "TRANS-"),
+        # Feature 002 — activity
+        ("controlflow", "ControlFlow", "CTRLFLOW-"),
+        ("objectflow", "ObjectFlow", "OBJFLOW-"),
+        # Feature 002 — package
+        ("package", "Package", "PKG-"),
+        ("dependency", "Dependency", "DEP-"),
+        # Feature 002 — use case
+        ("usecase", "UseCase", "USECASE-"),
+        ("actor", "Actor", "ACTOR-"),
+        # Feature 002 — parametric (registered in v1; rendered in v1.1)
+        ("constraintblock", "ConstraintBlock", "CONSTRAINT-"),
+        ("constraintparameter", "ConstraintParameter", "PARAM-"),
+        ("valueproperty", "ValueProperty", "VALUE-"),
+        ("bindingconnector", "BindingConnector", "BIND-"),
+        # Feature 002 — sequence
+        ("lifeline", "Lifeline", "LIFELINE-"),
+        ("message", "Message", "MSG-"),
     ]
 
     @pytest.mark.parametrize("directive,title,prefix", EXPECTED_TYPES)

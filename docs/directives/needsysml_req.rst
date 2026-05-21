@@ -21,7 +21,7 @@ Required Argument
 
 ``<filter-expr>``
    A sphinx-needs filter expression selecting which needs to include.
-   Example: ``type == 'Requirement' and status == 'open'``
+   Example: ``type == 'requirement' and status == 'open'``
 
 Options
 -------
@@ -68,7 +68,7 @@ Example
 
       Engine shall produce at least 150kW.
 
-   .. needsysml-req:: type == 'Requirement'
+   .. needsysml-req:: type == 'requirement'
       :show-satisfy: true
       :show-refine: false
       :align: center
@@ -81,7 +81,7 @@ Filter Expressions
 
 Filter expressions use sphinx-needs' standard filter syntax. Common patterns:
 
-- ``type == 'Requirement'`` — all requirement needs
-- ``type == 'Requirement' and status == 'open'`` — open requirements only
+- ``type == 'requirement'`` — all requirement needs
+- ``type == 'requirement' and status == 'open'`` — open requirements only
 - ``satisfies != ""`` — requirements that satisfy something
 - ``owned_by == 'RD-001'`` — requirements owned by a specific definition

@@ -4,7 +4,7 @@ build-backend = "flit_core.buildapi"
 
 [project]
 name = "sphinxcontrib-sysml"
-version = "0.2.4"
+version = "0.3.0"
 description = "Sphinx extension for SysML v2 need types and diagrams via sphinx-needs and PlantUML"
 readme = "README.rst"
 license = { file = "LICENSE" }
@@ -35,13 +35,13 @@ test = [
   "pytest>=7.0",
   "pytest-cov",
   "sphinxcontrib-plantuml",
-  "sphinx-need-svg",
+  "sphinx-need-svg>=0.3.1",
   "Pillow",
 ]
 docs = [
   "sphinx-immaterial",
   "sphinxcontrib-plantuml",
-  "sphinx-need-svg",
+  "sphinx-need-svg>=0.3.1",
   "Pillow",
 ]
 
@@ -107,7 +107,7 @@ testpaths = ["tests"]
 
 [tool.commitizen]
 name = "cz_conventional_commits"
-version = "0.2.4"
+version = "0.3.0"
 version_files = [
   "pyproject.toml:^version",
   "sphinxcontrib/sysml/__init__.py:VERSION",
