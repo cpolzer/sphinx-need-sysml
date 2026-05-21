@@ -678,7 +678,15 @@ Custom SVG with ``needsvg``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 For full control, drop into a raw ``needsvg`` directive and use the
-Jinja helpers (``needs``, ``filter``, ``flow``, ``ref``) directly:
+Jinja helpers (``needs``, ``filter``) directly.
+
+.. note::
+
+   We render need cards with inline ``<a href="#{{ id }}">`` instead of
+   the ``flow()`` helper. ``flow()`` is fine when the SVG and the need
+   live on different pages, but on the same page it produces a doubled
+   path (``examples/page.html#ID`` resolved from
+   ``examples/page.html``). A pure fragment link works in both cases.
 
 .. code-block:: rst
 
@@ -686,14 +694,27 @@ Jinja helpers (``needs``, ``filter``, ``flow``, ``ref``) directly:
       :align: center
 
       {% set root_id = "PD-002" %}
+      {% set root = needs.get(root_id) %}
       {% set children = filter("type == 'partdef' and owned_by == '" + root_id + "'") %}
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 240">
-        <g transform="translate(240, 20)">{{ flow(root_id) }}</g>
+        <g transform="translate(240, 20)">
+          <a href="#{{ root_id }}">
+            <rect width="120" height="40" rx="4" fill="#ddeeff" stroke="#336699"/>
+            <text x="60" y="16" text-anchor="middle" font-size="10" fill="#666">{{ root_id }}</text>
+            <text x="60" y="30" text-anchor="middle" font-size="11">{{ root.title }}</text>
+          </a>
+        </g>
         {% for child in children %}
         {% set cx = 150 * loop.index %}
         <line x1="300" y1="60" x2="{{ cx }}" y2="180"
               stroke="#336699" stroke-width="1.5"/>
-        <g transform="translate({{ cx - 60 }}, 180)">{{ flow(child.id) }}</g>
+        <g transform="translate({{ cx - 60 }}, 180)">
+          <a href="#{{ child.id }}">
+            <rect width="120" height="40" rx="4" fill="#ddeeff" stroke="#336699"/>
+            <text x="60" y="16" text-anchor="middle" font-size="10" fill="#666">{{ child.id }}</text>
+            <text x="60" y="30" text-anchor="middle" font-size="11">{{ child.title }}</text>
+          </a>
+        </g>
         {% endfor %}
       </svg>
 
@@ -701,14 +722,27 @@ Jinja helpers (``needs``, ``filter``, ``flow``, ``ref``) directly:
    :align: center
 
    {% set root_id = "PD-002" %}
+   {% set root = needs.get(root_id) %}
    {% set children = filter("type == 'partdef' and owned_by == '" + root_id + "'") %}
    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 240">
-     <g transform="translate(240, 20)">{{ flow(root_id) }}</g>
+     <g transform="translate(240, 20)">
+       <a href="#{{ root_id }}">
+         <rect width="120" height="40" rx="4" fill="#ddeeff" stroke="#336699"/>
+         <text x="60" y="16" text-anchor="middle" font-size="10" fill="#666">{{ root_id }}</text>
+         <text x="60" y="30" text-anchor="middle" font-size="11">{{ root.title }}</text>
+       </a>
+     </g>
      {% for child in children %}
      {% set cx = 150 * loop.index %}
      <line x1="300" y1="60" x2="{{ cx }}" y2="180"
            stroke="#336699" stroke-width="1.5"/>
-     <g transform="translate({{ cx - 60 }}, 180)">{{ flow(child.id) }}</g>
+     <g transform="translate({{ cx - 60 }}, 180)">
+       <a href="#{{ child.id }}">
+         <rect width="120" height="40" rx="4" fill="#ddeeff" stroke="#336699"/>
+         <text x="60" y="16" text-anchor="middle" font-size="10" fill="#666">{{ child.id }}</text>
+         <text x="60" y="30" text-anchor="middle" font-size="11">{{ child.title }}</text>
+       </a>
+     </g>
      {% endfor %}
    </svg>
 
@@ -749,7 +783,13 @@ helpers:
               fill="#336699">{{ parent }} (IBD)</text>
         {% for part in parts %}
         {% set px = 40 + (loop.index0 * 280) %}
-        <g transform="translate({{ px }}, 60)">{{ flow(part.id) }}</g>
+        <g transform="translate({{ px }}, 60)">
+          <a href="#{{ part.id }}">
+            <rect width="120" height="40" rx="4" fill="#ddeeff" stroke="#336699"/>
+            <text x="60" y="16" text-anchor="middle" font-size="10" fill="#666">{{ part.id }}</text>
+            <text x="60" y="30" text-anchor="middle" font-size="11">{{ part.title }}</text>
+          </a>
+        </g>
         {% set ports = filter("type == 'port' and owned_by == '" + part.id + "'") %}
         {% for port in ports %}
         <circle cx="{{ px + (loop.index0 * 30) + 10 }}" cy="110"
@@ -773,7 +813,13 @@ helpers:
            fill="#336699">{{ parent }} (IBD)</text>
      {% for part in parts %}
      {% set px = 40 + (loop.index0 * 280) %}
-     <g transform="translate({{ px }}, 60)">{{ flow(part.id) }}</g>
+     <g transform="translate({{ px }}, 60)">
+       <a href="#{{ part.id }}">
+         <rect width="120" height="40" rx="4" fill="#ddeeff" stroke="#336699"/>
+         <text x="60" y="16" text-anchor="middle" font-size="10" fill="#666">{{ part.id }}</text>
+         <text x="60" y="30" text-anchor="middle" font-size="11">{{ part.title }}</text>
+       </a>
+     </g>
      {% set ports = filter("type == 'port' and owned_by == '" + part.id + "'") %}
      {% for port in ports %}
      <circle cx="{{ px + (loop.index0 * 30) + 10 }}" cy="110"
@@ -821,7 +867,11 @@ A simple SVG list of requirements with their satisfy links, built using
            viewBox="0 0 640 {{ 40 + (reqs | length) * 60 }}">
         {% for r in reqs %}
         <g transform="translate(20, {{ 20 + loop.index0 * 60 }})">
-          {{ flow(r.id) }}
+          <a href="#{{ r.id }}">
+            <rect width="120" height="40" rx="4" fill="#ddeeff" stroke="#336699"/>
+            <text x="60" y="16" text-anchor="middle" font-size="10" fill="#666">{{ r.id }}</text>
+            <text x="60" y="30" text-anchor="middle" font-size="11">{{ r.title }}</text>
+          </a>
         </g>
         {% if r.satisfies %}
         <text x="160" y="{{ 45 + loop.index0 * 60 }}"
@@ -840,7 +890,11 @@ A simple SVG list of requirements with their satisfy links, built using
         viewBox="0 0 640 {{ 40 + (reqs | length) * 60 }}">
      {% for r in reqs %}
      <g transform="translate(20, {{ 20 + loop.index0 * 60 }})">
-       {{ flow(r.id) }}
+       <a href="#{{ r.id }}">
+         <rect width="120" height="40" rx="4" fill="#ddeeff" stroke="#336699"/>
+         <text x="60" y="16" text-anchor="middle" font-size="10" fill="#666">{{ r.id }}</text>
+         <text x="60" y="30" text-anchor="middle" font-size="11">{{ r.title }}</text>
+       </a>
      </g>
      {% if r.satisfies %}
      <text x="160" y="{{ 45 + loop.index0 * 60 }}"

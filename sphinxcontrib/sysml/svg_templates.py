@@ -25,7 +25,13 @@ BDD_SVG_TEMPLATE = """\
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 260" width="100%">
   {% set root = needs.get(root_id) %}
   {% if root %}
-  <g transform="translate(300, 20)">{{ flow(root_id) }}</g>
+  <g transform="translate(300, 20)">
+    <a href="#{{ root_id }}">
+      <rect width="120" height="40" rx="4" fill="#ddeeff" stroke="#336699"/>
+      <text x="60" y="16" text-anchor="middle" font-size="10" fill="#666">{{ root_id }}</text>
+      <text x="60" y="30" text-anchor="middle" font-size="11">{{ root.title }}</text>
+    </a>
+  </g>
   {% set count = children | length %}
   {% if count > 0 %}
   {% set step = (720 // (count + 1)) %}
@@ -34,7 +40,13 @@ BDD_SVG_TEMPLATE = """\
   <line x1="360" y1="60" x2="{{ cx }}" y2="180"
         stroke="#336699" stroke-width="1.5"/>
   <polygon points="358,55 366,55 362,65" fill="#336699"/>
-  <g transform="translate({{ cx - 60 }}, 180)">{{ flow(child.id) }}</g>
+  <g transform="translate({{ cx - 60 }}, 180)">
+    <a href="#{{ child.id }}">
+      <rect width="120" height="40" rx="4" fill="#ddeeff" stroke="#336699"/>
+      <text x="60" y="16" text-anchor="middle" font-size="10" fill="#666">{{ child.id }}</text>
+      <text x="60" y="30" text-anchor="middle" font-size="11">{{ child.title }}</text>
+    </a>
+  </g>
   {% endfor %}
   {% else %}
   <text x="360" y="150" text-anchor="middle"
@@ -95,7 +107,7 @@ ACT_SVG_TEMPLATE = """\
   <text x="{{ cx }}" y="{{ cy + 26 }}" text-anchor="middle"
         font-family="monospace" font-size="9" fill="#666">{{ a.id }}</text>
   {% else %}
-  <a href="{{ ref(a.id) }}">
+  <a href="#{{ a.id }}">
     <rect x="{{ cx - 70 }}" y="{{ cy }}" width="140" height="44"
           rx="20" fill="#FFEEDD" stroke="#CC9966"/>
     <text x="{{ cx }}" y="{{ cy + 18 }}" text-anchor="middle"
@@ -133,7 +145,7 @@ UC_SVG_TEMPLATE = """\
   {% for a in actors %}
   {% set ay = 60 + loop.index0 * 80 %}
   {% set _ = actor_pos.update({a.id: [80, ay + 20]}) %}
-  <a href="{{ ref(a.id) }}">
+  <a href="#{{ a.id }}">
     <circle cx="80" cy="{{ ay }}" r="10" fill="#EEEECC" stroke="#886600"/>
     <line x1="80" y1="{{ ay + 10 }}" x2="80" y2="{{ ay + 25 }}" stroke="#886600"/>
     <line x1="65" y1="{{ ay + 15 }}" x2="95" y2="{{ ay + 15 }}" stroke="#886600"/>
@@ -152,7 +164,7 @@ UC_SVG_TEMPLATE = """\
   {% for uc in use_cases %}
   {% set uy = 90 + loop.index0 * 70 %}
   {% set _ = uc_pos.update({uc.id: [460, uy]}) %}
-  <a href="{{ ref(uc.id) }}">
+  <a href="#{{ uc.id }}">
     <ellipse cx="460" cy="{{ uy }}" rx="120" ry="24"
              fill="#FFEEDD" stroke="#CC8800"/>
     <text x="460" y="{{ uy + 4 }}" text-anchor="middle"
@@ -218,7 +230,7 @@ PKG_SVG_TEMPLATE = """\
 {% set children = all_packages | selectattr('parent_package', 'equalto', root_id) | list %}
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 380" width="100%">
   {% if root %}
-  <a href="{{ ref(root.id) }}">
+  <a href="#{{ root.id }}">
     <rect x="20" y="20" width="720" height="340"
           fill="#EEEEFF" stroke="#336699" stroke-width="2"/>
     <text x="36" y="42" font-family="sans-serif" font-size="13"
@@ -231,7 +243,7 @@ PKG_SVG_TEMPLATE = """\
   {% for c in children %}
   {% set cx = 40 + loop.index0 * cw %}
   {% set _ = child_pos.update({c.id: [cx + cw // 2, 200]}) %}
-  <a href="{{ ref(c.id) }}">
+  <a href="#{{ c.id }}">
     <rect x="{{ cx }}" y="80" width="{{ cw - 20 }}" height="220"
           fill="#FFFFFF" stroke="#336699"/>
     <text x="{{ cx + 12 }}" y="100" font-family="sans-serif" font-size="11"
@@ -281,7 +293,7 @@ SD_SVG_TEMPLATE = """\
   {% if lifelines | length > 0 %}
   {% for ll in lifelines %}
   {% set lx = 60 + loop.index0 * col_w %}
-  <a href="{{ ref(ll.id) }}">
+  <a href="#{{ ll.id }}">
     <rect x="{{ lx - 60 }}" y="20" width="120" height="40"
           rx="4" fill="#E0E8F0" stroke="#336699"/>
     <text x="{{ lx }}" y="36" text-anchor="middle"
@@ -323,7 +335,7 @@ SD_SVG_TEMPLATE = """\
            fill="{{ '#444' if marker_id == 'filled' else 'none' }}" stroke="#444"/>
   <text x="{{ (sx + dx) // 2 }}" y="{{ msg_y.val - 4 }}" text-anchor="middle"
         font-family="sans-serif" font-size="10" fill="#222">
-    <a href="{{ ref(m.id) }}">{{ m.title }}</a>
+    <a href="#{{ m.id }}">{{ m.title }}</a>
   </text>
   {% set msg_y.val = msg_y.val + row_h %}
   {% endif %}
@@ -375,7 +387,7 @@ STM_SVG_TEMPLATE = """\
   {% elif s.pseudo_kind == 'junction' %}
   <circle cx="{{ cx }}" cy="{{ cy + 20 }}" r="6" fill="#888888" stroke="#444"/>
   {% else %}
-  <a href="{{ ref(s.id) }}">
+  <a href="#{{ s.id }}">
     <rect x="{{ cx - 55 }}" y="{{ cy }}" width="110" height="40"
           rx="8" fill="#EEEEDD" stroke="#888866"/>
     <text x="{{ cx }}" y="{{ cy + 16 }}" text-anchor="middle"
@@ -429,7 +441,13 @@ IBD_SVG_TEMPLATE = """\
   {% if count > 0 %}
   {% for part in parts %}
   {% set px = 60 + ((680 - 120) // (count + 1)) * loop.index - 60 %}
-  <g transform="translate({{ px }}, 90)">{{ flow(part.id) }}</g>
+  <g transform="translate({{ px }}, 90)">
+    <a href="#{{ part.id }}">
+      <rect width="120" height="40" rx="4" fill="#ddeeff" stroke="#336699"/>
+      <text x="60" y="16" text-anchor="middle" font-size="10" fill="#666">{{ part.id }}</text>
+      <text x="60" y="30" text-anchor="middle" font-size="11">{{ part.title }}</text>
+    </a>
+  </g>
   {% set ports = filter("type == 'port' and owned_by == '" + part.id + "'") | list %}
   {% for port in ports %}
   <circle cx="{{ px + (loop.index0 * 28) + 10 }}" cy="150"
