@@ -112,24 +112,24 @@ PKG_FULL_TEMPLATE = """\
 {% set root = needs.get(root_id) %}
 {% if root %}
 {% set level1 = filter("type == 'package' and parent_package == '" + root_id + "'") | list %}
-package "{{ root.title }}" as {{ root.id }} [[{{ ref(root.id) }}]] {
+package "{{ root.title }}" {
 {% for c1 in level1 %}
 {% set level2 = filter("type == 'package' and parent_package == '" + c1.id + "'") | list %}
 {% if (level2 | length) > 0 %}
-package "{{ c1.title }}" as {{ c1.id }} [[{{ ref(c1.id) }}]] {
+package "{{ c1.title }}" {
 {% for c2 in level2 %}
-package "{{ c2.title }}" as {{ c2.id }} [[{{ ref(c2.id) }}]]
+package "{{ c2.title }}"
 {% endfor %}
 }
 {% else %}
-package "{{ c1.title }}" as {{ c1.id }} [[{{ ref(c1.id) }}]]
+package "{{ c1.title }}"
 {% endif %}
 {% endfor %}
 }
 {% set deps = filter("type == 'Dependency'") | list %}
 {% for d in deps %}
 {% if needs.get(d.source_ref) and needs.get(d.target_ref) %}
-{{ d.source_ref }} ..> {{ d.target_ref }} : <<{{ d.kind or 'use' }}>>
+"{{ needs.get(d.source_ref).title }}" ..> "{{ needs.get(d.target_ref).title }}" : <<{{ d.kind or 'use' }}>>
 {% endif %}
 {% endfor %}
 {% endif %}
@@ -151,22 +151,22 @@ UC_FULL_TEMPLATE = """\
 {% set use_cases = use_cases | selectattr('subject', 'equalto', subject_filter) | list %}
 {% endif %}
 {% set uc_ids = use_cases | map(attribute='id') | list %}
-{% set actors = filter("type == 'Actor'") | list %}
+{% set actors = filter("type == 'actor'") | list %}
 {% set non_default_subjects = use_cases | map(attribute='subject') | reject('equalto', None) | reject('equalto', '') | unique | list %}
 {% set has_default_subject = (use_cases | rejectattr('subject') | list | length) > 0 or (use_cases | selectattr('subject', 'equalto', '') | list | length) > 0 %}
 {% set subjects = non_default_subjects + (['_default'] if has_default_subject else []) %}
 {% for a in actors %}
-actor "{{ a.title }}" as {{ a.id }} [[{{ ref(a.id) }}]]
+actor "{{ a.title }}"
 {% endfor %}
 {% for s in subjects %}
 {% if s == '_default' %}
 {% for uc in use_cases if (uc.subject or '_default') == '_default' %}
-usecase "{{ uc.title }}" as {{ uc.id }} [[{{ ref(uc.id) }}]]
+usecase "{{ uc.title }}"
 {% endfor %}
 {% else %}
 rectangle "{{ s }}" {
 {% for uc in use_cases if uc.subject == s %}
-    usecase "{{ uc.title }}" as {{ uc.id }} [[{{ ref(uc.id) }}]]
+    usecase "{{ uc.title }}"
 {% endfor %}
 }
 {% endif %}
@@ -176,7 +176,10 @@ rectangle "{{ s }}" {
 {% for uc_id in a.interacts_with.split(",") %}
 {% set uc_id_stripped = uc_id | trim %}
 {% if uc_id_stripped in uc_ids %}
-{{ a.id }} --> {{ uc_id_stripped }}
+{% set target_uc = use_cases | selectattr('id', 'equalto', uc_id_stripped) | first %}
+{% if target_uc %}
+"{{ a.title }}" --> "{{ target_uc.title }}"
+{% endif %}
 {% endif %}
 {% endfor %}
 {% endif %}
@@ -184,17 +187,35 @@ rectangle "{{ s }}" {
 {% for uc in use_cases %}
 {% if uc.extends %}
 {% for target in uc.extends.split(",") %}
-{{ uc.id }} ..> {{ target | trim }} : <<extend>>
+{% set target_id = target | trim %}
+{% if target_id in uc_ids %}
+{% set target_uc = use_cases | selectattr('id', 'equalto', target_id) | first %}
+{% if target_uc %}
+"{{ uc.title }}" ..> "{{ target_uc.title }}" : <<extend>>
+{% endif %}
+{% endif %}
 {% endfor %}
 {% endif %}
 {% if uc.includes %}
 {% for target in uc.includes.split(",") %}
-{{ uc.id }} ..> {{ target | trim }} : <<include>>
+{% set target_id = target | trim %}
+{% if target_id in uc_ids %}
+{% set target_uc = use_cases | selectattr('id', 'equalto', target_id) | first %}
+{% if target_uc %}
+"{{ uc.title }}" ..> "{{ target_uc.title }}" : <<include>>
+{% endif %}
+{% endif %}
 {% endfor %}
 {% endif %}
 {% if uc.generalizes %}
 {% for target in uc.generalizes.split(",") %}
-{{ uc.id }} <|-- {{ target | trim }}
+{% set target_id = target | trim %}
+{% if target_id in uc_ids %}
+{% set target_uc = use_cases | selectattr('id', 'equalto', target_id) | first %}
+{% if target_uc %}
+"{{ uc.title }}" <|-- "{{ target_uc.title }}"
+{% endif %}
+{% endif %}
 {% endfor %}
 {% endif %}
 {% endfor %}

@@ -36,7 +36,7 @@ class NeedsymlUcDirective(SphinxDirective):
         if self.arguments:
             filter_expr = self.arguments[0]
         else:
-            filter_expr = self.options.get("filter", "type == 'UseCase'")
+            filter_expr = self.options.get("filter", "type == 'usecase'")
         subject_filter = self.options.get("subject", "")
         scale = self.options.get("scale")
         align = self.options.get("align", "center")
@@ -88,7 +88,7 @@ class NeedsymlUcSvgDirective(SphinxDirective):
         if self.arguments:
             filter_expr = self.arguments[0]
         else:
-            filter_expr = self.options.get("filter", "type == 'UseCase'")
+            filter_expr = self.options.get("filter", "type == 'usecase'")
         align = self.options.get("align", "center")
         width = self.options.get("width", "100%")
         content = _substitute(UC_SVG_TEMPLATE, "", filter_expr)
