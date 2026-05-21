@@ -154,3 +154,7 @@ we have linting errors. how can we pass pre commit hooks and then have ci lintin
 <status>completed</status>
 <summary>Background command "Re-run regression check synchronously" completed (exit code 0)</summary>
 </task-notification>
+
+---
+
+please check on the greated html pages, i am not able to see any meaningfull svg diagram rendered? even empty
