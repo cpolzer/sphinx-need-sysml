@@ -136,3 +136,11 @@ Yes
 ---
 
 push, open mr
+
+---
+
+/loop check pytest output and continue speckit-implement
+
+---
+
+we have linting errors. how can we pass pre commit hooks and then have ci linting errors?
