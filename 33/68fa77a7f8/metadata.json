@@ -1,0 +1,39 @@
+{
+  "cli_version": "0.6.2",
+  "checkpoint_id": "3368fa77a7f8",
+  "strategy": "manual-commit",
+  "branch": "003-svg-helper-cleanup",
+  "checkpoints_count": 6,
+  "files_touched": [
+    "docs/directives/needsysml_alloc.rst",
+    "docs/directives/needsysml_par.rst",
+    "docs/examples/vehicle_system.rst",
+    "docs/index.rst",
+    "sphinxcontrib/sysml/__init__.py",
+    "sphinxcontrib/sysml/directives/needsysml_alloc.py",
+    "sphinxcontrib/sysml/directives/needsysml_par.py",
+    "sphinxcontrib/sysml/svg_templates.py",
+    "sphinxcontrib/sysml/templates.py",
+    "tests/doc_test/alloc/conf.py",
+    "tests/doc_test/alloc/index.rst",
+    "tests/doc_test/par/conf.py",
+    "tests/doc_test/par/index.rst",
+    "tests/test_alloc_directive.py",
+    "tests/test_par_directive.py"
+  ],
+  "sessions": [
+    {
+      "metadata": "/33/68fa77a7f8/0/metadata.json",
+      "transcript": "/33/68fa77a7f8/0/full.jsonl",
+      "content_hash": "/33/68fa77a7f8/0/content_hash.txt",
+      "prompt": "/33/68fa77a7f8/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 1110,
+    "cache_creation_tokens": 329204,
+    "cache_read_tokens": 24838121,
+    "output_tokens": 59530,
+    "api_call_count": 187
+  }
+}
