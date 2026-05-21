@@ -51,8 +51,8 @@ class TestFieldsRegistration:
         # Feature 002 — package
         "parent_package",
         "kind",
-        "source",
-        "target",
+        "source_ref",
+        "target_ref",
         # Feature 002 — use case
         "subject",
         "extends",

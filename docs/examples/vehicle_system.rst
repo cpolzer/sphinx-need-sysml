@@ -379,14 +379,14 @@ dependencies labelled by kind.
 
 .. dependency:: pt_uses_controls
    :id: DEP-001
-   :source: PKG-002
-   :target: PKG-004
+   :source_ref: PKG-002
+   :target_ref: PKG-004
    :kind: use
 
 .. dependency:: chassis_imports_controls
    :id: DEP-002
-   :source: PKG-003
-   :target: PKG-004
+   :source_ref: PKG-003
+   :target_ref: PKG-004
    :kind: import
 
 Package Diagram (PlantUML)

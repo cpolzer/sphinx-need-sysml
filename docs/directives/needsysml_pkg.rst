@@ -53,8 +53,8 @@ A ``Dependency`` need wires two packages together:
 
    .. dependency:: pt_uses_chassis
       :id: DEP-001
-      :source: PKG-002
-      :target: PKG-003
+      :source_ref: PKG-002
+      :target_ref: PKG-003
       :kind: use
 
 The ``:kind:`` enum values:

@@ -50,7 +50,7 @@ BDD_FULL_TEMPLATE = """\
 {% set root = needs.get(root_id) %}
 {% if root %}
 {{ uml(root_id) }}
-{% for child in filter("type == 'part' and owned_by == '" + root_id + "'") %}
+{% for child in filter("type == 'Part' and owned_by == '" + root_id + "'") %}
 {{ uml(child.id) }}
 {{ root_id }} *-- {{ child.id }}
 {% endfor %}
@@ -63,9 +63,9 @@ IBD_FULL_TEMPLATE = """\
 {% set root = needs.get(root_id) %}
 {% if root %}
 rectangle "{{ root.title }}" <<ibd>> {
-{% for child in filter("type == 'part' and owned_by == '" + root_id + "'") %}
+{% for child in filter("type == 'Part' and owned_by == '" + root_id + "'") %}
     component "{{ child.id }}\\n{{ child.title }}" <<Part>> as {{ child.id }} {
-{% for port in filter("type == 'port' and owned_by == '" + child.id + "'") %}
+{% for port in filter("type == 'Port' and owned_by == '" + child.id + "'") %}
         portin {{ port.id }}
 {% endfor %}
     }
@@ -111,10 +111,10 @@ PKG_FULL_TEMPLATE = """\
 {% set root_id = "{root_id}" %}
 {% set root = needs.get(root_id) %}
 {% if root %}
-{% set level1 = filter("type == 'package' and parent_package == '" + root_id + "'") | list %}
+{% set level1 = filter("type == 'Package' and parent_package == '" + root_id + "'") | list %}
 package "{{ root.title }}" as {{ root.id }} [[{{ ref(root.id) }}]] {
 {% for c1 in level1 %}
-{% set level2 = filter("type == 'package' and parent_package == '" + c1.id + "'") | list %}
+{% set level2 = filter("type == 'Package' and parent_package == '" + c1.id + "'") | list %}
 {% if (level2 | length) > 0 %}
 package "{{ c1.title }}" as {{ c1.id }} [[{{ ref(c1.id) }}]] {
 {% for c2 in level2 %}
@@ -126,10 +126,10 @@ package "{{ c1.title }}" as {{ c1.id }} [[{{ ref(c1.id) }}]]
 {% endif %}
 {% endfor %}
 }
-{% set deps = filter("type == 'dependency'") | list %}
+{% set deps = filter("type == 'Dependency'") | list %}
 {% for d in deps %}
-{% if needs.get(d.source) and needs.get(d.target) %}
-{{ d.source }} ..> {{ d.target }} : <<{{ d.kind or 'use' }}>>
+{% if needs.get(d.source_ref) and needs.get(d.target_ref) %}
+{{ d.source_ref }} ..> {{ d.target_ref }} : <<{{ d.kind or 'use' }}>>
 {% endif %}
 {% endfor %}
 {% endif %}
@@ -138,7 +138,7 @@ package "{{ c1.title }}" as {{ c1.id }} [[{{ ref(c1.id) }}]]
 
 
 # Use case — actors outside system boundaries, use cases inside. Walks
-# UseCase needs matching `filter_expr` (default `type == 'usecase'`).
+# UseCase needs matching `filter_expr` (default `type == 'UseCase'`).
 # Groups by `subject` for boundaries. Actors with `interacts_with` get
 # solid association lines per listed UseCase. extends/includes/
 # generalizes between UseCases render as dashed labelled arrows.
@@ -151,7 +151,7 @@ UC_FULL_TEMPLATE = """\
 {% set use_cases = use_cases | selectattr('subject', 'equalto', subject_filter) | list %}
 {% endif %}
 {% set uc_ids = use_cases | map(attribute='id') | list %}
-{% set actors = filter("type == 'actor'") | list %}
+{% set actors = filter("type == 'Actor'") | list %}
 {% set non_default_subjects = use_cases | map(attribute='subject') | reject('equalto', None) | reject('equalto', '') | unique | list %}
 {% set has_default_subject = (use_cases | rejectattr('subject') | list | length) > 0 or (use_cases | selectattr('subject', 'equalto', '') | list | length) > 0 %}
 {% set subjects = non_default_subjects + (['_default'] if has_default_subject else []) %}
@@ -210,8 +210,8 @@ rectangle "{{ s }}" {
 SD_FULL_TEMPLATE = """\
 @startuml
 {% set root_id = "{root_id}" %}
-{% set lifelines = filter("type == 'lifeline' and definition == '" + root_id + "'") | list %}
-{% set messages = filter("type == 'message'") | list %}
+{% set lifelines = filter("type == 'Lifeline' and definition == '" + root_id + "'") | list %}
+{% set messages = filter("type == 'Message'") | list %}
 {% set lifeline_ids = lifelines | map(attribute='id') | list %}
 {% set state = namespace(group=None) %}
 {% for ll in lifelines %}
@@ -244,9 +244,9 @@ ACT_FULL_TEMPLATE = """\
 @startuml
 {% set root_id = "{root_id}" %}
 {% set show_partitions = ({show_partitions} == 'true') %}
-{% set actions = filter("type == 'action' and definition == '" + root_id + "'") | list %}
-{% set ctrl_flows = filter("type == 'controlflow'") | list %}
-{% set obj_flows = filter("type == 'objectflow'") | list %}
+{% set actions = filter("type == 'Action' and definition == '" + root_id + "'") | list %}
+{% set ctrl_flows = filter("type == 'ControlFlow'") | list %}
+{% set obj_flows = filter("type == 'ObjectFlow'") | list %}
 {% set action_ids = actions | map(attribute='id') | list %}
 {% if show_partitions %}
 {% set partition_names = actions | map(attribute='partition') | reject('equalto', None) | reject('equalto', '') | unique | list %}
@@ -293,8 +293,8 @@ class "{{ a.id }}\\n{{ a.title }}" <<{{ a.activity_kind or 'action' }}>> [[{{ re
 STM_FULL_TEMPLATE = """\
 @startuml
 {% set root_id = "{root_id}" %}
-{% set states = filter("type == 'stateusage' and definition == '" + root_id + "'") | list %}
-{% set transitions = filter("type == 'transition'") | list %}
+{% set states = filter("type == 'StateUsage' and definition == '" + root_id + "'") | list %}
+{% set transitions = filter("type == 'Transition'") | list %}
 {% set state_ids = states | map(attribute='id') | list %}
 {% for s in states %}
 {% if s.pseudo_kind == 'choice' %}

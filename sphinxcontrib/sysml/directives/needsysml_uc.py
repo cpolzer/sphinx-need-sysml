@@ -15,7 +15,7 @@ class NeedsymlUcDirective(SphinxDirective):
     """Generate a use case diagram.
 
     Walks ``UseCase`` needs matching the filter argument (default
-    ``type == 'usecase'``) and groups them by ``subject`` into system
+    ``type == 'UseCase'``) and groups them by ``subject`` into system
     boundaries. Actors render outside the boundary; their
     ``interacts_with`` field drives solid association lines.
     extends / includes / generalizes render between use cases as
@@ -36,7 +36,7 @@ class NeedsymlUcDirective(SphinxDirective):
         if self.arguments:
             filter_expr = self.arguments[0]
         else:
-            filter_expr = self.options.get("filter", "type == 'usecase'")
+            filter_expr = self.options.get("filter", "type == 'UseCase'")
         subject_filter = self.options.get("subject", "")
         scale = self.options.get("scale")
         align = self.options.get("align", "center")
@@ -88,7 +88,7 @@ class NeedsymlUcSvgDirective(SphinxDirective):
         if self.arguments:
             filter_expr = self.arguments[0]
         else:
-            filter_expr = self.options.get("filter", "type == 'usecase'")
+            filter_expr = self.options.get("filter", "type == 'UseCase'")
         align = self.options.get("align", "center")
         width = self.options.get("width", "100%")
         content = _substitute(UC_SVG_TEMPLATE, "", filter_expr)

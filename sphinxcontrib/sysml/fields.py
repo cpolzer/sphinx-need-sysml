@@ -176,13 +176,20 @@ SYSML_FIELDS: list[FieldDef] = [
         },
     },
     {
-        "name": "source",
-        "description": "Source need ID for a Dependency",
+        "name": "source_ref",
+        "description": (
+            "Source need ID for a Dependency. Named source_ref (not source) "
+            "to avoid collision with sphinx-needs' built-in need.source "
+            "attribute which holds the directive's source location."
+        ),
         "schema": {"type": "string"},
     },
     {
-        "name": "target",
-        "description": "Target need ID for a Dependency",
+        "name": "target_ref",
+        "description": (
+            "Target need ID for a Dependency. Named target_ref (not target) "
+            "to mirror source_ref."
+        ),
         "schema": {"type": "string"},
     },
     # Use case

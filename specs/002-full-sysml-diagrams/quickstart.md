@@ -242,8 +242,8 @@ The vehicle example in `docs/examples/vehicle_system.rst` exercises every diagra
 
 .. dependency::
    :id: DEP-001
-   :source: PKG-002
-   :target: PKG-003
+   :source_ref: PKG-002
+   :target_ref: PKG-003
    :kind: use
 
 .. needsysml-pkg:: PKG-001

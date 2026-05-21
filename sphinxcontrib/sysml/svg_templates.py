@@ -247,9 +247,9 @@ PKG_SVG_TEMPLATE = """\
   </text>
   {% endif %}
   {% for d in deps %}
-  {% if d.source in child_pos and d.target in child_pos %}
-  {% set src = child_pos[d.source] %}
-  {% set dst = child_pos[d.target] %}
+  {% if d.source_ref in child_pos and d.target_ref in child_pos %}
+  {% set src = child_pos[d.source_ref] %}
+  {% set dst = child_pos[d.target_ref] %}
   <line x1="{{ src[0] }}" y1="{{ src[1] }}" x2="{{ dst[0] }}" y2="{{ dst[1] - 20 - loop.index0 * 16 }}"
         stroke="#444" stroke-dasharray="4 3" stroke-width="1.2"/>
   <text x="{{ (src[0] + dst[0]) // 2 }}" y="{{ src[1] - 14 - loop.index0 * 16 }}" text-anchor="middle"
