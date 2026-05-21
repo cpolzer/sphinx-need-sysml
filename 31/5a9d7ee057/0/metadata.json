@@ -1,0 +1,74 @@
+{
+  "cli_version": "0.6.2",
+  "checkpoint_id": "315a9d7ee057",
+  "session_id": "ee5f5543-9f88-4838-b7fd-7e9ec9bf1398",
+  "strategy": "manual-commit",
+  "created_at": "2026-05-21T20:48:05.460108436Z",
+  "branch": "003-svg-helper-cleanup",
+  "checkpoints_count": 2,
+  "files_touched": [
+    "docs/examples/vehicle_system.rst",
+    "docs/index.rst",
+    "sphinxcontrib/sysml/svg_templates.py",
+    "sphinxcontrib/sysml/templates.py"
+  ],
+  "agent": "Claude Code",
+  "model": "",
+  "turn_id": "bab5aea87f64",
+  "checkpoint_transcript_start": 2779,
+  "transcript_lines_at_start": 2779,
+  "token_usage": {
+    "input_tokens": 167,
+    "cache_creation_tokens": 398987,
+    "cache_read_tokens": 46081756,
+    "output_tokens": 89174,
+    "api_call_count": 142
+  },
+  "session_metrics": {
+    "turn_count": 6
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-05-21T20:48:05.34713855Z",
+    "agent_lines": 196,
+    "agent_removed": 91,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 196,
+    "total_lines_changed": 287,
+    "agent_percentage": 100,
+    "metric_version": 2
+  },
+  "prompt_attributions": [
+    {
+      "checkpoint_number": 1,
+      "user_lines_added": 83,
+      "user_lines_removed": 0,
+      "agent_lines_added": 0,
+      "agent_lines_removed": 0,
+      "user_added_per_file": {
+        ".claude/settings.local.json": 83
+      }
+    },
+    {
+      "checkpoint_number": 2,
+      "user_lines_added": 86,
+      "user_lines_removed": 0,
+      "agent_lines_added": 25,
+      "agent_lines_removed": 8,
+      "user_added_per_file": {
+        ".claude/settings.local.json": 86
+      }
+    },
+    {
+      "checkpoint_number": 3,
+      "user_lines_added": 86,
+      "user_lines_removed": 0,
+      "agent_lines_added": 196,
+      "agent_lines_removed": 91,
+      "user_added_per_file": {
+        ".claude/settings.local.json": 86
+      }
+    }
+  ]
+}

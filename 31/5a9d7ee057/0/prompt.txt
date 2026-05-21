@@ -1,0 +1,5 @@
+lets move on to the "Internal Block Diagram" -> the Plantuml example is empty
+
+---
+
+no work on the block definition diagram - uml and after that svg
