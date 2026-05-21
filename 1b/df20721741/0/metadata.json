@@ -1,0 +1,96 @@
+{
+  "cli_version": "0.6.2",
+  "checkpoint_id": "1bdf20721741",
+  "session_id": "ee5f5543-9f88-4838-b7fd-7e9ec9bf1398",
+  "strategy": "manual-commit",
+  "created_at": "2026-05-21T18:11:51.951492547Z",
+  "branch": "003-svg-helper-cleanup",
+  "checkpoints_count": 3,
+  "files_touched": [
+    "sphinxcontrib/sysml/svg_templates.py",
+    "sphinxcontrib/sysml/templates.py",
+    "tests/doc_test/stm/conf.py",
+    "tests/doc_test/stm/index.rst",
+    "tests/test_stm_directive.py"
+  ],
+  "agent": "Claude Code",
+  "model": "",
+  "turn_id": "0e4f1a395a9c",
+  "token_usage": {
+    "input_tokens": 751,
+    "cache_creation_tokens": 2518994,
+    "cache_read_tokens": 169284133,
+    "output_tokens": 452084,
+    "api_call_count": 541
+  },
+  "session_metrics": {
+    "turn_count": 3
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-05-21T18:11:51.854548588Z",
+    "agent_lines": 0,
+    "agent_removed": 0,
+    "human_added": 0,
+    "human_modified": 35,
+    "human_removed": 34,
+    "total_committed": 1,
+    "total_lines_changed": 69,
+    "agent_percentage": 0,
+    "metric_version": 2
+  },
+  "prompt_attributions": [
+    {
+      "checkpoint_number": 1,
+      "user_lines_added": 351,
+      "user_lines_removed": 11,
+      "agent_lines_added": 0,
+      "agent_lines_removed": 0,
+      "user_added_per_file": {
+        ".claude/settings.local.json": 83,
+        "sphinxcontrib/sysml/svg_templates.py": 57,
+        "sphinxcontrib/sysml/templates.py": 1,
+        "tests/doc_test/stm/conf.py": 1,
+        "tests/doc_test/stm/index.rst": 3,
+        "tests/test_stm_directive.py": 206
+      },
+      "user_removed_per_file": {
+        "sphinxcontrib/sysml/svg_templates.py": 10,
+        "sphinxcontrib/sysml/templates.py": 1
+      }
+    },
+    {
+      "checkpoint_number": 2,
+      "user_lines_added": 83,
+      "user_lines_removed": 0,
+      "agent_lines_added": 268,
+      "agent_lines_removed": 11,
+      "user_added_per_file": {
+        ".claude/settings.local.json": 83
+      }
+    },
+    {
+      "checkpoint_number": 3,
+      "user_lines_added": 118,
+      "user_lines_removed": 58,
+      "agent_lines_added": 268,
+      "agent_lines_removed": 11,
+      "user_added_per_file": {
+        ".claude/settings.local.json": 83,
+        "sphinxcontrib/sysml/svg_templates.py": 35
+      },
+      "user_removed_per_file": {
+        "sphinxcontrib/sysml/svg_templates.py": 58
+      }
+    },
+    {
+      "checkpoint_number": 4,
+      "user_lines_added": 83,
+      "user_lines_removed": 0,
+      "agent_lines_added": 338,
+      "agent_lines_removed": 22,
+      "user_added_per_file": {
+        ".claude/settings.local.json": 83
+      }
+    }
+  ]
+}
