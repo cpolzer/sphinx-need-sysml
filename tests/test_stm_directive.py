@@ -1,5 +1,6 @@
 """Tests for the needsysml-stm directive (PlantUML + SVG variants)."""
 
+import re
 import shutil
 from pathlib import Path
 
@@ -23,6 +24,31 @@ class TestStmDirective:
     def test_stm_builds_without_error(self, stm_app):
         """The fixture builds cleanly."""
         assert stm_app is not None
+
+    def test_stm_plantuml_renders_without_errors(self, stm_app):
+        """PlantUML diagram renders without syntax errors.
+
+        Checks the rendered HTML for common PlantUML error indicators:
+        - 'Syntax Error' text in plantuml output
+        - 'ERROR' text in plantuml output
+        - Tiny plantuml images (10x10px indicates failed rendering)
+        """
+        html = (Path(stm_app.outdir) / "index.html").read_text(encoding="utf-8")
+
+        # Check for error text in plantuml sections
+        error_patterns = [
+            r'class="plantuml"[^>]*>.*?Syntax Error',
+            r'class="plantuml"[^>]*>.*?ERROR',
+        ]
+        for pattern in error_patterns:
+            match = re.search(pattern, html, re.DOTALL | re.IGNORECASE)
+            assert not match, f"PlantUML error found in HTML: {match.group(0)[:200]}"
+
+        # Check for tiny plantuml images (failed renders are often 10x10px)
+        tiny_img = re.search(
+            r'<img[^>]*plantuml[^>]*style="width:\s*10px[^>]*>', html, re.IGNORECASE
+        )
+        assert not tiny_img, "Found 10px PlantUML image (indicates render failure)"
 
     def test_stm_root_id_in_rendered_html(self, stm_app):
         """The root StateDef ID appears in the rendered HTML output."""

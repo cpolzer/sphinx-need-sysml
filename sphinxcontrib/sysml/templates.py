@@ -269,9 +269,9 @@ ACT_FULL_TEMPLATE = """\
 @startuml
 {% set root_id = "{root_id}" %}
 {% set show_partitions = ({show_partitions} == 'true') %}
-{% set actions = filter("type == 'Action' and definition == '" + root_id + "'") | list %}
-{% set ctrl_flows = filter("type == 'ControlFlow'") | list %}
-{% set obj_flows = filter("type == 'ObjectFlow'") | list %}
+{% set actions = filter("type == 'action' and definition == '" + root_id + "'") | list %}
+{% set ctrl_flows = filter("type == 'controlflow'") | list %}
+{% set obj_flows = filter("type == 'objectflow'") | list %}
 {% set action_ids = actions | map(attribute='id') | list %}
 {% if show_partitions %}
 {% set partition_names = actions | map(attribute='partition') | reject('equalto', None) | reject('equalto', '') | unique | list %}
@@ -280,20 +280,20 @@ ACT_FULL_TEMPLATE = """\
 {% for part in partition_names %}
 {% if part == '_default' %}
 {% for a in actions if (a.partition or '_default') == '_default' %}
-class "{{ a.id }}\\n{{ a.title }}" <<{{ a.activity_kind or 'action' }}>> [[{{ ref(a.id) }}]]
+class "{{ a.id }}\\n{{ a.title }}" <<{{ a.activity_kind or 'action' }}>>
 
 {% endfor %}
 {% else %}
 package "{{ part }}" <<swimlane>> {
 {% for a in actions if a.partition == part %}
-class "{{ a.id }}\\n{{ a.title }}" <<{{ a.activity_kind or 'action' }}>> [[{{ ref(a.id) }}]]
+class "{{ a.id }}\\n{{ a.title }}" <<{{ a.activity_kind or 'action' }}>>
 {% endfor %}
 }
 {% endif %}
 {% endfor %}
 {% else %}
 {% for a in actions %}
-class "{{ a.id }}\\n{{ a.title }}" <<{{ a.activity_kind or 'action' }}>> [[{{ ref(a.id) }}]]
+class "{{ a.id }}\\n{{ a.title }}" <<{{ a.activity_kind or 'action' }}>>
 
 {% endfor %}
 {% endif %}
@@ -318,28 +318,31 @@ class "{{ a.id }}\\n{{ a.title }}" <<{{ a.activity_kind or 'action' }}>> [[{{ re
 STM_FULL_TEMPLATE = """\
 @startuml
 {% set root_id = "{root_id}" %}
-{% set states = filter("type == 'StateUsage' and definition == '" + root_id + "'") | list %}
-{% set transitions = filter("type == 'Transition'") | list %}
+{% set states = filter("type == 'stateusage' and definition == '" + root_id + "'") | list %}
+{% set transitions = filter("type == 'transition'") | list %}
 {% set state_ids = states | map(attribute='id') | list %}
 {% for s in states %}
-{% if s.pseudo_kind == 'choice' %}
-state {{ s.id }} <<choice>>
+{% set alias = s.id | replace('-', '_') %}
+{% if s.pseudo_kind not in ('initial', 'final') %}
+state "{{ s.title }}" as {{ alias }}
+{% elif s.pseudo_kind == 'choice' %}
+state {{ alias }} <<choice>>
 {% elif s.pseudo_kind == 'junction' %}
-state {{ s.id }} <<junction>>
+state {{ alias }} <<junction>>
 {% elif s.pseudo_kind == 'shallowHistory' %}
-state {{ s.id }} <<history>>
+state {{ alias }} <<history>>
 {% elif s.pseudo_kind == 'deepHistory' %}
-state {{ s.id }} <<history*>>
-{% elif s.pseudo_kind not in ('initial', 'final') %}
-state "{{ s.title }}" as {{ s.id }} [[{{ ref(s.id) }}]]
+state {{ alias }} <<history*>>
 {% endif %}
 {% endfor %}
+{% for s in states %}{% if s.pseudo_kind == 'initial' %}[*] --> {{ s.id | replace('-', '_') }}
+{% endif %}{% endfor %}
 {% for t in transitions %}
 {% if t.from_state in state_ids and t.to_state in state_ids %}
 {% set src = needs.get(t.from_state) %}
 {% set dst = needs.get(t.to_state) %}
-{% set src_render = '[*]' if (src and src.pseudo_kind == 'initial') else t.from_state %}
-{% set dst_render = '[*]' if (dst and dst.pseudo_kind == 'final') else t.to_state %}
+{% set src_render = '[*]' if (src and src.pseudo_kind in ('initial', 'final')) else src.id | replace('-', '_') %}
+{% set dst_render = '[*]' if (dst and dst.pseudo_kind in ('initial', 'final')) else dst.id | replace('-', '_') %}
 {% set label = t.trigger or '' %}
 {% if t.guard %}{% set label = label + ' [' + t.guard + ']' %}{% endif %}
 {% if t.effect %}{% set label = label + ' / ' + t.effect %}{% endif %}
@@ -347,6 +350,8 @@ state "{{ s.title }}" as {{ s.id }} [[{{ ref(s.id) }}]]
 
 {% endif %}
 {% endfor %}
+{% for s in states %}{% if s.pseudo_kind == 'final' %}{{ s.id | replace('-', '_') }} --> [*]
+{% endif %}{% endfor %}
 @enduml
 """
 
