@@ -12,7 +12,7 @@ Usage
 .. code-block:: rst
 
    .. needsysml-uc::
-      :filter: type == 'UseCase'
+      :filter: type == 'usecase'
       :subject: Vehicle
       :align: center
 
@@ -24,14 +24,14 @@ Optional Argument
 
 You may pass the filter expression positionally for parity with the
 ``needsysml-req`` directive, or via the ``:filter:`` option. When
-neither is supplied, the default is ``type == 'UseCase'``.
+neither is supplied, the default is ``type == 'usecase'``.
 
 Options
 -------
 
 ``:filter: <expression>``
    Filter expression selecting which use cases to draw. Default
-   ``type == 'UseCase'``.
+   ``type == 'usecase'``.
 
 ``:subject: <name>``
    Limit the diagram to use cases whose ``subject`` equals this value.

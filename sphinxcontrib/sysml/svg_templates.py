@@ -54,8 +54,8 @@ BDD_SVG_TEMPLATE = """\
 
 ACT_SVG_TEMPLATE = """\
 {% set root_id = "__ROOT_ID__" %}
-{% set actions = filter("type == 'Action' and definition == '" + root_id + "'") | list %}
-{% set ctrl_flows = filter("type == 'ControlFlow'") | list %}
+{% set actions = filter("type == 'action' and definition == '" + root_id + "'") | list %}
+{% set ctrl_flows = filter("type == 'controlflow'") | list %}
 {% set action_ids = actions | map(attribute='id') | list %}
 {% set partition_names = [] %}
 {% for a in actions %}
@@ -125,7 +125,7 @@ ACT_SVG_TEMPLATE = """\
 
 UC_SVG_TEMPLATE = """\
 {% set use_cases = filter("__FILTER_EXPR__") | list %}
-{% set actors = filter("type == 'Actor'") | list %}
+{% set actors = filter("type == 'actor'") | list %}
 {% set uc_ids = use_cases | map(attribute='id') | list %}
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 {{ (actors | length + use_cases | length) * 40 + 80 }}" width="100%">
   {% if (use_cases | length) > 0 or (actors | length) > 0 %}
@@ -212,8 +212,8 @@ UC_SVG_TEMPLATE = """\
 
 PKG_SVG_TEMPLATE = """\
 {% set root_id = "__ROOT_ID__" %}
-{% set all_packages = filter("type == 'Package'") | list %}
-{% set deps = filter("type == 'Dependency'") | list %}
+{% set all_packages = filter("type == 'package'") | list %}
+{% set deps = filter("type == 'dependency'") | list %}
 {% set root = needs.get(root_id) %}
 {% set children = all_packages | selectattr('parent_package', 'equalto', root_id) | list %}
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 380" width="100%">
@@ -269,8 +269,8 @@ PKG_SVG_TEMPLATE = """\
 
 SD_SVG_TEMPLATE = """\
 {% set root_id = "__ROOT_ID__" %}
-{% set lifelines = filter("type == 'Lifeline' and definition == '" + root_id + "'") | list %}
-{% set messages = filter("type == 'Message'") | list %}
+{% set lifelines = filter("type == 'lifeline' and definition == '" + root_id + "'") | list %}
+{% set messages = filter("type == 'message'") | list %}
 {% set lifeline_ids = lifelines | map(attribute='id') | list %}
 {% set msg_count = messages | length %}
 {% set col_w = 180 %}
@@ -344,8 +344,8 @@ SD_SVG_TEMPLATE = """\
 
 STM_SVG_TEMPLATE = """\
 {% set root_id = "__ROOT_ID__" %}
-{% set states = filter("type == 'StateUsage' and definition == '" + root_id + "'") | list %}
-{% set transitions = filter("type == 'Transition'") | list %}
+{% set states = filter("type == 'stateusage' and definition == '" + root_id + "'") | list %}
+{% set transitions = filter("type == 'transition'") | list %}
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 320" width="100%">
   {% set count = states | length %}
   {% if count > 0 %}
@@ -417,7 +417,7 @@ STM_SVG_TEMPLATE = """\
 
 IBD_SVG_TEMPLATE = """\
 {% set root_id = "__ROOT_ID__" %}
-{% set parts = filter("type == 'Part' and owned_by == '" + root_id + "'") | list %}
+{% set parts = filter("type == 'part' and owned_by == '" + root_id + "'") | list %}
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 260" width="100%">
   {% set root = needs.get(root_id) %}
   {% if root %}
@@ -430,7 +430,7 @@ IBD_SVG_TEMPLATE = """\
   {% for part in parts %}
   {% set px = 60 + ((680 - 120) // (count + 1)) * loop.index - 60 %}
   <g transform="translate({{ px }}, 90)">{{ flow(part.id) }}</g>
-  {% set ports = filter("type == 'Port' and owned_by == '" + part.id + "'") | list %}
+  {% set ports = filter("type == 'port' and owned_by == '" + part.id + "'") | list %}
   {% for port in ports %}
   <circle cx="{{ px + (loop.index0 * 28) + 10 }}" cy="150"
           r="6" fill="#FFE0AA" stroke="#cc8800"/>

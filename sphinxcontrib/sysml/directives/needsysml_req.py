@@ -35,7 +35,7 @@ class NeedsymlReqDirective(SphinxDirective):
         if self.arguments:
             filter_expr = self.arguments[0]
         else:
-            filter_expr = self.options.get("filter", "type == 'Requirement'")
+            filter_expr = self.options.get("filter", "type == 'requirement'")
         show_satisfy = self.options.get("show-satisfy", "true").lower() == "true"
         show_refine = self.options.get("show-refine", "true").lower() == "true"
         show_allocate = self.options.get("show-allocate", "true").lower() == "true"

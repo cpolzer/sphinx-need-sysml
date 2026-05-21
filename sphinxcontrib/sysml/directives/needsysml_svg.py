@@ -88,7 +88,7 @@ class NeedsymlBddSvgDirective(SphinxDirective):
         align = self.options.get("align", "center")
         width = self.options.get("width", "100%")
         filter_expr = self.options.get(
-            "filter", f"type == 'PartDef' and owned_by == '{root_id}'"
+            "filter", f"type == 'partdef' and owned_by == '{root_id}'"
         )
         content = _substitute(BDD_SVG_TEMPLATE, root_id, filter_expr)
         return _emit_needsvg_node(self, content, width, align)

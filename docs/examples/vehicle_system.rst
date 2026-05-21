@@ -686,7 +686,7 @@ Jinja helpers (``needs``, ``filter``, ``flow``, ``ref``) directly:
       :align: center
 
       {% set root_id = "PD-002" %}
-      {% set children = filter("type == 'PartDef' and owned_by == '" + root_id + "'") %}
+      {% set children = filter("type == 'partdef' and owned_by == '" + root_id + "'") %}
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 240">
         <g transform="translate(240, 20)">{{ flow(root_id) }}</g>
         {% for child in children %}
@@ -701,7 +701,7 @@ Jinja helpers (``needs``, ``filter``, ``flow``, ``ref``) directly:
    :align: center
 
    {% set root_id = "PD-002" %}
-   {% set children = filter("type == 'PartDef' and owned_by == '" + root_id + "'") %}
+   {% set children = filter("type == 'partdef' and owned_by == '" + root_id + "'") %}
    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 240">
      <g transform="translate(240, 20)">{{ flow(root_id) }}</g>
      {% for child in children %}
@@ -741,7 +741,7 @@ helpers:
       :align: center
 
       {% set parent = "PD-002" %}
-      {% set parts = filter("type == 'Part' and owned_by == '" + parent + "'") %}
+      {% set parts = filter("type == 'part' and owned_by == '" + parent + "'") %}
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 220">
         <rect x="10" y="10" width="620" height="200"
               fill="none" stroke="#336699" stroke-dasharray="4 3"/>
@@ -750,7 +750,7 @@ helpers:
         {% for part in parts %}
         {% set px = 40 + (loop.index0 * 280) %}
         <g transform="translate({{ px }}, 60)">{{ flow(part.id) }}</g>
-        {% set ports = filter("type == 'Port' and owned_by == '" + part.id + "'") %}
+        {% set ports = filter("type == 'port' and owned_by == '" + part.id + "'") %}
         {% for port in ports %}
         <circle cx="{{ px + (loop.index0 * 30) + 10 }}" cy="110"
                 r="6" fill="#FFE0AA" stroke="#cc8800"/>
@@ -765,7 +765,7 @@ helpers:
    :align: center
 
    {% set parent = "PD-002" %}
-   {% set parts = filter("type == 'Part' and owned_by == '" + parent + "'") %}
+   {% set parts = filter("type == 'part' and owned_by == '" + parent + "'") %}
    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 220">
      <rect x="10" y="10" width="620" height="200"
            fill="none" stroke="#336699" stroke-dasharray="4 3"/>
@@ -774,7 +774,7 @@ helpers:
      {% for part in parts %}
      {% set px = 40 + (loop.index0 * 280) %}
      <g transform="translate({{ px }}, 60)">{{ flow(part.id) }}</g>
-     {% set ports = filter("type == 'Port' and owned_by == '" + part.id + "'") %}
+     {% set ports = filter("type == 'port' and owned_by == '" + part.id + "'") %}
      {% for port in ports %}
      <circle cx="{{ px + (loop.index0 * 30) + 10 }}" cy="110"
              r="6" fill="#FFE0AA" stroke="#cc8800"/>
@@ -793,13 +793,13 @@ allocate links.
 
 .. code-block:: rst
 
-   .. needsysml-req:: type == 'Requirement'
+   .. needsysml-req:: type == 'requirement'
       :show-satisfy: true
       :show-refine: true
       :show-allocate: true
       :align: center
 
-.. needsysml-req:: type == 'Requirement'
+.. needsysml-req:: type == 'requirement'
    :show-satisfy: true
    :show-refine: true
    :show-allocate: true
@@ -816,7 +816,7 @@ A simple SVG list of requirements with their satisfy links, built using
    .. needsvg::
       :align: center
 
-      {% set reqs = filter("type == 'Requirement'") | list %}
+      {% set reqs = filter("type == 'requirement'") | list %}
       <svg xmlns="http://www.w3.org/2000/svg"
            viewBox="0 0 640 {{ 40 + (reqs | length) * 60 }}">
         {% for r in reqs %}
@@ -835,7 +835,7 @@ A simple SVG list of requirements with their satisfy links, built using
 .. needsvg::
    :align: center
 
-   {% set reqs = filter("type == 'Requirement'") | list %}
+   {% set reqs = filter("type == 'requirement'") | list %}
    <svg xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 640 {{ 40 + (reqs | length) * 60 }}">
      {% for r in reqs %}
@@ -860,19 +860,19 @@ SysML element:
 .. code-block:: rst
 
    .. needtable::
-      :filter: type == 'Requirement' and satisfies != ""
+      :filter: type == 'requirement' and satisfies != ""
       :columns: id, title, satisfies, refines, status
 
 .. needtable::
-   :filter: type == 'Requirement' and satisfies != ""
+   :filter: type == 'requirement' and satisfies != ""
    :columns: id, title, satisfies, refines, status
 
 .. code-block:: rst
 
    .. needtable::
-      :filter: type == 'Part'
+      :filter: type == 'part'
       :columns: id, title, definition, owned_by
 
 .. needtable::
-   :filter: type == 'Part'
+   :filter: type == 'part'
    :columns: id, title, definition, owned_by
