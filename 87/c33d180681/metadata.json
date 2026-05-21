@@ -3,10 +3,12 @@
   "checkpoint_id": "87c33d180681",
   "strategy": "manual-commit",
   "branch": "003-svg-helper-cleanup",
-  "checkpoints_count": 1,
+  "checkpoints_count": 11,
   "files_touched": [
     "sphinxcontrib/sysml/directives/needsysml_uc.py",
-    "sphinxcontrib/sysml/templates.py"
+    "sphinxcontrib/sysml/templates.py",
+    "tests/test_pkg_directive.py",
+    "tests/test_uc_directive.py"
   ],
   "sessions": [
     {
@@ -14,13 +16,19 @@
       "transcript": "/87/c33d180681/0/full.jsonl",
       "content_hash": "/87/c33d180681/0/content_hash.txt",
       "prompt": "/87/c33d180681/0/prompt.txt"
+    },
+    {
+      "metadata": "/87/c33d180681/1/metadata.json",
+      "transcript": "/87/c33d180681/1/full.jsonl",
+      "content_hash": "/87/c33d180681/1/content_hash.txt",
+      "prompt": "/87/c33d180681/1/prompt.txt"
     }
   ],
   "token_usage": {
-    "input_tokens": 667,
-    "cache_creation_tokens": 2243311,
-    "cache_read_tokens": 155686681,
-    "output_tokens": 429186,
-    "api_call_count": 482
+    "input_tokens": 5571,
+    "cache_creation_tokens": 4288671,
+    "cache_read_tokens": 208567391,
+    "output_tokens": 572490,
+    "api_call_count": 898
   }
 }

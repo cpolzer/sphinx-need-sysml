@@ -1,0 +1,196 @@
+{
+  "cli_version": "0.6.2",
+  "checkpoint_id": "87c33d180681",
+  "session_id": "ses_1b60664d6ffefiKtAPx7T34Ckb",
+  "strategy": "manual-commit",
+  "created_at": "2026-05-21T14:41:35.482980639Z",
+  "branch": "003-svg-helper-cleanup",
+  "checkpoints_count": 10,
+  "files_touched": [
+    "sphinxcontrib/sysml/directives/needsysml_uc.py",
+    "sphinxcontrib/sysml/templates.py",
+    "tests/test_pkg_directive.py",
+    "tests/test_uc_directive.py"
+  ],
+  "agent": "OpenCode",
+  "model": "qwen3.6-plus",
+  "turn_id": "63b3616bbb72",
+  "token_usage": {
+    "input_tokens": 4904,
+    "cache_creation_tokens": 2045360,
+    "cache_read_tokens": 52880710,
+    "output_tokens": 143304,
+    "api_call_count": 416
+  },
+  "session_metrics": {
+    "turn_count": 33
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-05-21T14:41:35.421224009Z",
+    "agent_lines": 87,
+    "agent_removed": 15,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 87,
+    "total_lines_changed": 102,
+    "agent_percentage": 100,
+    "metric_version": 2
+  },
+  "prompt_attributions": [
+    {
+      "checkpoint_number": 2,
+      "user_lines_added": 0,
+      "user_lines_removed": 0,
+      "agent_lines_added": 0,
+      "agent_lines_removed": 0
+    },
+    {
+      "checkpoint_number": 3,
+      "user_lines_added": 2127,
+      "user_lines_removed": 0,
+      "agent_lines_added": 477,
+      "agent_lines_removed": 2,
+      "user_added_per_file": {
+        ".claude/scheduled_tasks.lock": 1,
+        ".claude/settings.local.json": 83,
+        ".claude/skills/speckit-analyze/SKILL.md": 260,
+        ".claude/skills/speckit-checklist/SKILL.md": 372,
+        ".claude/skills/speckit-clarify/SKILL.md": 254,
+        ".claude/skills/speckit-constitution/SKILL.md": 157,
+        ".claude/skills/speckit-implement/SKILL.md": 210,
+        ".claude/skills/speckit-plan/SKILL.md": 152,
+        ".claude/skills/speckit-specify/SKILL.md": 330,
+        ".claude/skills/speckit-tasks/SKILL.md": 202,
+        ".claude/skills/speckit-taskstoissues/SKILL.md": 106
+      }
+    },
+    {
+      "checkpoint_number": 4,
+      "user_lines_added": 2127,
+      "user_lines_removed": 0,
+      "agent_lines_added": 615,
+      "agent_lines_removed": 2,
+      "user_added_per_file": {
+        ".claude/scheduled_tasks.lock": 1,
+        ".claude/settings.local.json": 83,
+        ".claude/skills/speckit-analyze/SKILL.md": 260,
+        ".claude/skills/speckit-checklist/SKILL.md": 372,
+        ".claude/skills/speckit-clarify/SKILL.md": 254,
+        ".claude/skills/speckit-constitution/SKILL.md": 157,
+        ".claude/skills/speckit-implement/SKILL.md": 210,
+        ".claude/skills/speckit-plan/SKILL.md": 152,
+        ".claude/skills/speckit-specify/SKILL.md": 330,
+        ".claude/skills/speckit-tasks/SKILL.md": 202,
+        ".claude/skills/speckit-taskstoissues/SKILL.md": 106
+      }
+    },
+    {
+      "checkpoint_number": 5,
+      "user_lines_added": 2127,
+      "user_lines_removed": 0,
+      "agent_lines_added": 906,
+      "agent_lines_removed": 2,
+      "user_added_per_file": {
+        ".claude/scheduled_tasks.lock": 1,
+        ".claude/settings.local.json": 83,
+        ".claude/skills/speckit-analyze/SKILL.md": 260,
+        ".claude/skills/speckit-checklist/SKILL.md": 372,
+        ".claude/skills/speckit-clarify/SKILL.md": 254,
+        ".claude/skills/speckit-constitution/SKILL.md": 157,
+        ".claude/skills/speckit-implement/SKILL.md": 210,
+        ".claude/skills/speckit-plan/SKILL.md": 152,
+        ".claude/skills/speckit-specify/SKILL.md": 330,
+        ".claude/skills/speckit-tasks/SKILL.md": 202,
+        ".claude/skills/speckit-taskstoissues/SKILL.md": 106
+      }
+    },
+    {
+      "checkpoint_number": 6,
+      "user_lines_added": 2127,
+      "user_lines_removed": 0,
+      "agent_lines_added": 906,
+      "agent_lines_removed": 2,
+      "user_added_per_file": {
+        ".claude/scheduled_tasks.lock": 1,
+        ".claude/settings.local.json": 83,
+        ".claude/skills/speckit-analyze/SKILL.md": 260,
+        ".claude/skills/speckit-checklist/SKILL.md": 372,
+        ".claude/skills/speckit-clarify/SKILL.md": 254,
+        ".claude/skills/speckit-constitution/SKILL.md": 157,
+        ".claude/skills/speckit-implement/SKILL.md": 210,
+        ".claude/skills/speckit-plan/SKILL.md": 152,
+        ".claude/skills/speckit-specify/SKILL.md": 330,
+        ".claude/skills/speckit-tasks/SKILL.md": 202,
+        ".claude/skills/speckit-taskstoissues/SKILL.md": 106
+      }
+    },
+    {
+      "checkpoint_number": 7,
+      "user_lines_added": 2127,
+      "user_lines_removed": 0,
+      "agent_lines_added": 906,
+      "agent_lines_removed": 2,
+      "user_added_per_file": {
+        ".claude/scheduled_tasks.lock": 1,
+        ".claude/settings.local.json": 83,
+        ".claude/skills/speckit-analyze/SKILL.md": 260,
+        ".claude/skills/speckit-checklist/SKILL.md": 372,
+        ".claude/skills/speckit-clarify/SKILL.md": 254,
+        ".claude/skills/speckit-constitution/SKILL.md": 157,
+        ".claude/skills/speckit-implement/SKILL.md": 210,
+        ".claude/skills/speckit-plan/SKILL.md": 152,
+        ".claude/skills/speckit-specify/SKILL.md": 330,
+        ".claude/skills/speckit-tasks/SKILL.md": 202,
+        ".claude/skills/speckit-taskstoissues/SKILL.md": 106
+      }
+    },
+    {
+      "checkpoint_number": 8,
+      "user_lines_added": 2127,
+      "user_lines_removed": 0,
+      "agent_lines_added": 937,
+      "agent_lines_removed": 12,
+      "user_added_per_file": {
+        ".claude/scheduled_tasks.lock": 1,
+        ".claude/settings.local.json": 83,
+        ".claude/skills/speckit-analyze/SKILL.md": 260,
+        ".claude/skills/speckit-checklist/SKILL.md": 372,
+        ".claude/skills/speckit-clarify/SKILL.md": 254,
+        ".claude/skills/speckit-constitution/SKILL.md": 157,
+        ".claude/skills/speckit-implement/SKILL.md": 210,
+        ".claude/skills/speckit-plan/SKILL.md": 152,
+        ".claude/skills/speckit-specify/SKILL.md": 330,
+        ".claude/skills/speckit-tasks/SKILL.md": 202,
+        ".claude/skills/speckit-taskstoissues/SKILL.md": 106
+      }
+    },
+    {
+      "checkpoint_number": 9,
+      "user_lines_added": 0,
+      "user_lines_removed": 0,
+      "agent_lines_added": 0,
+      "agent_lines_removed": 0
+    },
+    {
+      "checkpoint_number": 10,
+      "user_lines_added": 83,
+      "user_lines_removed": 0,
+      "agent_lines_added": 2986,
+      "agent_lines_removed": 17,
+      "user_added_per_file": {
+        ".claude/settings.local.json": 83
+      }
+    },
+    {
+      "checkpoint_number": 11,
+      "user_lines_added": 83,
+      "user_lines_removed": 0,
+      "agent_lines_added": 3037,
+      "agent_lines_removed": 17,
+      "user_added_per_file": {
+        ".claude/settings.local.json": 83
+      }
+    }
+  ]
+}
