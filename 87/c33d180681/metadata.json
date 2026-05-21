@@ -1,0 +1,26 @@
+{
+  "cli_version": "0.6.2",
+  "checkpoint_id": "87c33d180681",
+  "strategy": "manual-commit",
+  "branch": "003-svg-helper-cleanup",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "sphinxcontrib/sysml/directives/needsysml_uc.py",
+    "sphinxcontrib/sysml/templates.py"
+  ],
+  "sessions": [
+    {
+      "metadata": "/87/c33d180681/0/metadata.json",
+      "transcript": "/87/c33d180681/0/full.jsonl",
+      "content_hash": "/87/c33d180681/0/content_hash.txt",
+      "prompt": "/87/c33d180681/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 667,
+    "cache_creation_tokens": 2243311,
+    "cache_read_tokens": 155686681,
+    "output_tokens": 429186,
+    "api_call_count": 482
+  }
+}

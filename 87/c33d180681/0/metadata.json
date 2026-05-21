@@ -1,0 +1,84 @@
+{
+  "cli_version": "0.6.2",
+  "checkpoint_id": "87c33d180681",
+  "session_id": "ee5f5543-9f88-4838-b7fd-7e9ec9bf1398",
+  "strategy": "manual-commit",
+  "created_at": "2026-05-21T14:41:33.471150173Z",
+  "branch": "003-svg-helper-cleanup",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "sphinxcontrib/sysml/directives/needsysml_uc.py",
+    "sphinxcontrib/sysml/templates.py"
+  ],
+  "agent": "Claude Code",
+  "model": "",
+  "turn_id": "df678d4c9db8",
+  "token_usage": {
+    "input_tokens": 667,
+    "cache_creation_tokens": 2243311,
+    "cache_read_tokens": 155686681,
+    "output_tokens": 429186,
+    "api_call_count": 482
+  },
+  "session_metrics": {
+    "turn_count": 1
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-05-21T14:41:33.380741303Z",
+    "agent_lines": 0,
+    "agent_removed": 0,
+    "human_added": 36,
+    "human_modified": 15,
+    "human_removed": 0,
+    "total_committed": 36,
+    "total_lines_changed": 51,
+    "agent_percentage": 0,
+    "metric_version": 2
+  },
+  "prompt_attributions": [
+    {
+      "checkpoint_number": 1,
+      "user_lines_added": 3069,
+      "user_lines_removed": 17,
+      "agent_lines_added": 0,
+      "agent_lines_removed": 0,
+      "user_added_per_file": {
+        ".claude/scheduled_tasks.lock": 1,
+        ".claude/settings.local.json": 83,
+        ".claude/skills/speckit-analyze/SKILL.md": 260,
+        ".claude/skills/speckit-checklist/SKILL.md": 372,
+        ".claude/skills/speckit-clarify/SKILL.md": 254,
+        ".claude/skills/speckit-constitution/SKILL.md": 157,
+        ".claude/skills/speckit-implement/SKILL.md": 210,
+        ".claude/skills/speckit-plan/SKILL.md": 152,
+        ".claude/skills/speckit-specify/SKILL.md": 330,
+        ".claude/skills/speckit-tasks/SKILL.md": 202,
+        ".claude/skills/speckit-taskstoissues/SKILL.md": 106,
+        ".specify/feature.json": 1,
+        ".specify/integrations/claude.manifest.json": 16,
+        "CLAUDE.md": 1,
+        "specs/004-fix-package-uml-svg/checklists/requirements.md": 34,
+        "specs/004-fix-package-uml-svg/plan.md": 82,
+        "specs/004-fix-package-uml-svg/spec.md": 61,
+        "specs/005-fix-pkg-svg-dependency-lines/checklists/requirements.md": 34,
+        "specs/005-fix-pkg-svg-dependency-lines/plan.md": 84,
+        "specs/005-fix-pkg-svg-dependency-lines/spec.md": 63,
+        "specs/005-fix-pkg-svg-dependency-lines/tasks.md": 101,
+        "specs/006-usecase-diagram-uml-svg/checklists/requirements.md": 34,
+        "specs/006-usecase-diagram-uml-svg/data-model.md": 78,
+        "specs/006-usecase-diagram-uml-svg/plan.md": 92,
+        "specs/006-usecase-diagram-uml-svg/quickstart.md": 58,
+        "specs/006-usecase-diagram-uml-svg/research.md": 63,
+        "specs/006-usecase-diagram-uml-svg/spec.md": 104,
+        "sphinxcontrib/sysml/directives/needsysml_uc.py": 2,
+        "sphinxcontrib/sysml/templates.py": 34
+      },
+      "user_removed_per_file": {
+        ".specify/feature.json": 1,
+        "CLAUDE.md": 1,
+        "sphinxcontrib/sysml/directives/needsysml_uc.py": 2,
+        "sphinxcontrib/sysml/templates.py": 13
+      }
+    }
+  ]
+}
