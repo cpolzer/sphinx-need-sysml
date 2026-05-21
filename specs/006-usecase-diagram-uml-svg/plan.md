@@ -26,7 +26,7 @@ Align the `needsysml-uc-svg` directive output with the PlantUML `needsysml-uc` r
 
 **Constraints**: Pure Jinja2 template — no Python code in the template. Must use the same `actor_pos` / `uc_pos` dictionary pattern as the existing template. SVG must be self-contained (no external CSS/JS).
 
-**Scale/Scope**: Single file change (`sphinxcontrib/sysml/svg_templates.py`, ~85 lines for UC_SVG_TEMPLATE) plus test fixture updates and 3 new tests.
+**Scale/Scope**: Single file change (`sphinx_need_sysml/svg_templates.py`, ~85 lines for UC_SVG_TEMPLATE) plus test fixture updates and 3 new tests.
 
 ## Constitution Check
 
@@ -71,7 +71,7 @@ specs/006-usecase-diagram-uml-svg/
 ### Source Code (repository root)
 
 ```text
-sphinxcontrib/sysml/
+sphinx_need_sysml/
 ├── svg_templates.py     # UC_SVG_TEMPLATE modified (lines 127-211)
 
 tests/

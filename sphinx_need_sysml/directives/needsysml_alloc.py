@@ -70,7 +70,7 @@ class NeedsymlAllocDirective(SphinxDirective):
 
         # Handle empty result
         if not sorted_row_needs or not sorted_col_ids:
-            from sphinxcontrib.sysml.warnings import warn_empty
+            from sphinx_need_sysml.warnings import warn_empty
 
             placeholder = warn_empty(self.env.app, env.docname, self.lineno, "alloc")
             return [nodes.paragraph("", placeholder)]

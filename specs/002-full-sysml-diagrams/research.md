@@ -364,8 +364,8 @@ def test_stm_renders_fixture_state(stm_app):
 ## 9. Two-phase release packaging
 
 ### Decision
-- v1 (`sphinxcontrib-sysml 0.3.0`): User Stories 1–5 — `needsysml-stm`, `needsysml-act`, `needsysml-sd`, `needsysml-uc`, `needsysml-pkg` (each with `-svg` companion).
-- v1.1 (`sphinxcontrib-sysml 0.4.0`): User Stories 6–7 — `needsysml-alloc` (matrix), `needsysml-par` (parametric, with `-svg` companion).
+- v1 (`sphinx-need-sysml 0.3.0`): User Stories 1–5 — `needsysml-stm`, `needsysml-act`, `needsysml-sd`, `needsysml-uc`, `needsysml-pkg` (each with `-svg` companion).
+- v1.1 (`sphinx-need-sysml 0.4.0`): User Stories 6–7 — `needsysml-alloc` (matrix), `needsysml-par` (parametric, with `-svg` companion).
 
 All thirteen new need types and ~22 fields ship in v1, even those used only by v1.1 directives. This keeps downstream user models stable across the two releases.
 

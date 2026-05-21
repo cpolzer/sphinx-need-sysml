@@ -29,7 +29,7 @@ upstream `sphinx_need_svg.jinja_context.SvgJinjaContext.ref()` returned
 relative to the current page's URL — doubling the path
 (`examples/page.html#PD-001` resolves to
 `examples/examples/page.html#PD-001`) and 404-ing for the same-page
-case (which is the normal case for sphinxcontrib-sysml diagrams).
+case (which is the normal case for sphinx-need-sysml diagrams).
 
 **Two parallel fixes shipped:**
 
@@ -40,11 +40,11 @@ case (which is the normal case for sphinxcontrib-sysml diagrams).
    `../path/page.html#NEED-ID` for cross-directory. `flow()` inherits
    the fix transparently because it calls `ref()` internally.
 
-2. **Downstream workaround** (sphinxcontrib-sysml PR #3, commit
+2. **Downstream workaround** (sphinx-need-sysml PR #3, commit
    `4934b30`): swapped all `{{ ref(x.id) }}` → `#{{ x.id }}` and
    inlined all `{{ flow(x) }}` calls as
    `<a href="#{{ id }}"><rect/><text/></a>` blocks. This works because
-   `sphinxcontrib-sysml` only renders SVGs on the **same page** as the
+   `sphinx-need-sysml` only renders SVGs on the **same page** as the
    needs they reference, so a pure fragment link is correct in all our
    current cases.
 
@@ -78,7 +78,7 @@ upstream benefits and stay portable to cross-page diagrams.
 ### US1 — Pin the upstream dep
 
 As a maintainer, I want `pyproject.toml` to require sphinx-need-svg
-≥0.3.1 so users installing sphinxcontrib-sysml automatically get the
+≥0.3.1 so users installing sphinx-need-sysml automatically get the
 relative-URL fix.
 
 **Acceptance**: both occurrences in `[project.optional-dependencies]`
@@ -95,7 +95,7 @@ upstream's card style.
 
 **Acceptance**:
 
-- `BDD_SVG_TEMPLATE` (in `sphinxcontrib/sysml/svg_templates.py`):
+- `BDD_SVG_TEMPLATE` (in `sphinx_need_sysml/svg_templates.py`):
   - `<g transform="translate(300, 20)">{{ flow(root_id) }}</g>` (root card)
   - `<g transform="translate({{ cx - 60 }}, 180)">{{ flow(child.id) }}</g>` (child card)
 - `IBD_SVG_TEMPLATE`:

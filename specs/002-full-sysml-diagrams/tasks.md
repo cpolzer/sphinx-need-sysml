@@ -23,7 +23,7 @@ description: "Task list for feature 002-full-sysml-diagrams"
 
 Single-project layout per plan.md § "Project Structure":
 
-- Source: `sphinxcontrib/sysml/`
+- Source: `sphinx_need_sysml/`
 - Docs: `docs/`
 - Tests: `tests/`
 
@@ -33,9 +33,9 @@ Single-project layout per plan.md § "Project Structure":
 
 **Purpose**: Pre-implementation housekeeping that affects every later task
 
-- [X] T001 Confirm working tree clean on branch `002-full-sysml-diagrams`; bump `[project] version` in `pyproject.toml` from `0.2.4` to `0.3.0-dev` and `VERSION` in `sphinxcontrib/sysml/__init__.py` to match
+- [X] T001 Confirm working tree clean on branch `002-full-sysml-diagrams`; bump `[project] version` in `pyproject.toml` from `0.2.4` to `0.3.0-dev` and `VERSION` in `sphinx_need_sysml/__init__.py` to match
 - [X] T002 [P] Add the existing pre-existing test failure (`tests/test_req_directive.py::TestReqDirective::test_req_filter_expression_respected`) to a known-issues marker in `tests/conftest.py` (`pytest.mark.xfail(reason="pre-existing — tracked in issue")`) so this feature's CI doesn't regress on it
-- [X] T003 [P] Create the new SVG template module file `sphinxcontrib/sysml/svg_templates.py` with a module docstring and an exported `__all__` list (empty for now — templates added per-story)
+- [X] T003 [P] Create the new SVG template module file `sphinx_need_sysml/svg_templates.py` with a module docstring and an exported `__all__` list (empty for now — templates added per-story)
 
 ---
 
@@ -47,22 +47,22 @@ Single-project layout per plan.md § "Project Structure":
 
 ### Need types and fields
 
-- [X] T004 Add 13 new need-type dicts to `SYSML_NEED_TYPES` in `sphinxcontrib/sysml/config.py` per data-model.md § "New Need Types" (Transition, ControlFlow, ObjectFlow, Package, Dependency, UseCase, Actor, ConstraintBlock, ConstraintParameter, ValueProperty, BindingConnector, Lifeline, Message — with the locked word-like prefixes from spec Q1)
-- [X] T005 Add the 34 new field dicts to `SYSML_FIELDS` in `sphinxcontrib/sysml/fields.py` per data-model.md § "New Extra Fields" (state-machine 6, activity 5, package 4, use case 5, sequence 7, parametric 7). Includes `interacts_with` on Actor (comma-list of UseCase IDs, per remediation of analyze finding U1). Enum-constrained fields use `schema: {enum: [...]}` so sphinx-needs validates at parse time.
+- [X] T004 Add 13 new need-type dicts to `SYSML_NEED_TYPES` in `sphinx_need_sysml/config.py` per data-model.md § "New Need Types" (Transition, ControlFlow, ObjectFlow, Package, Dependency, UseCase, Actor, ConstraintBlock, ConstraintParameter, ValueProperty, BindingConnector, Lifeline, Message — with the locked word-like prefixes from spec Q1)
+- [X] T005 Add the 34 new field dicts to `SYSML_FIELDS` in `sphinx_need_sysml/fields.py` per data-model.md § "New Extra Fields" (state-machine 6, activity 5, package 4, use case 5, sequence 7, parametric 7). Includes `interacts_with` on Actor (comma-list of UseCase IDs, per remediation of analyze finding U1). Enum-constrained fields use `schema: {enum: [...]}` so sphinx-needs validates at parse time.
 - [X] T006 Extend `tests/test_need_types.py` to assert all 13 new types are registered with their expected prefixes; extend `tests/test_fields.py` to assert all 34 new fields are registered with their schemas
 
 ### Flow configs
 
-- [X] T007 Add six new skinparam strings to `SYSML_FLOW_CONFIGS` in `sphinxcontrib/sysml/flow_configs.py`: `sysml_stm`, `sysml_act`, `sysml_sd`, `sysml_uc`, `sysml_pkg`, `sysml_par` — refer to research.md § 1 for example PlantUML output styling
+- [X] T007 Add six new skinparam strings to `SYSML_FLOW_CONFIGS` in `sphinx_need_sysml/flow_configs.py`: `sysml_stm`, `sysml_act`, `sysml_sd`, `sysml_uc`, `sysml_pkg`, `sysml_par` — refer to research.md § 1 for example PlantUML output styling
 - [X] T008 Extend `tests/test_flow_configs.py` to assert the six new flow-config keys are present after `builder-inited`
 
 ### Foundation directive work (preserves backward compatibility)
 
-- [X] T009 [P] In `sphinxcontrib/sysml/directives/needsysml_req.py`, add a `:filter:` option to `option_spec` with default `type == 'Requirement'`; keep the positional argument working as a fallback (no regression to existing tests)
-- [X] T009b In `sphinxcontrib/sysml/warnings.py`, add two shared helpers used by every new diagram directive (closes analyze findings G1 and G2): `warn_unknown_ref(app, docname, lineno, diagram, ref_kind, ref_id)` — emits a Sphinx warning under the category `[needsysml.<diagram>.unknown-<ref_kind>]` and returns the placeholder string (`?? <ref_id>`) the directive should render in that element's slot; `warn_empty(app, docname, lineno, diagram)` — emits one informational warning under category `[needsysml.<diagram>.empty]` and returns the standard "No matching elements" placeholder string. Both helpers MUST be the ONLY mechanism every new directive uses for FR-016 and FR-018, so the warning categories and placeholder text are uniform.
-- [X] T010 Promote the raw `needsvg` IBD template from `docs/examples/vehicle_system.rst` to a first-class directive: create `sphinxcontrib/sysml/directives/needsysml_ibd.py`'s sibling `NeedsymlIbdSvgDirective` inside `sphinxcontrib/sysml/directives/needsysml_svg.py` (reusing the same module that hosts `NeedsymlBddSvgDirective`); use the `Needsvg` placeholder pattern documented in research.md § 2
-- [X] T011 Move the inline `_SVG_TEMPLATE` string from `sphinxcontrib/sysml/directives/needsysml_svg.py` to `sphinxcontrib/sysml/svg_templates.py` as `BDD_SVG_TEMPLATE` and reference it from the directive (refactor — no behavior change)
-- [X] T012 Register the new `needsysml-ibd-svg` directive in `sphinxcontrib/sysml/__init__.py:setup()` under the `_HAS_NEED_SVG` gate
+- [X] T009 [P] In `sphinx_need_sysml/directives/needsysml_req.py`, add a `:filter:` option to `option_spec` with default `type == 'Requirement'`; keep the positional argument working as a fallback (no regression to existing tests)
+- [X] T009b In `sphinx_need_sysml/warnings.py`, add two shared helpers used by every new diagram directive (closes analyze findings G1 and G2): `warn_unknown_ref(app, docname, lineno, diagram, ref_kind, ref_id)` — emits a Sphinx warning under the category `[needsysml.<diagram>.unknown-<ref_kind>]` and returns the placeholder string (`?? <ref_id>`) the directive should render in that element's slot; `warn_empty(app, docname, lineno, diagram)` — emits one informational warning under category `[needsysml.<diagram>.empty]` and returns the standard "No matching elements" placeholder string. Both helpers MUST be the ONLY mechanism every new directive uses for FR-016 and FR-018, so the warning categories and placeholder text are uniform.
+- [X] T010 Promote the raw `needsvg` IBD template from `docs/examples/vehicle_system.rst` to a first-class directive: create `sphinx_need_sysml/directives/needsysml_ibd.py`'s sibling `NeedsymlIbdSvgDirective` inside `sphinx_need_sysml/directives/needsysml_svg.py` (reusing the same module that hosts `NeedsymlBddSvgDirective`); use the `Needsvg` placeholder pattern documented in research.md § 2
+- [X] T011 Move the inline `_SVG_TEMPLATE` string from `sphinx_need_sysml/directives/needsysml_svg.py` to `sphinx_need_sysml/svg_templates.py` as `BDD_SVG_TEMPLATE` and reference it from the directive (refactor — no behavior change)
+- [X] T012 Register the new `needsysml-ibd-svg` directive in `sphinx_need_sysml/__init__.py:setup()` under the `_HAS_NEED_SVG` gate
 
 **Checkpoint**: Foundation ready — every user story can now build on the 27-type/38-field model
 
@@ -78,15 +78,15 @@ Single-project layout per plan.md § "Project Structure":
 
 > Write the smoke test FIRST and confirm it fails before implementation lands.
 
-- [X] T013 [P] [US1] Create test fixture `tests/doc_test/stm/conf.py` (extensions list incl. `sphinxcontrib.sysml`, `plantuml_output_format = "svg"`) and `tests/doc_test/stm/index.rst` (one `statedef`, four `stateusage` with varied `pseudo_kind`, four `transition`s, one `.. needsysml-stm::` invocation)
+- [X] T013 [P] [US1] Create test fixture `tests/doc_test/stm/conf.py` (extensions list incl. `sphinx_need_sysml`, `plantuml_output_format = "svg"`) and `tests/doc_test/stm/index.rst` (one `statedef`, four `stateusage` with varied `pseudo_kind`, four `transition`s, one `.. needsysml-stm::` invocation)
 - [X] T014 [US1] Create smoke test `tests/test_stm_directive.py`: build cleanly, `SD-001` appears in the rendered HTML (doctree astext doesn't include needuml-rendered IDs), transitions registered, `pseudo_kind` field readable
 
 ### Implementation for User Story 1
 
-- [X] T015 [P] [US1] Add `STM_FULL_TEMPLATE` Jinja constant to `sphinxcontrib/sysml/templates.py` per research.md § 1 (state-machine pattern); walks the root `StateDef`'s usages and their transitions, emits composite-state nesting via `owned_by`, emits pseudostate notation per `pseudo_kind`
-- [X] T016 [P] [US1] Add `STM_SVG_TEMPLATE` to `sphinxcontrib/sysml/svg_templates.py` using `flow()` for state nodes and hand-laid arrows for transitions (mirror the existing `BDD_SVG_TEMPLATE` layout strategy)
-- [X] T017 [US1] Create `sphinxcontrib/sysml/directives/needsysml_stm.py` with `NeedsymlStmDirective` (wraps `needuml` with `STM_FULL_TEMPLATE` and `:config: sysml_stm`) and `NeedsymlStmSvgDirective` (uses the `Needsvg` placeholder pattern from research.md § 2 with `STM_SVG_TEMPLATE`); follow the `needsysml_bdd.py` + `needsysml_svg.py` patterns
-- [X] T018 [US1] Register both directives in `sphinxcontrib/sysml/__init__.py:setup()` (PlantUML unconditional; SVG under `_HAS_NEED_SVG`)
+- [X] T015 [P] [US1] Add `STM_FULL_TEMPLATE` Jinja constant to `sphinx_need_sysml/templates.py` per research.md § 1 (state-machine pattern); walks the root `StateDef`'s usages and their transitions, emits composite-state nesting via `owned_by`, emits pseudostate notation per `pseudo_kind`
+- [X] T016 [P] [US1] Add `STM_SVG_TEMPLATE` to `sphinx_need_sysml/svg_templates.py` using `flow()` for state nodes and hand-laid arrows for transitions (mirror the existing `BDD_SVG_TEMPLATE` layout strategy)
+- [X] T017 [US1] Create `sphinx_need_sysml/directives/needsysml_stm.py` with `NeedsymlStmDirective` (wraps `needuml` with `STM_FULL_TEMPLATE` and `:config: sysml_stm`) and `NeedsymlStmSvgDirective` (uses the `Needsvg` placeholder pattern from research.md § 2 with `STM_SVG_TEMPLATE`); follow the `needsysml_bdd.py` + `needsysml_svg.py` patterns
+- [X] T018 [US1] Register both directives in `sphinx_need_sysml/__init__.py:setup()` (PlantUML unconditional; SVG under `_HAS_NEED_SVG`)
 - [X] T019 [P] [US1] Write per-directive documentation page `docs/directives/needsysml_stm.rst` mirroring the existing `needsysml_bdd.rst` structure (Usage, Options, How It Works, Example, Pseudostate notation table)
 - [X] T020 [P] [US1] Add `needsysml_stm` entry to the `directives/` toctree in `docs/index.rst`
 - [X] T021 [US1] Extend `docs/examples/vehicle_system.rst` with a "State Machine" section: define engine states (Off/Starting/Running/Stopping) with `pseudo_kind`, four transitions between them, both `.. needsysml-stm::` and `.. needsysml-stm-svg::` invocations side by side
@@ -108,10 +108,10 @@ Single-project layout per plan.md § "Project Structure":
 
 ### Implementation for User Story 2
 
-- [X] T024 [P] [US2] Add `ACT_FULL_TEMPLATE` to `sphinxcontrib/sysml/templates.py` per research.md § 1 + § 4 (class-diagram approximation: actions as stereotyped classes inside `package <<swimlane>>` blocks, explicit control-flow arrows; fork/join via `<<fork>>` / `<<join>>` stereotypes — activity-beta syntax is order-driven and doesn't fit the data model)
-- [X] T025 [P] [US2] Add `ACT_SVG_TEMPLATE` to `sphinxcontrib/sysml/svg_templates.py` (swimlane columns, action boxes via `flow()`-style anchors, control-flow arrows; fork/join as horizontal bars, decision/merge as diamonds)
-- [X] T026 [US2] Create `sphinxcontrib/sysml/directives/needsysml_act.py` with `NeedsymlActDirective` and `NeedsymlActSvgDirective`; accept `:show-partitions: true|false` option (default true) per contracts § 2.2
-- [X] T027 [US2] Register both directives in `sphinxcontrib/sysml/__init__.py:setup()`
+- [X] T024 [P] [US2] Add `ACT_FULL_TEMPLATE` to `sphinx_need_sysml/templates.py` per research.md § 1 + § 4 (class-diagram approximation: actions as stereotyped classes inside `package <<swimlane>>` blocks, explicit control-flow arrows; fork/join via `<<fork>>` / `<<join>>` stereotypes — activity-beta syntax is order-driven and doesn't fit the data model)
+- [X] T025 [P] [US2] Add `ACT_SVG_TEMPLATE` to `sphinx_need_sysml/svg_templates.py` (swimlane columns, action boxes via `flow()`-style anchors, control-flow arrows; fork/join as horizontal bars, decision/merge as diamonds)
+- [X] T026 [US2] Create `sphinx_need_sysml/directives/needsysml_act.py` with `NeedsymlActDirective` and `NeedsymlActSvgDirective`; accept `:show-partitions: true|false` option (default true) per contracts § 2.2
+- [X] T027 [US2] Register both directives in `sphinx_need_sysml/__init__.py:setup()`
 - [X] T028 [P] [US2] Write `docs/directives/needsysml_act.rst` documentation page
 - [X] T029 [P] [US2] Add `needsysml_act` entry to `docs/index.rst` toctree
 - [X] T030 [US2] Add "Activity" section to `docs/examples/vehicle_system.rst` demonstrating a multi-partition activity, fork/join, and both render variants
@@ -133,10 +133,10 @@ Single-project layout per plan.md § "Project Structure":
 
 ### Implementation for User Story 3
 
-- [X] T033 [P] [US3] Add `SD_FULL_TEMPLATE` to `sphinxcontrib/sysml/templates.py` per research.md § 1 + § 5 (`participant` declarations, message arrows per kind, fragment frames per `fragment_group` via Jinja namespace state)
-- [X] T034 [P] [US3] Add `SD_SVG_TEMPLATE` to `sphinxcontrib/sysml/svg_templates.py` (vertical lifeline lines, horizontal message arrows with arrowhead per `message_kind`, fragment frame `<rect>`s with header guard text)
-- [X] T035 [US3] Create `sphinxcontrib/sysml/directives/needsysml_sd.py` with `NeedsymlSdDirective` and `NeedsymlSdSvgDirective` per contracts § 2.3
-- [X] T036 [US3] Register both directives in `sphinxcontrib/sysml/__init__.py:setup()`
+- [X] T033 [P] [US3] Add `SD_FULL_TEMPLATE` to `sphinx_need_sysml/templates.py` per research.md § 1 + § 5 (`participant` declarations, message arrows per kind, fragment frames per `fragment_group` via Jinja namespace state)
+- [X] T034 [P] [US3] Add `SD_SVG_TEMPLATE` to `sphinx_need_sysml/svg_templates.py` (vertical lifeline lines, horizontal message arrows with arrowhead per `message_kind`, fragment frame `<rect>`s with header guard text)
+- [X] T035 [US3] Create `sphinx_need_sysml/directives/needsysml_sd.py` with `NeedsymlSdDirective` and `NeedsymlSdSvgDirective` per contracts § 2.3
+- [X] T036 [US3] Register both directives in `sphinx_need_sysml/__init__.py:setup()`
 - [X] T037 [P] [US3] Write `docs/directives/needsysml_sd.rst` documentation page (include the combined-fragment kinds table)
 - [X] T038 [P] [US3] Add `needsysml_sd` entry to `docs/index.rst` toctree
 - [X] T039 [US3] Add "Sequence" section to `docs/examples/vehicle_system.rst` (ignition sequence: Driver → ECU → Starter with an `alt` fragment guarded by `key_position == "start"`)
@@ -158,10 +158,10 @@ Single-project layout per plan.md § "Project Structure":
 
 ### Implementation for User Story 4
 
-- [X] T042 [P] [US4] Add `UC_FULL_TEMPLATE` to `sphinxcontrib/sysml/templates.py` per research.md § 1 + § 6 (`left to right direction`, actor declarations, system-boundary `rectangle` per subject, use case ellipses, extends/includes/generalizes arrows, actor→usecase associations via `interacts_with`)
-- [X] T043 [P] [US4] Add `UC_SVG_TEMPLATE` to `sphinxcontrib/sysml/svg_templates.py` (stick figures for actors, ellipses for use cases inside a labelled `<rect>` boundary, dashed arrows for relationships, solid association lines)
-- [X] T044 [US4] Create `sphinxcontrib/sysml/directives/needsysml_uc.py` with `NeedsymlUcDirective` and `NeedsymlUcSvgDirective`; accept `:subject:` option per contracts § 2.4; default filter `type == 'UseCase'` when no positional argument provided; renders solid association lines from each Actor to every UseCase listed in the actor's `interacts_with` field
-- [X] T045 [US4] Register both directives in `sphinxcontrib/sysml/__init__.py:setup()`
+- [X] T042 [P] [US4] Add `UC_FULL_TEMPLATE` to `sphinx_need_sysml/templates.py` per research.md § 1 + § 6 (`left to right direction`, actor declarations, system-boundary `rectangle` per subject, use case ellipses, extends/includes/generalizes arrows, actor→usecase associations via `interacts_with`)
+- [X] T043 [P] [US4] Add `UC_SVG_TEMPLATE` to `sphinx_need_sysml/svg_templates.py` (stick figures for actors, ellipses for use cases inside a labelled `<rect>` boundary, dashed arrows for relationships, solid association lines)
+- [X] T044 [US4] Create `sphinx_need_sysml/directives/needsysml_uc.py` with `NeedsymlUcDirective` and `NeedsymlUcSvgDirective`; accept `:subject:` option per contracts § 2.4; default filter `type == 'UseCase'` when no positional argument provided; renders solid association lines from each Actor to every UseCase listed in the actor's `interacts_with` field
+- [X] T045 [US4] Register both directives in `sphinx_need_sysml/__init__.py:setup()`
 - [X] T046 [P] [US4] Write `docs/directives/needsysml_uc.rst` documentation page
 - [X] T047 [P] [US4] Add `needsysml_uc` entry to `docs/index.rst` toctree
 - [X] T048 [US4] Add "Use Case" section to `docs/examples/vehicle_system.rst` (Driver + Mechanic actors, four use cases, one extend, one include)
@@ -183,10 +183,10 @@ Single-project layout per plan.md § "Project Structure":
 
 ### Implementation for User Story 5
 
-- [X] T051 [P] [US5] Add `PKG_FULL_TEMPLATE` to `sphinxcontrib/sysml/templates.py` (nested `package "Name" { … }` blocks, dependency arrows with `<<kind>>` labels; unrolled to ≤3 levels because minijinja doesn't support recursive macros with `.append()`)
-- [X] T052 [P] [US5] Add `PKG_SVG_TEMPLATE` to `sphinxcontrib/sysml/svg_templates.py` (nested `<rect>` groupings sized to contain children, labelled dependency `<line>`s)
-- [X] T053 [US5] Create `sphinxcontrib/sysml/directives/needsysml_pkg.py` with `NeedsymlPkgDirective` and `NeedsymlPkgSvgDirective`; accept `:depth:` option (default 3) per contracts § 2.5
-- [X] T054 [US5] Register both directives in `sphinxcontrib/sysml/__init__.py:setup()`
+- [X] T051 [P] [US5] Add `PKG_FULL_TEMPLATE` to `sphinx_need_sysml/templates.py` (nested `package "Name" { … }` blocks, dependency arrows with `<<kind>>` labels; unrolled to ≤3 levels because minijinja doesn't support recursive macros with `.append()`)
+- [X] T052 [P] [US5] Add `PKG_SVG_TEMPLATE` to `sphinx_need_sysml/svg_templates.py` (nested `<rect>` groupings sized to contain children, labelled dependency `<line>`s)
+- [X] T053 [US5] Create `sphinx_need_sysml/directives/needsysml_pkg.py` with `NeedsymlPkgDirective` and `NeedsymlPkgSvgDirective`; accept `:depth:` option (default 3) per contracts § 2.5
+- [X] T054 [US5] Register both directives in `sphinx_need_sysml/__init__.py:setup()`
 - [X] T055 [P] [US5] Write `docs/directives/needsysml_pkg.rst` documentation page
 - [X] T056 [P] [US5] Add `needsysml_pkg` entry to `docs/index.rst` toctree (completed alongside T055 — same edit pass)
 - [X] T057 [US5] Add "Package" section to `docs/examples/vehicle_system.rst` (VehicleSystem with PowertrainPkg / ChassisPkg / ControlsPkg + two cross-package dependencies of different kinds)
@@ -204,10 +204,10 @@ Single-project layout per plan.md § "Project Structure":
 - [X] T060 Time the full docs build per SC-008; **10.5 s wall-clock** (target < 30 s); recorded in `quickstart.md`
 - [X] T061 [P] Inspect rendered HTML for the vehicle example; **78 unique need-anchor `href` links** in `vehicle_system.html`; recorded in `quickstart.md`
 - [X] T062 Update `docs/directives/need_types.rst` to add a "New in v1" section listing the 13 new types with their prefixes (split into stm/act/pkg/uc/sd/par sub-sections)
-- [X] T063 Bump version `0.3.0-dev0` → `0.3.0` in `pyproject.toml`, `sphinxcontrib/sysml/__init__.py`, `pyproject.toml:[tool.commitizen]`; CHANGELOG.md entry added describing the v1 feature set
+- [X] T063 Bump version `0.3.0-dev0` → `0.3.0` in `pyproject.toml`, `sphinx_need_sysml/__init__.py`, `pyproject.toml:[tool.commitizen]`; CHANGELOG.md entry added describing the v1 feature set
 - [ ] T064 Open a PR titled `feat: full SysML v2 diagram coverage (v1 — stories 1–5)` referencing this tasks.md
 
-**Checkpoint v1**: `sphinxcontrib-sysml 0.3.0` is ready to release. User Stories 1–5 deliver.
+**Checkpoint v1**: `sphinx-need-sysml 0.3.0` is ready to release. User Stories 1–5 deliver.
 
 ---
 
@@ -226,8 +226,8 @@ Single-project layout per plan.md § "Project Structure":
 
 ### Implementation for User Story 6
 
-- [ ] T067 [US6] Create `sphinxcontrib/sysml/directives/needsysml_alloc.py` with `NeedsymlAllocDirective` per contracts § 2.7: parse `:rows:` / `:columns:` filter options (defaults per spec Q3), parse `:marker:` option (default `✓`), build a `docutils.nodes.table` with row/column header `pending_xref` links to need anchors, marker characters at intersections (no link in interior cells per contracts § 5.5)
-- [ ] T068 [US6] Register `needsysml-alloc` (unconditional — no SVG variant) in `sphinxcontrib/sysml/__init__.py:setup()`
+- [ ] T067 [US6] Create `sphinx_need_sysml/directives/needsysml_alloc.py` with `NeedsymlAllocDirective` per contracts § 2.7: parse `:rows:` / `:columns:` filter options (defaults per spec Q3), parse `:marker:` option (default `✓`), build a `docutils.nodes.table` with row/column header `pending_xref` links to need anchors, marker characters at intersections (no link in interior cells per contracts § 5.5)
+- [ ] T068 [US6] Register `needsysml-alloc` (unconditional — no SVG variant) in `sphinx_need_sysml/__init__.py:setup()`
 - [ ] T069 [P] [US6] Write `docs/directives/needsysml_alloc.rst` documentation page
 - [ ] T070 [P] [US6] Add `needsysml_alloc` entry to `docs/index.rst` toctree
 - [ ] T071 [US6] Add "Allocation Matrix" section to `docs/examples/vehicle_system.rst` — two invocations: one with defaults, one with `:rows: type == 'Action'` / `:columns: type == 'Part'`
@@ -249,10 +249,10 @@ Single-project layout per plan.md § "Project Structure":
 
 ### Implementation for User Story 7
 
-- [ ] T074 [P] [US7] Add `PAR_FULL_TEMPLATE` to `sphinxcontrib/sysml/templates.py` (class-diagram approximation: `<<constraint>>`-stereotyped class with parameter compartment, dashed binding arrows labelled with `unit`)
-- [ ] T075 [P] [US7] Add `PAR_SVG_TEMPLATE` to `sphinxcontrib/sysml/svg_templates.py` (rounded rectangle for the constraint block, small circles on its edges for parameter ports, lines to value-property boxes labelled with the unit)
-- [ ] T076 [US7] Create `sphinxcontrib/sysml/directives/needsysml_par.py` with `NeedsymlParDirective` and `NeedsymlParSvgDirective` per contracts § 2.6
-- [ ] T077 [US7] Register both directives in `sphinxcontrib/sysml/__init__.py:setup()`
+- [ ] T074 [P] [US7] Add `PAR_FULL_TEMPLATE` to `sphinx_need_sysml/templates.py` (class-diagram approximation: `<<constraint>>`-stereotyped class with parameter compartment, dashed binding arrows labelled with `unit`)
+- [ ] T075 [P] [US7] Add `PAR_SVG_TEMPLATE` to `sphinx_need_sysml/svg_templates.py` (rounded rectangle for the constraint block, small circles on its edges for parameter ports, lines to value-property boxes labelled with the unit)
+- [ ] T076 [US7] Create `sphinx_need_sysml/directives/needsysml_par.py` with `NeedsymlParDirective` and `NeedsymlParSvgDirective` per contracts § 2.6
+- [ ] T077 [US7] Register both directives in `sphinx_need_sysml/__init__.py:setup()`
 - [ ] T078 [P] [US7] Write `docs/directives/needsysml_par.rst` documentation page (note the class-diagram-approximation caveat)
 - [ ] T079 [P] [US7] Add `needsysml_par` entry to `docs/index.rst` toctree
 - [ ] T080 [US7] Add "Parametric" section to `docs/examples/vehicle_system.rst` (fuel-consumption constraint binding engine output, trip duration, efficiency)
@@ -321,8 +321,8 @@ Within a story:
 ```text
 # These can start simultaneously once Phase 2 is complete:
 Task: "T013 [US1] Create tests/doc_test/stm/ fixture (conf.py + index.rst)"
-Task: "T015 [US1] Add STM_FULL_TEMPLATE to sphinxcontrib/sysml/templates.py"
-Task: "T016 [US1] Add STM_SVG_TEMPLATE to sphinxcontrib/sysml/svg_templates.py"
+Task: "T015 [US1] Add STM_FULL_TEMPLATE to sphinx_need_sysml/templates.py"
+Task: "T016 [US1] Add STM_SVG_TEMPLATE to sphinx_need_sysml/svg_templates.py"
 Task: "T019 [US1] Write docs/directives/needsysml_stm.rst"
 Task: "T020 [US1] Add stm entry to docs/index.rst toctree"
 
@@ -376,7 +376,7 @@ The `docs/index.rst` toctree and `docs/examples/vehicle_system.rst` need a quick
 
 - ✅ All five v1 user stories have one independent test fixture each
 - ✅ All seven user stories have one smoke test file each
-- ✅ All thirteen new directives (7 PlantUML + 6 SVG) are registered in `sphinxcontrib/sysml/__init__.py:setup()`
+- ✅ All thirteen new directives (7 PlantUML + 6 SVG) are registered in `sphinx_need_sysml/__init__.py:setup()`
 - ✅ Every new directive has a per-directive documentation page under `docs/directives/`
 - ✅ The vehicle example demonstrates all ten diagram views (3 existing + 7 new) per FR-020 / SC-003
 - ✅ Smoke tests cover the FR-019 contract (build + content-presence)

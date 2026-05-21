@@ -21,7 +21,7 @@ jobs:
         run: uv sync --all-extras
 
       - name: Run tests
-        run: uv run pytest --cov=sphinxcontrib.sysml --cov-report=xml
+        run: uv run pytest --cov=sphinx_need_sysml --cov-report=xml
 
       - name: Upload results to Codecov
         if: ${{ secrets.CODECOV_TOKEN != '' }}

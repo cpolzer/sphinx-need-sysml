@@ -83,13 +83,13 @@ The PlantUML directive wraps ``.. needuml::`` with:
 
 * ``:config: sysml_stm`` — applies SysML state-machine skinparam styling
 * A pre-baked Jinja2 template (``STM_FULL_TEMPLATE`` in
-  ``sphinxcontrib.sysml.templates``) that emits ``state X``,
+  ``sphinx_need_sysml.templates``) that emits ``state X``,
   ``state X <<choice>>``, transition arrows, and pseudostate markers.
 
 The SVG companion routes through ``sphinx-need-svg``'s ``Needsvg``
 placeholder so the rendering is deferred to ``doctree-resolved`` (this
 avoids freezing the needs registry mid-parse). It uses
-``STM_SVG_TEMPLATE`` from ``sphinxcontrib.sysml.svg_templates``.
+``STM_SVG_TEMPLATE`` from ``sphinx_need_sysml.svg_templates``.
 
 Example
 -------

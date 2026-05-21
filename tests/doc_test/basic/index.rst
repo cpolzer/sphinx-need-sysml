@@ -1,7 +1,7 @@
 Test Project
 ============
 
-Basic test project for sphinxcontrib-sysml with all 14 need types.
+Basic test project for sphinx-need-sysml with all 14 need types.
 
 Structural Types
 ----------------

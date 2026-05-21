@@ -9,8 +9,8 @@ from sphinx.application import Sphinx
 from sphinx.config import Config
 from sphinx_needs.api import add_need_type
 
-from sphinxcontrib.sysml.config import SYSML_NEED_TYPES
-from sphinxcontrib.sysml.fields import SYSML_FIELDS
+from sphinx_need_sysml.config import SYSML_NEED_TYPES
+from sphinx_need_sysml.fields import SYSML_FIELDS
 
 VERSION = "0.3.0"
 
@@ -78,7 +78,7 @@ def _register_types_and_fields(app: Sphinx, config: Config) -> None:
 
 def _register_flow_configs(app: Sphinx) -> None:
     """Merge SysML flow configs into needs_flow_configs, preserving user overrides."""
-    from sphinxcontrib.sysml.flow_configs import SYSML_FLOW_CONFIGS
+    from sphinx_need_sysml.flow_configs import SYSML_FLOW_CONFIGS
 
     existing = getattr(app.config, "needs_flow_configs", None) or {}
     app.config.needs_flow_configs = {**SYSML_FLOW_CONFIGS, **existing}
@@ -86,7 +86,7 @@ def _register_flow_configs(app: Sphinx) -> None:
 
 def _warn_plantuml_format(app: Sphinx) -> None:
     """Emit warning if plantuml_output_format is not svg when diagram directives are used."""
-    from sphinxcontrib.sysml.warnings import warn_plantuml_format
+    from sphinx_need_sysml.warnings import warn_plantuml_format
 
     warn_plantuml_format(app)
 
@@ -100,31 +100,31 @@ def setup(app: Sphinx) -> dict[str, object]:
     app.connect("builder-inited", _warn_plantuml_format)
 
     # Register diagram directives
-    from sphinxcontrib.sysml.directives.needsysml_act import (
+    from sphinx_need_sysml.directives.needsysml_act import (
         NeedsymlActDirective,
         NeedsymlActSvgDirective,
     )
-    from sphinxcontrib.sysml.directives.needsysml_alloc import NeedsymlAllocDirective
-    from sphinxcontrib.sysml.directives.needsysml_bdd import NeedsymlBddDirective
-    from sphinxcontrib.sysml.directives.needsysml_ibd import NeedsymlIbdDirective
-    from sphinxcontrib.sysml.directives.needsysml_par import (
+    from sphinx_need_sysml.directives.needsysml_alloc import NeedsymlAllocDirective
+    from sphinx_need_sysml.directives.needsysml_bdd import NeedsymlBddDirective
+    from sphinx_need_sysml.directives.needsysml_ibd import NeedsymlIbdDirective
+    from sphinx_need_sysml.directives.needsysml_par import (
         NeedsymlParDirective,
         NeedsymlParSvgDirective,
     )
-    from sphinxcontrib.sysml.directives.needsysml_pkg import (
+    from sphinx_need_sysml.directives.needsysml_pkg import (
         NeedsymlPkgDirective,
         NeedsymlPkgSvgDirective,
     )
-    from sphinxcontrib.sysml.directives.needsysml_req import NeedsymlReqDirective
-    from sphinxcontrib.sysml.directives.needsysml_sd import (
+    from sphinx_need_sysml.directives.needsysml_req import NeedsymlReqDirective
+    from sphinx_need_sysml.directives.needsysml_sd import (
         NeedsymlSdDirective,
         NeedsymlSdSvgDirective,
     )
-    from sphinxcontrib.sysml.directives.needsysml_stm import (
+    from sphinx_need_sysml.directives.needsysml_stm import (
         NeedsymlStmDirective,
         NeedsymlStmSvgDirective,
     )
-    from sphinxcontrib.sysml.directives.needsysml_uc import (
+    from sphinx_need_sysml.directives.needsysml_uc import (
         NeedsymlUcDirective,
         NeedsymlUcSvgDirective,
     )
@@ -144,7 +144,7 @@ def setup(app: Sphinx) -> dict[str, object]:
 
     # Register SVG directives only when sphinx-need-svg is available
     if _HAS_NEED_SVG:
-        from sphinxcontrib.sysml.directives.needsysml_svg import (
+        from sphinx_need_sysml.directives.needsysml_svg import (
             NeedsymlBddSvgDirective,
             NeedsymlIbdSvgDirective,
         )

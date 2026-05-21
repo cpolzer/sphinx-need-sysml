@@ -1,4 +1,4 @@
-# Quickstart: sphinxcontrib-sysml
+# Quickstart: sphinx-need-sysml
 
 **Date**: 2026-05-20
 
@@ -7,7 +7,7 @@
 ## Install
 
 ```bash
-pip install sphinxcontrib-sysml sphinxcontrib-plantuml
+pip install sphinx-need-sysml sphinxcontrib-plantuml
 ```
 
 ## conf.py
@@ -16,7 +16,7 @@ pip install sphinxcontrib-sysml sphinxcontrib-plantuml
 extensions = [
     "sphinx_needs",
     "sphinxcontrib.plantuml",
-    "sphinxcontrib.sysml",
+    "sphinx_need_sysml",
 ]
 
 # Required for clickable diagram links in HTML output

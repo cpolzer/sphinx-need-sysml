@@ -46,13 +46,13 @@ pytest tests/test_uc_directive.py -v
 pytest tests/ -v
 
 # Lint
-ruff check sphinxcontrib/sysml/svg_templates.py tests/test_uc_directive.py
-ruff format --check sphinxcontrib/sysml/svg_templates.py tests/test_uc_directive.py
+ruff check sphinx_need_sysml/svg_templates.py tests/test_uc_directive.py
+ruff format --check sphinx_need_sysml/svg_templates.py tests/test_uc_directive.py
 ```
 
 ## Files changed
 
-- `sphinxcontrib/sysml/svg_templates.py` — `UC_SVG_TEMPLATE` (~85 lines)
+- `sphinx_need_sysml/svg_templates.py` — `UC_SVG_TEMPLATE` (~85 lines)
 - `tests/test_uc_directive.py` — 3 new tests
 - `tests/doc_test/uc/conf.py` — add `sphinx_need_svg` extension
 - `tests/doc_test/uc/index.rst` — add `needsysml-uc-svg` directive

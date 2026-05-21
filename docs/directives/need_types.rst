@@ -1,7 +1,7 @@
 Need Types
 ==========
 
-sphinxcontrib-sysml registers 27 SysML need types with sphinx-needs: 14
+sphinx-need-sysml registers 27 SysML need types with sphinx-needs: 14
 structural / behavioral / requirement types from the initial release,
 plus 13 additional types added in feature 002 to support state-machine,
 activity, sequence, use case, package, parametric, and allocation

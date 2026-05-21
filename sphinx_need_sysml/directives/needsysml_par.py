@@ -7,8 +7,8 @@ from docutils.statemachine import StringList
 from sphinx.application import Sphinx
 from sphinx.util.docutils import SphinxDirective
 
-from sphinxcontrib.sysml.svg_templates import PAR_SVG_TEMPLATE
-from sphinxcontrib.sysml.templates import PAR_FULL_TEMPLATE
+from sphinx_need_sysml.svg_templates import PAR_SVG_TEMPLATE
+from sphinx_need_sysml.templates import PAR_FULL_TEMPLATE
 
 
 class NeedsymlParDirective(SphinxDirective):
@@ -68,7 +68,7 @@ class NeedsymlParSvgDirective(SphinxDirective):
     }
 
     def run(self) -> list[Any]:
-        from sphinxcontrib.sysml.directives.needsysml_svg import (
+        from sphinx_need_sysml.directives.needsysml_svg import (
             _emit_needsvg_node,
             _substitute,
         )
