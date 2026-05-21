@@ -25,7 +25,7 @@ classifiers = [
 keywords = ["sphinx", "sysml", "sysml-v2", "plantuml", "sphinx-needs"]
 requires-python = ">=3.10"
 dependencies = [
-  "sphinx>=4.0",
+  "sphinx<9",
   "sphinx-needs>=1.0",
 ]
 

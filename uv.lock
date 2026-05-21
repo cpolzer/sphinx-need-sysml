@@ -1444,7 +1444,7 @@ requires-dist = [
     { name = "pillow", marker = "extra == 'test'" },
     { name = "pytest", marker = "extra == 'test'", specifier = ">=7.0" },
     { name = "pytest-cov", marker = "extra == 'test'" },
-    { name = "sphinx", specifier = ">=4.0" },
+    { name = "sphinx", specifier = "<9" },
     { name = "sphinx-immaterial", marker = "extra == 'docs'" },
     { name = "sphinx-need-svg", marker = "extra == 'docs'", specifier = ">=0.3.1" },
     { name = "sphinx-need-svg", marker = "extra == 'test'", specifier = ">=0.3.1" },
