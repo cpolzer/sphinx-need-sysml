@@ -100,17 +100,17 @@ def setup(app: Sphinx) -> dict[str, object]:
     app.connect("builder-inited", _warn_plantuml_format)
 
     # Register diagram directives
-    from sphinxcontrib.sysml.directives.needsysml_bdd import NeedsymlBddDirective
-    from sphinxcontrib.sysml.directives.needsysml_ibd import NeedsymlIbdDirective
-    from sphinxcontrib.sysml.directives.needsysml_req import NeedsymlReqDirective
     from sphinxcontrib.sysml.directives.needsysml_act import (
         NeedsymlActDirective,
         NeedsymlActSvgDirective,
     )
+    from sphinxcontrib.sysml.directives.needsysml_bdd import NeedsymlBddDirective
+    from sphinxcontrib.sysml.directives.needsysml_ibd import NeedsymlIbdDirective
     from sphinxcontrib.sysml.directives.needsysml_pkg import (
         NeedsymlPkgDirective,
         NeedsymlPkgSvgDirective,
     )
+    from sphinxcontrib.sysml.directives.needsysml_req import NeedsymlReqDirective
     from sphinxcontrib.sysml.directives.needsysml_sd import (
         NeedsymlSdDirective,
         NeedsymlSdSvgDirective,

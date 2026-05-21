@@ -5,8 +5,6 @@ from pathlib import Path
 
 import pytest
 
-import pytest
-
 
 @pytest.fixture()
 def req_app(make_app, tmp_path):

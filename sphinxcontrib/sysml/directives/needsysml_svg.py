@@ -42,9 +42,9 @@ def _emit_needsvg_node(
     targetid = f"needsvg-{env.docname}-{serial}"
 
     if not hasattr(env, "needsvg_all_data"):
-        env.needsvg_all_data = {}
+        env.needsvg_all_data = {}  # type: ignore[attr-defined]
 
-    env.needsvg_all_data[targetid] = {
+    env.needsvg_all_data[targetid] = {  # type: ignore[attr-defined]
         "docname": env.docname,
         "lineno": directive.lineno,
         "content": content,

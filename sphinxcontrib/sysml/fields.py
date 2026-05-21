@@ -3,8 +3,9 @@
 from typing import TypedDict
 
 
-class _FieldSchema(TypedDict):
+class _FieldSchema(TypedDict, total=False):
     type: str
+    enum: list[str]
 
 
 class _FieldBase(TypedDict):
@@ -291,8 +292,7 @@ SYSML_FIELDS: list[FieldDef] = [
     {
         "name": "unit",
         "description": (
-            "Unit label printed on a BindingConnector arrow or on a "
-            "ValueProperty"
+            "Unit label printed on a BindingConnector arrow or on a ValueProperty"
         ),
         "schema": {"type": "string"},
     },
@@ -305,9 +305,7 @@ SYSML_FIELDS: list[FieldDef] = [
     },
     {
         "name": "target_value",
-        "description": (
-            "ValueProperty need ID — target end of a BindingConnector"
-        ),
+        "description": ("ValueProperty need ID — target end of a BindingConnector"),
         "schema": {"type": "string"},
     },
 ]
