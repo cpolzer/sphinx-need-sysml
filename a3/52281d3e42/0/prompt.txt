@@ -1,0 +1,13 @@
+is this project not deploying to readdthedocs?
+
+---
+
+its set, the build fails on warning. are we not ?
+
+---
+
+should we renme the extensionm rather?
+
+---
+
+1 and 2
