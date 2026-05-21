@@ -131,7 +131,7 @@ class NeedsymlAllocDirective(SphinxDirective):
         return [table]
 
 
-def _make_need_ref(need_info: dict, docname: str) -> nodes.paragraph:
+def _make_need_ref(need_info: dict[str, Any], docname: str) -> nodes.paragraph:
     """Create a paragraph with a pending cross-reference to the given need."""
     para = nodes.paragraph()
     ref = pending_xref(
