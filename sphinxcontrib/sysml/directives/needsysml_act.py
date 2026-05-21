@@ -45,7 +45,7 @@ class NeedsymlActDirective(SphinxDirective):
         content_list = StringList(content.splitlines(), source="needsysml-act")
         needuml = NeedumlDirective(
             name="needuml",
-            arguments=[root_id],
+            arguments=[],
             options={
                 "config": "sysml_act",
                 "scale": scale or "",

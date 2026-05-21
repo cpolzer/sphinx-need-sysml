@@ -42,7 +42,7 @@ class NeedsymlIbdDirective(SphinxDirective):
         content_list = StringList(content.splitlines(), source="needsysml-ibd")
         needuml = NeedumlDirective(
             name="needuml",
-            arguments=[root_id],
+            arguments=[],
             options={
                 "config": "sysml_ibd",
                 "scale": scale or "",

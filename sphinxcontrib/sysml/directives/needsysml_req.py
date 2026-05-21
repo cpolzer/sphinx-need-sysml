@@ -55,7 +55,7 @@ class NeedsymlReqDirective(SphinxDirective):
         content_list = StringList(content.splitlines(), source="needsysml-req")
         needuml = NeedumlDirective(
             name="needuml",
-            arguments=[filter_expr],
+            arguments=[],
             options={
                 "config": "sysml_req",
                 "scale": scale or "",

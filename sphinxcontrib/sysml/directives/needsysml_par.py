@@ -39,7 +39,7 @@ class NeedsymlParDirective(SphinxDirective):
         content_list = StringList(content.splitlines(), source="needsysml-par")
         needuml = NeedumlDirective(
             name="needuml",
-            arguments=[root_id],
+            arguments=[],
             options={
                 "config": "sysml_par",
                 "scale": scale or "",

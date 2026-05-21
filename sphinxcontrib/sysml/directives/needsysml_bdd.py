@@ -45,7 +45,7 @@ class NeedsymlBddDirective(SphinxDirective):
         content_list = StringList(content.splitlines(), source="needsysml-bdd")
         needuml = NeedumlDirective(
             name="needuml",
-            arguments=[root_id],
+            arguments=[],
             options={
                 "config": "sysml_bdd",
                 "scale": scale or "",
