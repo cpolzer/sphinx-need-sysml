@@ -112,17 +112,17 @@ PKG_FULL_TEMPLATE = """\
 {% set root = needs.get(root_id) %}
 {% if root %}
 {% set level1 = filter("type == 'package' and parent_package == '" + root_id + "'") | list %}
-package "{{ root.title }}" {
+package "{{ root.title }}" {{ ref(root.id) }} {
 {% for c1 in level1 %}
 {% set level2 = filter("type == 'package' and parent_package == '" + c1.id + "'") | list %}
 {% if (level2 | length) > 0 %}
-package "{{ c1.title }}" {
+package "{{ c1.title }}" {{ ref(c1.id) }} {
 {% for c2 in level2 %}
-package "{{ c2.title }}"
+package "{{ c2.title }}" {{ ref(c2.id) }}
 {% endfor %}
 }
 {% else %}
-package "{{ c1.title }}"
+package "{{ c1.title }}" {{ ref(c1.id) }}
 {% endif %}
 {% endfor %}
 }
@@ -156,17 +156,17 @@ UC_FULL_TEMPLATE = """\
 {% set has_default_subject = (use_cases | rejectattr('subject') | list | length) > 0 or (use_cases | selectattr('subject', 'equalto', '') | list | length) > 0 %}
 {% set subjects = non_default_subjects + (['_default'] if has_default_subject else []) %}
 {% for a in actors %}
-actor "{{ a.title }}"
+actor "{{ a.title }}" {{ ref(a.id) }}
 {% endfor %}
 {% for s in subjects %}
 {% if s == '_default' %}
 {% for uc in use_cases if (uc.subject or '_default') == '_default' %}
-usecase "{{ uc.title }}"
+usecase "{{ uc.title }}" {{ ref(uc.id) }}
 {% endfor %}
 {% else %}
 rectangle "{{ s }}" {
 {% for uc in use_cases if uc.subject == s %}
-    usecase "{{ uc.title }}"
+    usecase "{{ uc.title }}" {{ ref(uc.id) }}
 {% endfor %}
 }
 {% endif %}
@@ -236,7 +236,7 @@ SD_FULL_TEMPLATE = """\
 {% set lifeline_ids = lifelines | map(attribute='id') | list %}
 {% set state = namespace(group=None) %}
 {% for ll in lifelines %}
-participant "{{ ll.title }}"
+participant "{{ ll.title }}" {{ ref(ll.id) }}
 {% endfor %}
 {% for m in messages %}
 {% if m.from_lifeline in lifeline_ids and m.to_lifeline in lifeline_ids %}
@@ -280,20 +280,20 @@ ACT_FULL_TEMPLATE = """\
 {% for part in partition_names %}
 {% if part == '_default' %}
 {% for a in actions if (a.partition or '_default') == '_default' %}
-class "{{ a.id }}\\n{{ a.title }}" <<{{ a.activity_kind or 'action' }}>>
+class "{{ a.id }}\\n{{ a.title }}" <<{{ a.activity_kind or 'action' }}>> {{ ref(a.id) }}
 
 {% endfor %}
 {% else %}
 package "{{ part }}" <<swimlane>> {
 {% for a in actions if a.partition == part %}
-class "{{ a.id }}\\n{{ a.title }}" <<{{ a.activity_kind or 'action' }}>>
+class "{{ a.id }}\\n{{ a.title }}" <<{{ a.activity_kind or 'action' }}>> {{ ref(a.id) }}
 {% endfor %}
 }
 {% endif %}
 {% endfor %}
 {% else %}
 {% for a in actions %}
-class "{{ a.id }}\\n{{ a.title }}" <<{{ a.activity_kind or 'action' }}>>
+class "{{ a.id }}\\n{{ a.title }}" <<{{ a.activity_kind or 'action' }}>> {{ ref(a.id) }}
 
 {% endfor %}
 {% endif %}
@@ -324,7 +324,7 @@ STM_FULL_TEMPLATE = """\
 {% for s in states %}
 {% set alias = s.id | replace('-', '_') %}
 {% if s.pseudo_kind not in ('initial', 'final') %}
-state "{{ s.title }}" as {{ alias }}
+state "{{ s.title }}" as {{ alias }} {{ ref(s.id) }}
 {% elif s.pseudo_kind == 'choice' %}
 state {{ alias }} <<choice>>
 {% elif s.pseudo_kind == 'junction' %}
