@@ -727,59 +727,13 @@ Internal Block Diagram (PlantUML)
 Internal Block Diagram (SVG)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-There is no high-level ``needsysml-ibd-svg`` directive yet, but the same
-result is achievable today by composing ``needsvg`` with the Jinja
-helpers:
-
 .. code-block:: rst
 
-   .. needsvg::
+   .. needsysml-ibd-svg:: PD-002
       :align: center
 
-      {% set parent = "PD-002" %}
-      {% set parts = filter("type == 'part' and owned_by == '" + parent + "'") %}
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 220">
-        <rect x="10" y="10" width="620" height="200"
-              fill="none" stroke="#336699" stroke-dasharray="4 3"/>
-        <text x="20" y="28" font-family="sans-serif" font-size="12"
-              fill="#336699">{{ parent }} (IBD)</text>
-        {% for part in parts %}
-        {% set px = 40 + (loop.index0 * 280) %}
-        <g transform="translate({{ px }}, 60)">{{ flow(part.id) }}</g>
-        {% set ports = filter("type == 'port' and owned_by == '" + part.id + "'") %}
-        {% for port in ports %}
-        <circle cx="{{ px + (loop.index0 * 30) + 10 }}" cy="110"
-                r="6" fill="#FFE0AA" stroke="#cc8800"/>
-        <text x="{{ px + (loop.index0 * 30) + 10 }}" y="135"
-              text-anchor="middle" font-family="monospace"
-              font-size="9" fill="#666">{{ port.id }}</text>
-        {% endfor %}
-        {% endfor %}
-      </svg>
-
-.. needsvg::
+.. needsysml-ibd-svg:: PD-002
    :align: center
-
-   {% set parent = "PD-002" %}
-   {% set parts = filter("type == 'part' and owned_by == '" + parent + "'") %}
-   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 220">
-     <rect x="10" y="10" width="620" height="200"
-           fill="none" stroke="#336699" stroke-dasharray="4 3"/>
-     <text x="20" y="28" font-family="sans-serif" font-size="12"
-           fill="#336699">{{ parent }} (IBD)</text>
-     {% for part in parts %}
-     {% set px = 40 + (loop.index0 * 280) %}
-     <g transform="translate({{ px }}, 60)">{{ flow(part.id) }}</g>
-     {% set ports = filter("type == 'port' and owned_by == '" + part.id + "'") %}
-     {% for port in ports %}
-     <circle cx="{{ px + (loop.index0 * 30) + 10 }}" cy="110"
-             r="6" fill="#FFE0AA" stroke="#cc8800"/>
-     <text x="{{ px + (loop.index0 * 30) + 10 }}" y="135"
-           text-anchor="middle" font-family="monospace"
-           font-size="9" fill="#666">{{ port.id }}</text>
-     {% endfor %}
-     {% endfor %}
-   </svg>
 
 Requirements
 ------------

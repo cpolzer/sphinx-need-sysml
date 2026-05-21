@@ -49,3 +49,8 @@ Quick Example
 
 See :doc:`install` for setup instructions and :doc:`examples/vehicle_system`
 for a complete worked example.
+
+References
+----------
+
+- `SysML v2 Diagram Tutorial <https://sysml.org/tutorials/sysml-diagram-tutorial/>`_ — Official OMG tutorial covering all SysML v2 diagram types.

@@ -47,12 +47,21 @@ class "{{ need.id }}\\n{{ need.title }}" <<requirement>> [[{{ ref(need.id) }|{{ 
 
 BDD_FULL_TEMPLATE = """\
 @startuml
+{% set root_id = "{root_id}" %}
 {% set root = needs.get(root_id) %}
 {% if root %}
 {{ uml(root_id) }}
-{% for child in filter("type == 'Part' and owned_by == '" + root_id + "'") %}
-{{ uml(child.id) }}
-{{ root_id }} *-- {{ child.id }}
+{% for c1 in filter("type == 'partdef' and owned_by == '" + root_id + "'") %}
+{{ uml(c1.id) }}
+{{ root_id | replace('-', '_') }} *-- {{ c1.id | replace('-', '_') }}
+{% for c2 in filter("type == 'partdef' and owned_by == '" + c1.id + "'") %}
+{{ uml(c2.id) }}
+{{ c1.id | replace('-', '_') }} *-- {{ c2.id | replace('-', '_') }}
+{% for c3 in filter("type == 'partdef' and owned_by == '" + c2.id + "'") %}
+{{ uml(c3.id) }}
+{{ c2.id | replace('-', '_') }} *-- {{ c3.id | replace('-', '_') }}
+{% endfor %}
+{% endfor %}
 {% endfor %}
 {% endif %}
 @enduml
@@ -60,17 +69,33 @@ BDD_FULL_TEMPLATE = """\
 
 IBD_FULL_TEMPLATE = """\
 @startuml
+{% set root_id = "{root_id}" %}
 {% set root = needs.get(root_id) %}
 {% if root %}
+{% set children = filter("type == 'part' and owned_by == '" + root_id + "'") | list %}
+{% set child_ids = children | map(attribute='id') | list %}
 rectangle "{{ root.title }}" <<ibd>> {
-{% for child in filter("type == 'Part' and owned_by == '" + root_id + "'") %}
-    component "{{ child.id }}\\n{{ child.title }}" <<Part>> as {{ child.id }} {
-{% for port in filter("type == 'Port' and owned_by == '" + child.id + "'") %}
-        portin {{ port.id }}
+{% for child in children %}
+    component "{{ child.id }}\\n{{ child.title }}" <<Part>> as "{{ child.id }}" {
+{% for port in filter("type == 'port' and owned_by == '" + child.id + "'") %}
+{% if port.direction == 'in' %}
+        portin "{{ port.id }}"
+{% elif port.direction == 'out' %}
+        portout "{{ port.id }}"
+{% else %}
+        port "{{ port.id }}"
+{% endif %}
 {% endfor %}
     }
 {% endfor %}
 }
+{% for c in filter("type == 'connection'") %}
+{% set s = needs.get(c.source_port) %}
+{% set t = needs.get(c.target_port) %}
+{% if s and t and s.owned_by in child_ids and t.owned_by in child_ids %}
+"{{ c.source_port }}" --> "{{ c.target_port }}" : {{ c.title }}
+{% endif %}
+{% endfor %}
 {% endif %}
 @enduml
 """
@@ -126,7 +151,7 @@ package "{{ c1.title }}" {{ ref(c1.id) }}
 {% endif %}
 {% endfor %}
 }
-{% set deps = filter("type == 'Dependency'") | list %}
+{% set deps = filter("type == 'dependency'") | list %}
 {% for d in deps %}
 {% if needs.get(d.source_ref) and needs.get(d.target_ref) %}
 "{{ needs.get(d.source_ref).title }}" ..> "{{ needs.get(d.target_ref).title }}" : <<{{ d.kind or 'use' }}>>
@@ -138,7 +163,7 @@ package "{{ c1.title }}" {{ ref(c1.id) }}
 
 
 # Use case — actors outside system boundaries, use cases inside. Walks
-# UseCase needs matching `filter_expr` (default `type == 'UseCase'`).
+# UseCase needs matching `filter_expr` (default `type == 'usecase'`).
 # Groups by `subject` for boundaries. Actors with `interacts_with` get
 # solid association lines per listed UseCase. extends/includes/
 # generalizes between UseCases render as dashed labelled arrows.

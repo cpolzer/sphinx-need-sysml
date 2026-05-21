@@ -22,29 +22,77 @@ __all__ = [
 
 BDD_SVG_TEMPLATE = """\
 {% set root_id = "__ROOT_ID__" %}
-{% set children = filter("__FILTER_EXPR__") | list %}
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 260" width="100%">
-  {% set root = needs.get(root_id) %}
+{% set root = needs.get(root_id) %}
+{% set l1 = filter("__FILTER_EXPR__") | list %}
+{# Bottom-up tree layout: leaves get columns, parents center above kids. #}
+{% set ns = namespace(l2_map={}, l2_total=0) %}
+{% for c1 in l1 %}
+{% set kids = filter("type == 'partdef' and owned_by == '" + c1.id + "'") | list %}
+{% set _ = ns.l2_map.update({c1.id: kids}) %}
+{% set ns.l2_total = ns.l2_total + (kids | length) %}
+{% endfor %}
+{% set cols = ns.l2_total if ns.l2_total > (l1 | length) else (l1 | length) %}
+{% if cols < 1 %}{% set cols = 1 %}{% endif %}
+{% set col_w = 150 %}
+{% set width = (cols * col_w) + 40 %}
+{% set y_root = 20 %}
+{% set y_l1 = 130 %}
+{% set y_l2 = 240 %}
+{% set height = (y_l2 + 60) if ns.l2_total > 0 else (y_l1 + 60) %}
+{% set positions = {} %}
+{% set col_idx = namespace(val=0) %}
+{% for c1 in l1 %}
+{% set kids = ns.l2_map[c1.id] %}
+{% if (kids | length) > 0 %}
+{% set first_col = col_idx.val %}
+{% for c2 in kids %}
+{% set _ = positions.update({c2.id: [20 + col_idx.val * col_w + col_w // 2, y_l2]}) %}
+{% set col_idx.val = col_idx.val + 1 %}
+{% endfor %}
+{% set last_col = col_idx.val - 1 %}
+{% set _ = positions.update({c1.id: [20 + ((first_col + last_col) * col_w) // 2 + col_w // 2, y_l1]}) %}
+{% else %}
+{% set _ = positions.update({c1.id: [20 + col_idx.val * col_w + col_w // 2, y_l1]}) %}
+{% set col_idx.val = col_idx.val + 1 %}
+{% endif %}
+{% endfor %}
+{% set root_xs = namespace(sum=0) %}
+{% for c1 in l1 %}{% set root_xs.sum = root_xs.sum + positions[c1.id][0] %}{% endfor %}
+{% set root_x = (root_xs.sum // (l1 | length)) if (l1 | length) > 0 else (width // 2) %}
+{% if root %}{% set _ = positions.update({root.id: [root_x, y_root]}) %}{% endif %}
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {{ width }} {{ height }}" width="100%">
   {% if root %}
-  <g transform="translate(300, 20)">{{ flow(root_id) }}</g>
-  {% set count = children | length %}
-  {% if count > 0 %}
-  {% set step = (720 // (count + 1)) %}
-  {% for child in children %}
-  {% set cx = step * loop.index %}
-  <line x1="360" y1="60" x2="{{ cx }}" y2="180"
+  <g transform="translate({{ positions[root.id][0] - 60 }}, {{ positions[root.id][1] }})">{{ flow(root.id) }}</g>
+  {% for c1 in l1 %}
+  {% set rx = positions[root.id][0] %}
+  {% set ry = positions[root.id][1] + 40 %}
+  {% set cx1 = positions[c1.id][0] %}
+  {% set cy1 = positions[c1.id][1] %}
+  <line x1="{{ rx }}" y1="{{ ry + 16 }}" x2="{{ cx1 }}" y2="{{ cy1 }}"
         stroke="#336699" stroke-width="1.5"/>
-  <polygon points="358,55 366,55 362,65" fill="#336699"/>
-  <g transform="translate({{ cx - 60 }}, 180)">{{ flow(child.id) }}</g>
+  <polygon points="{{ rx }},{{ ry }} {{ rx + 6 }},{{ ry + 8 }} {{ rx }},{{ ry + 16 }} {{ rx - 6 }},{{ ry + 8 }}"
+           fill="#336699" stroke="#336699"/>
+  <g transform="translate({{ cx1 - 60 }}, {{ cy1 }})">{{ flow(c1.id) }}</g>
+  {% for c2 in ns.l2_map[c1.id] %}
+  {% set px = positions[c1.id][0] %}
+  {% set py = positions[c1.id][1] + 40 %}
+  {% set cx2 = positions[c2.id][0] %}
+  {% set cy2 = positions[c2.id][1] %}
+  <line x1="{{ px }}" y1="{{ py + 16 }}" x2="{{ cx2 }}" y2="{{ cy2 }}"
+        stroke="#336699" stroke-width="1.5"/>
+  <polygon points="{{ px }},{{ py }} {{ px + 6 }},{{ py + 8 }} {{ px }},{{ py + 16 }} {{ px - 6 }},{{ py + 8 }}"
+           fill="#336699" stroke="#336699"/>
+  <g transform="translate({{ cx2 - 60 }}, {{ cy2 }})">{{ flow(c2.id) }}</g>
   {% endfor %}
-  {% else %}
-  <text x="360" y="150" text-anchor="middle"
+  {% endfor %}
+  {% if (l1 | length) == 0 %}
+  <text x="{{ width // 2 }}" y="{{ y_l1 + 30 }}" text-anchor="middle"
         font-family="sans-serif" font-size="12" fill="#999">
     No matching elements
   </text>
   {% endif %}
   {% else %}
-  <text x="360" y="130" text-anchor="middle"
+  <text x="{{ width // 2 }}" y="{{ height // 2 }}" text-anchor="middle"
         font-family="sans-serif" font-size="12" fill="red">
     Unknown root need: {{ root_id }}
   </text>
@@ -468,36 +516,109 @@ STM_SVG_TEMPLATE = """\
 
 IBD_SVG_TEMPLATE = """\
 {% set root_id = "__ROOT_ID__" %}
+{% set root = needs.get(root_id) %}
 {% set parts = filter("type == 'part' and owned_by == '" + root_id + "'") | list %}
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 260" width="100%">
-  {% set root = needs.get(root_id) %}
+{% set part_ids = parts | map(attribute='id') | list %}
+{# Group ports by direction per part so we can place in-ports on the left
+   edge, out-ports on the right edge, others on the top. #}
+{% set part_ports = {} %}
+{% for p in parts %}
+{% set ins = [] %}
+{% set outs = [] %}
+{% set others = [] %}
+{% for port in filter("type == 'port' and owned_by == '" + p.id + "'") %}
+{% if port.direction == 'in' %}{% set _ = ins.append(port) %}
+{% elif port.direction == 'out' %}{% set _ = outs.append(port) %}
+{% else %}{% set _ = others.append(port) %}
+{% endif %}
+{% endfor %}
+{% set _ = part_ports.update({p.id: {'in': ins, 'out': outs, 'other': others}}) %}
+{% endfor %}
+{% set part_w = 170 %}
+{% set part_h = 110 %}
+{% set part_gap = 120 %}
+{% set pad = 70 %}
+{% set part_y = 70 %}
+{% set count = parts | length %}
+{% set width = (pad * 2) + (count * part_w) + ((count - 1) * part_gap) if count > 0 else 720 %}
+{% set height = part_y + part_h + 60 %}
+{% set ns = namespace(port_pos={}) %}
+{% for p in parts %}
+{% set p_x = pad + loop.index0 * (part_w + part_gap) %}
+{% set ports = part_ports[p.id] %}
+{% for port in ports['in'] %}
+{% set py_offset = part_h * loop.index // ((ports['in'] | length) + 1) %}
+{% set _ = ns.port_pos.update({port.id: [p_x, part_y + py_offset, 'left']}) %}
+{% endfor %}
+{% for port in ports['out'] %}
+{% set py_offset = part_h * loop.index // ((ports['out'] | length) + 1) %}
+{% set _ = ns.port_pos.update({port.id: [p_x + part_w, part_y + py_offset, 'right']}) %}
+{% endfor %}
+{% for port in ports['other'] %}
+{% set px_offset = part_w * loop.index // ((ports['other'] | length) + 1) %}
+{% set _ = ns.port_pos.update({port.id: [p_x + px_offset, part_y, 'top']}) %}
+{% endfor %}
+{% endfor %}
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {{ width }} {{ height }}" width="100%">
   {% if root %}
-  <rect x="20" y="10" width="680" height="240"
+  <rect x="10" y="10" width="{{ width - 20 }}" height="{{ height - 20 }}"
         fill="none" stroke="#336699" stroke-dasharray="4 3"/>
-  <text x="32" y="32" font-family="sans-serif" font-size="13"
-        fill="#336699">{{ root.title }} ({{ root_id }}) — IBD</text>
-  {% set count = parts | length %}
+  <text x="24" y="32" font-family="sans-serif" font-size="13" font-style="italic"
+        fill="#336699">«ibd» {{ root.title }}</text>
+  <text x="24" y="48" font-family="monospace" font-size="9" fill="#666">{{ root_id }}</text>
   {% if count > 0 %}
-  {% for part in parts %}
-  {% set px = 60 + ((680 - 120) // (count + 1)) * loop.index - 60 %}
-  <g transform="translate({{ px }}, 90)">{{ flow(part.id) }}</g>
-  {% set ports = filter("type == 'port' and owned_by == '" + part.id + "'") | list %}
-  {% for port in ports %}
-  <circle cx="{{ px + (loop.index0 * 28) + 10 }}" cy="150"
-          r="6" fill="#FFE0AA" stroke="#cc8800"/>
-  <text x="{{ px + (loop.index0 * 28) + 10 }}" y="175"
-        text-anchor="middle" font-family="monospace"
-        font-size="9" fill="#666">{{ port.id }}</text>
+  {% for p in parts %}
+  {% set p_x = pad + loop.index0 * (part_w + part_gap) %}
+  <a href="#{{ p.id }}">
+    <rect x="{{ p_x }}" y="{{ part_y }}" width="{{ part_w }}" height="{{ part_h }}"
+          rx="6" fill="#E8F0FA" stroke="#336699" stroke-width="1.5"/>
+    <text x="{{ p_x + part_w // 2 }}" y="{{ part_y + 18 }}" text-anchor="middle"
+          font-family="sans-serif" font-size="10" font-style="italic" fill="#666">«Part»</text>
+    <text x="{{ p_x + part_w // 2 }}" y="{{ part_y + 38 }}" text-anchor="middle"
+          font-family="monospace" font-size="10" fill="#666">{{ p.id }}</text>
+    <text x="{{ p_x + part_w // 2 }}" y="{{ part_y + 58 }}" text-anchor="middle"
+          font-family="sans-serif" font-size="12" font-weight="bold">{{ p.title }}</text>
+  </a>
+  {% set ports = part_ports[p.id] %}
+  {% for port in ports['in'] + ports['out'] + ports['other'] %}
+  {% set pos = ns.port_pos[port.id] %}
+  <a href="#{{ port.id }}">
+    <rect x="{{ pos[0] - 6 }}" y="{{ pos[1] - 6 }}" width="12" height="12"
+          fill="#FFFFFF" stroke="#336699" stroke-width="1.2"/>
+    {% if pos[2] == 'left' %}
+    <text x="{{ pos[0] - 8 }}" y="{{ pos[1] - 10 }}" text-anchor="end"
+          font-family="monospace" font-size="9" fill="#444">{{ port.id }}</text>
+    {% elif pos[2] == 'right' %}
+    <text x="{{ pos[0] + 8 }}" y="{{ pos[1] - 10 }}"
+          font-family="monospace" font-size="9" fill="#444">{{ port.id }}</text>
+    {% else %}
+    <text x="{{ pos[0] }}" y="{{ pos[1] - 10 }}" text-anchor="middle"
+          font-family="monospace" font-size="9" fill="#444">{{ port.id }}</text>
+    {% endif %}
+  </a>
   {% endfor %}
+  {% endfor %}
+  {# Connectors: Connection needs whose both ports are inside this IBD #}
+  {% for c in filter("type == 'connection'") %}
+  {% if c.source_port in ns.port_pos and c.target_port in ns.port_pos %}
+  {% set s = ns.port_pos[c.source_port] %}
+  {% set t = ns.port_pos[c.target_port] %}
+  <line x1="{{ s[0] }}" y1="{{ s[1] }}" x2="{{ t[0] }}" y2="{{ t[1] }}"
+        stroke="#444" stroke-width="1.5"/>
+  {% set mx = (s[0] + t[0]) // 2 %}
+  {% set my = (s[1] + t[1]) // 2 %}
+  <text x="{{ mx }}" y="{{ my + 18 }}" text-anchor="middle"
+        font-family="sans-serif" font-size="10" font-style="italic" fill="#222">{{ c.title }}</text>
+  {% endif %}
   {% endfor %}
   {% else %}
-  <text x="360" y="135" text-anchor="middle"
+  <text x="{{ width // 2 }}" y="{{ part_y + 50 }}" text-anchor="middle"
         font-family="sans-serif" font-size="12" fill="#999">
-    No matching elements
+    No internal parts
   </text>
   {% endif %}
   {% else %}
-  <text x="360" y="135" text-anchor="middle"
+  <text x="{{ width // 2 }}" y="{{ height // 2 }}" text-anchor="middle"
         font-family="sans-serif" font-size="12" fill="red">
     Unknown root need: {{ root_id }}
   </text>
