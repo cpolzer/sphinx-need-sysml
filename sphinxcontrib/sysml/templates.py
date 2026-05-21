@@ -251,7 +251,7 @@ participant "{{ ll.title }}" {{ ref(ll.id) }}
 {% set state.group = m.fragment_group %}
 {% endif %}
 {% set arrow = '->' if (m.message_kind or 'sync') == 'sync' else ('->>' if m.message_kind == 'async' else '-->') %}
-"{{ from_ll.title }}" {{ arrow }} "{{ to_ll.title }}" : {{ m.title }} {{ ref(m.id) }}
+"{{ from_ll.title }}" {{ arrow }} "{{ to_ll.title }}" : {{ ref(m.id, text=m.title) }}
 {% endif %}
 {% endif %}
 {% endfor %}

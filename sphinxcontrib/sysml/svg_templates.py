@@ -377,31 +377,37 @@ STM_SVG_TEMPLATE = """\
   {% set count = states | length %}
   {% if count > 0 %}
   {% set step = (720 // (count + 1)) %}
-  {% set rendered = {} %}
+  {% set state_pos = {} %}
   {% for s in states %}
   {% set cx = step * loop.index %}
   {% set cy = 90 if loop.index0 % 2 == 0 else 230 %}
   {% if s.pseudo_kind == 'initial' %}
+  {% set _ = state_pos.update({s.id: {"x": cx - 9, "y": cy + 11, "w": 18, "h": 18}}) %}
   <circle cx="{{ cx }}" cy="{{ cy + 20 }}" r="9" fill="#222" stroke="#222"/>
   <text x="{{ cx }}" y="{{ cy + 50 }}" text-anchor="middle"
         font-family="monospace" font-size="9" fill="#666">{{ s.id }}</text>
   {% elif s.pseudo_kind == 'final' %}
+  {% set _ = state_pos.update({s.id: {"x": cx - 11, "y": cy + 9, "w": 22, "h": 22}}) %}
   <circle cx="{{ cx }}" cy="{{ cy + 20 }}" r="11" fill="white" stroke="#222"/>
   <circle cx="{{ cx }}" cy="{{ cy + 20 }}" r="6" fill="#222"/>
   <text x="{{ cx }}" y="{{ cy + 50 }}" text-anchor="middle"
         font-family="monospace" font-size="9" fill="#666">{{ s.id }}</text>
   {% elif s.pseudo_kind in ('shallowHistory', 'deepHistory') %}
+  {% set _ = state_pos.update({s.id: {"x": cx - 13, "y": cy + 7, "w": 26, "h": 26}}) %}
   <circle cx="{{ cx }}" cy="{{ cy + 20 }}" r="13"
           fill="#EEEEDD" stroke="#888866"/>
   <text x="{{ cx }}" y="{{ cy + 24 }}" text-anchor="middle"
         font-family="serif" font-style="italic" font-size="13">{{
         'H*' if s.pseudo_kind == 'deepHistory' else 'H' }}</text>
   {% elif s.pseudo_kind == 'choice' %}
+  {% set _ = state_pos.update({s.id: {"x": cx - 18, "y": cy + 5, "w": 36, "h": 30}}) %}
   <polygon points="{{ cx }},{{ cy + 5 }} {{ cx + 18 }},{{ cy + 20 }} {{ cx }},{{ cy + 35 }} {{ cx - 18 }},{{ cy + 20 }}"
            fill="#FFEEBB" stroke="#CC9900"/>
   {% elif s.pseudo_kind == 'junction' %}
+  {% set _ = state_pos.update({s.id: {"x": cx - 6, "y": cy + 14, "w": 12, "h": 12}}) %}
   <circle cx="{{ cx }}" cy="{{ cy + 20 }}" r="6" fill="#888888" stroke="#444"/>
   {% else %}
+  {% set _ = state_pos.update({s.id: {"x": cx - 55, "y": cy, "w": 110, "h": 40}}) %}
   <a href="{{ ref(s.id) }}">
     <rect x="{{ cx - 55 }}" y="{{ cy }}" width="110" height="40"
           rx="8" fill="#EEEEDD" stroke="#888866"/>
@@ -412,26 +418,44 @@ STM_SVG_TEMPLATE = """\
   </a>
   {% endif %}
   {% endfor %}
-  {% for t in transitions %}
-  {% set src = needs.get(t.from_state) %}
-  {% set dst = needs.get(t.to_state) %}
-  {% if src and dst and src.definition == root_id and dst.definition == root_id %}
-  {% set label = (t.trigger or '') %}
-  {% if t.guard %}{% set label = label + ' [' + t.guard + ']' %}{% endif %}
-  {% if t.effect %}{% set label = label + ' / ' + t.effect %}{% endif %}
-  {% set src_index = (states | map(attribute='id') | list).index(t.from_state) + 1 %}
-  {% set dst_index = (states | map(attribute='id') | list).index(t.to_state) + 1 %}
-  {% set sx = step * src_index %}
-  {% set dx = step * dst_index %}
-  {% set sy = (90 if (src_index - 1) % 2 == 0 else 230) + 40 %}
-  {% set dy = 90 if (dst_index - 1) % 2 == 0 else 230 %}
-  <line x1="{{ sx }}" y1="{{ sy }}" x2="{{ dx }}" y2="{{ dy }}"
-        stroke="#666" stroke-width="1.5"/>
-  <text x="{{ (sx + dx) // 2 }}" y="{{ (sy + dy) // 2 - 4 }}"
-        text-anchor="middle" font-family="sans-serif" font-size="10"
-        fill="#444">{{ label }}</text>
-  {% endif %}
-  {% endfor %}
+   {% for t in transitions %}
+   {% set src = needs.get(t.from_state) %}
+   {% set dst = needs.get(t.to_state) %}
+   {% if src and dst and src.definition == root_id and dst.definition == root_id and t.from_state in state_pos and t.to_state in state_pos %}
+   {% set label = (t.trigger or '') %}
+   {% if t.guard %}{% set label = label + ' [' + t.guard + ']' %}{% endif %}
+   {% if t.effect %}{% set label = label + ' / ' + t.effect %}{% endif %}
+   {% set src_rect = state_pos[t.from_state] %}
+   {% set dst_rect = state_pos[t.to_state] %}
+   {% set src_cx = src_rect.x + src_rect.w // 2 %}
+   {% set src_cy = src_rect.y + src_rect.h // 2 %}
+   {% set dst_cx = dst_rect.x + dst_rect.w // 2 %}
+   {% set dst_cy = dst_rect.y + dst_rect.h // 2 %}
+   {% set dx = dst_cx - src_cx %}
+   {% set dy = dst_cy - src_cy %}
+   {% set dist = (dx * dx + dy * dy) ** 0.5 %}
+   {% if dist > 0 %}
+   {% set nx = dx / dist %}
+   {% set ny = dy / dist %}
+   {% else %}
+   {% set nx = 0 %}
+   {% set ny = 0 %}
+   {% endif %}
+   {% set src_px = src_cx + nx * (src_rect.w // 2) %}
+   {% set src_py = src_cy + ny * (src_rect.h // 2) %}
+   {% set dst_px = dst_cx - nx * (dst_rect.w // 2) %}
+   {% set dst_py = dst_cy - ny * (dst_rect.h // 2) %}
+   <line x1="{{ src_px | round(1) }}" y1="{{ src_py | round(1) }}" x2="{{ dst_px | round(1) }}" y2="{{ dst_py | round(1) }}"
+         stroke="#666" stroke-width="1.5"/>
+   {% set mx = (src_px + dst_px) // 2 %}
+   {% set my = (src_py + dst_py) // 2 %}
+   {% set lx = mx + ny * 10 %}
+   {% set ly = my - nx * 10 - 6 %}
+   <text x="{{ lx | round(1) }}" y="{{ ly | round(1) }}"
+         text-anchor="middle" font-family="sans-serif" font-size="10"
+         fill="#444">{{ label }}</text>
+   {% endif %}
+   {% endfor %}
   {% else %}
   <text x="360" y="160" text-anchor="middle"
         font-family="sans-serif" font-size="12" fill="#999">

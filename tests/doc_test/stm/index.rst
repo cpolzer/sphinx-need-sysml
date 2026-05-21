@@ -50,3 +50,6 @@ stm fixture
 
 .. needsysml-stm:: SD-001
    :align: center
+
+.. needsysml-stm-svg:: SD-001
+   :align: center
