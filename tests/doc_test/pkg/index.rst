@@ -28,3 +28,6 @@ pkg fixture
 
 .. needsysml-pkg:: PKG-001
    :align: center
+
+.. needsysml-pkg-svg:: PKG-001
+   :align: center

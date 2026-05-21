@@ -231,13 +231,17 @@ PKG_SVG_TEMPLATE = """\
   {% set cw = (720 - 60) // count %}
   {% for c in children %}
   {% set cx = 40 + loop.index0 * cw %}
-  {% set _ = child_pos.update({c.id: [cx + cw // 2, 200]}) %}
+  {% set rx = cx %}
+  {% set ry = 80 %}
+  {% set rw = cw - 20 %}
+  {% set rh = 220 %}
+  {% set _ = child_pos.update({c.id: {"x": rx, "y": ry, "w": rw, "h": rh}}) %}
   <a href="{{ ref(c.id) }}">
-    <rect x="{{ cx }}" y="80" width="{{ cw - 20 }}" height="220"
+    <rect x="{{ rx }}" y="{{ ry }}" width="{{ rw }}" height="{{ rh }}"
           fill="#FFFFFF" stroke="#336699"/>
-    <text x="{{ cx + 12 }}" y="100" font-family="sans-serif" font-size="11"
+    <text x="{{ rx + 12 }}" y="100" font-family="sans-serif" font-size="11"
           font-weight="bold" fill="#336699">{{ c.title }}</text>
-    <text x="{{ cx + 12 }}" y="118" font-family="monospace" font-size="9"
+    <text x="{{ rx + 12 }}" y="118" font-family="monospace" font-size="9"
           fill="#666">{{ c.id }}</text>
   </a>
   {% endfor %}
@@ -251,9 +255,31 @@ PKG_SVG_TEMPLATE = """\
   {% if d.source_ref in child_pos and d.target_ref in child_pos %}
   {% set src = child_pos[d.source_ref] %}
   {% set dst = child_pos[d.target_ref] %}
-  <line x1="{{ src[0] }}" y1="{{ src[1] }}" x2="{{ dst[0] }}" y2="{{ dst[1] - 20 - loop.index0 * 16 }}"
+  {% set src_right = src.x + src.w %}
+  {% set dst_left = dst.x %}
+  {% set src_left = src.x %}
+  {% set dst_right = dst.x + dst.w %}
+  {% set mid_y = src.y + src.h // 2 %}
+  {% set offset = loop.index0 * 12 %}
+  {% if src_right <= dst_left %}
+  {% set x1 = src_right %}
+  {% set y1 = mid_y + offset %}
+  {% set x2 = dst_left %}
+  {% set y2 = mid_y + offset %}
+  {% elif src_left >= dst_right %}
+  {% set x1 = src_left %}
+  {% set y1 = mid_y + offset %}
+  {% set x2 = dst_right %}
+  {% set y2 = mid_y + offset %}
+  {% else %}
+  {% set x1 = src_right %}
+  {% set y1 = mid_y + offset %}
+  {% set x2 = dst_left %}
+  {% set y2 = mid_y + offset %}
+  {% endif %}
+  <line x1="{{ x1 }}" y1="{{ y1 }}" x2="{{ x2 }}" y2="{{ y2 }}"
         stroke="#444" stroke-dasharray="4 3" stroke-width="1.2"/>
-  <text x="{{ (src[0] + dst[0]) // 2 }}" y="{{ src[1] - 14 - loop.index0 * 16 }}" text-anchor="middle"
+  <text x="{{ (x1 + x2) // 2 }}" y="{{ mid_y + offset - 6 }}" text-anchor="middle"
         font-family="sans-serif" font-size="10" fill="#444"
         font-style="italic">&lt;&lt;{{ d.kind or 'use' }}&gt;&gt;</text>
   {% endif %}

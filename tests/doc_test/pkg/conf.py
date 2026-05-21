@@ -3,6 +3,7 @@
 extensions = [
     "sphinx_needs",
     "sphinxcontrib.plantuml",
+    "sphinx_need_svg",
     "sphinxcontrib.sysml",
 ]
 
