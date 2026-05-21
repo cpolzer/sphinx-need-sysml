@@ -182,3 +182,7 @@ open pr in browser
 ---
 
 MR was merged
+
+---
+
+yes
