@@ -1,0 +1,25 @@
+{
+  "cli_version": "0.6.2",
+  "checkpoint_id": "3048409cf14b",
+  "strategy": "manual-commit",
+  "branch": "007-rename-to-sphinx-need-sysml",
+  "checkpoints_count": 0,
+  "files_touched": [
+    "pyproject.toml"
+  ],
+  "sessions": [
+    {
+      "metadata": "/30/48409cf14b/0/metadata.json",
+      "transcript": "/30/48409cf14b/0/full.jsonl",
+      "content_hash": "/30/48409cf14b/0/content_hash.txt",
+      "prompt": "/30/48409cf14b/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 8,
+    "cache_creation_tokens": 3023,
+    "cache_read_tokens": 387468,
+    "output_tokens": 1167,
+    "api_call_count": 3
+  }
+}
