@@ -1,0 +1,156 @@
+lets check our sphinx docs. i think  our example is missing a lot of content: We need best practice full Sysml diagrams to show the potential of this sphinx extension, also for the sphinx-need-svg parts
+
+---
+
+we have an example in our sphinx docs, please imporve it. we aim for a full syml diagram demo, including plantuml and sphinx-need-svg examples.
+
+---
+
+can we check https://sysml.org/tutorials/sysml-diagram-tutorial/ for diagrams and use it as an input for a review - what are we missing in our extension, what is done well?
+
+---
+
+can we check https://sysml.org/tutorials/sysml-diagram-tutorial/ for diagrams and use it as an input for a review - what are we missing in our extension, what is done well?
+
+---
+
+yes, demo all of them and if needed plan in settiung up plantuml and scg templates
+
+---
+
+/speckit-specify Cover all SysML v2 diagram types in the
+  sphinxcontrib-sysml extension. Today the extension supports Block
+  Definition (bdd), Internal Block (ibd), and Requirements (req) diagrams,
+  but engineers writing SysML models also need State Machine (stm),
+  Activity (act), Sequence (sd), Use Case (uc), Package (pkg), Parametric
+  (par), and an Allocation matrix view. Engineers should be able to
+  declare every SysML v2 modeling element as a sphinx-needs item — so it
+  is queryable and traceable from sphinx-needs tables and roles — and
+  render every standard SysML diagram type from that model. Each diagram
+  should be available in two rendering paths: an auto-laid-out PlantUML
+  rendering (via the existing needuml wrapper) and a precise inline-SVG
+  rendering with clickable need links (via sphinx-need-svg's Needsvg
+  placeholder). Fidelity should be production-grade: state machines must
+  support nested/composite states, history pseudostates, and transitions
+  with trigger/guard/effect; activity diagrams must support swimlane
+  partitions, fork/join, decision/merge, and object flow; sequence
+  diagrams must support all combined fragments (alt, opt, loop, par, neg,
+  critical) and sync/async/return messages; use cases must support
+  extends/includes/generalization and a system-boundary subject; package
+  diagrams must distinguish dependency kinds (use, import, realize) and
+  support nested packages; parametric diagrams must support constraint
+  blocks with parameters, value properties, and binding connectors with
+  units. Add the necessary new need types (Transition, ControlFlow,
+  ObjectFlow, Package, Dependency, UseCase, Actor, ConstraintBlock,
+  ConstraintParameter, ValueProperty, BindingConnector, Lifeline, Message)
+  and the matching extra fields. Each new diagram directive should have a
+  smoke test that builds without error and asserts an expected need ID
+  appears in the rendered output. The docs/examples/vehicle_system.rst
+  example should be extended to demonstrate every new diagram in one
+  coherent model, with PlantUML and SVG variants side by side.
+
+---
+
+/speckit-clarify
+
+---
+
+B
+
+---
+
+b
+
+---
+
+B
+
+---
+
+A
+
+---
+
+C
+
+---
+
+/speckit-plan
+
+---
+
+/speckit-plan
+
+---
+
+/speckit-tasks
+
+---
+
+/speckit-analyze
+
+---
+
+Yes refine
+
+---
+
+/speckit-analyze
+
+---
+
+Yes
+
+---
+
+/speckit-implement
+
+---
+
+/loop check pytest output and continue speckit-implement
+
+---
+
+<task-notification>
+<task-id>br95lf9up</task-id>
+<tool-use-id>toolu_01G8rDif3XAveVoHD1vXKMN6</tool-use-id>
+<output-file>/tmp/claude-1000/-home-chris-develop-open-source-sphinx-need-sysml/ee5f5543-9f88-4838-b7fd-7e9ec9bf1398/tasks/br95lf9up.output</output-file>
+<status>completed</status>
+<summary>Background command "Full test suite" completed (exit code 0)</summary>
+</task-notification>
+
+---
+
+/loop check pytest output and continue speckit-implement
+
+---
+
+<task-notification>
+<task-id>blrzf4ve4</task-id>
+<tool-use-id>toolu_011NyfuJ7vKrvNBw2BYR1R5s</tool-use-id>
+<output-file>/tmp/claude-1000/-home-chris-develop-open-source-sphinx-need-sysml/ee5f5543-9f88-4838-b7fd-7e9ec9bf1398/tasks/blrzf4ve4.output</output-file>
+<status>completed</status>
+<summary>Background command "Full pytest suite for T058" completed (exit code 0)</summary>
+</task-notification>
+
+---
+
+push, open mr
+
+---
+
+/loop check pytest output and continue speckit-implement
+
+---
+
+we have linting errors. how can we pass pre commit hooks and then have ci linting errors?
+
+---
+
+<task-notification>
+<task-id>b3llmwdcg</task-id>
+<tool-use-id>REDACTED</tool-use-id>
+<output-file>/tmp/claude-1000/-home-chris-develop-open-source-sphinx-need-sysml/ee5f5543-9f88-4838-b7fd-7e9ec9bf1398/tasks/b3llmwdcg.output</output-file>
+<status>completed</status>
+<summary>Background command "Re-run regression check synchronously" completed (exit code 0)</summary>
+</task-notification>
