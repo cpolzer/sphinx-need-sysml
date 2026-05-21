@@ -104,8 +104,13 @@ def setup(app: Sphinx) -> dict[str, object]:
         NeedsymlActDirective,
         NeedsymlActSvgDirective,
     )
+    from sphinxcontrib.sysml.directives.needsysml_alloc import NeedsymlAllocDirective
     from sphinxcontrib.sysml.directives.needsysml_bdd import NeedsymlBddDirective
     from sphinxcontrib.sysml.directives.needsysml_ibd import NeedsymlIbdDirective
+    from sphinxcontrib.sysml.directives.needsysml_par import (
+        NeedsymlParDirective,
+        NeedsymlParSvgDirective,
+    )
     from sphinxcontrib.sysml.directives.needsysml_pkg import (
         NeedsymlPkgDirective,
         NeedsymlPkgSvgDirective,
@@ -133,6 +138,10 @@ def setup(app: Sphinx) -> dict[str, object]:
     app.add_directive("needsysml-uc", NeedsymlUcDirective)
     app.add_directive("needsysml-pkg", NeedsymlPkgDirective)
 
+    # v1.1 new directives
+    app.add_directive("needsysml-par", NeedsymlParDirective)
+    app.add_directive("needsysml-alloc", NeedsymlAllocDirective)
+
     # Register SVG directives only when sphinx-need-svg is available
     if _HAS_NEED_SVG:
         from sphinxcontrib.sysml.directives.needsysml_svg import (
@@ -147,6 +156,8 @@ def setup(app: Sphinx) -> dict[str, object]:
         app.add_directive("needsysml-sd-svg", NeedsymlSdSvgDirective)
         app.add_directive("needsysml-uc-svg", NeedsymlUcSvgDirective)
         app.add_directive("needsysml-pkg-svg", NeedsymlPkgSvgDirective)
+        # v1.1 svg
+        app.add_directive("needsysml-par-svg", NeedsymlParSvgDirective)
 
     return {
         "version": VERSION,

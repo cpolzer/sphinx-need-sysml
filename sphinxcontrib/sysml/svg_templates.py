@@ -12,6 +12,7 @@ __all__ = [
     "ACT_SVG_TEMPLATE",
     "BDD_SVG_TEMPLATE",
     "IBD_SVG_TEMPLATE",
+    "PAR_SVG_TEMPLATE",
     "PKG_SVG_TEMPLATE",
     "SD_SVG_TEMPLATE",
     "STM_SVG_TEMPLATE",
@@ -449,6 +450,81 @@ IBD_SVG_TEMPLATE = """\
   <text x="360" y="135" text-anchor="middle"
         font-family="sans-serif" font-size="12" fill="red">
     Unknown root need: {{ root_id }}
+  </text>
+  {% endif %}
+</svg>
+"""
+
+
+PAR_SVG_TEMPLATE = """\
+{% set root_id = "__ROOT_ID__" %}
+{% set root = needs.get(root_id) %}
+{% set bindings = filter("type == 'bindingconnector'") | list %}
+{% set value_props = filter("type == 'valueproperty'") | list %}
+{% set param_count = (root.parameters or '').split(',') | reject('equalto', '') | list | length %}
+{% set vp_count = value_props | length %}
+{% set box_w = 160 %}
+{% set box_h = 60 %}
+{% set svg_w = (param_count + vp_count + 2) * box_w + 40 %}
+{% set svg_h = 280 %}
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {{ svg_w }} {{ svg_h }}" width="100%">
+  {% if root %}
+  <a href="{{ ref(root.id) }}">
+    <rect x="20" y="20" width="{{ box_w }}" height="{{ box_h }}"
+          rx="8" fill="#FFF0DC" stroke="#CC8800"/>
+    <text x="{{ 20 + box_w // 2 }}" y="44" text-anchor="middle"
+          font-family="sans-serif" font-size="11" font-weight="bold">{{ root.title }}</text>
+    <text x="{{ 20 + box_w // 2 }}" y="62" text-anchor="middle"
+          font-family="monospace" font-size="9" fill="#666">&lt;&lt;constraint&gt;&gt;</text>
+  </a>
+  {% set param_ids = (root.parameters or '').split(',') | map('trim') | reject('equalto', '') | list %}
+  {% for pid in param_ids %}
+  {% set param = needs.get(pid) %}
+  {% if param %}
+  {% set px = 20 + loop.index * box_w %}
+  <circle cx="{{ px + box_w // 2 }}" cy="50" r="8"
+          fill="#FFE8C8" stroke="#CC8800"/>
+  <text x="{{ px + box_w // 2 }}" y="80" text-anchor="middle"
+        font-family="monospace" font-size="8" fill="#666">{{ param.id }}</text>
+  {% endif %}
+  {% endfor %}
+  {% for vp in value_props %}
+  {% set vx = 20 + (param_count + 1 + loop.index0) * box_w %}
+  <a href="{{ ref(vp.id) }}">
+    <rect x="{{ vx }}" y="140" width="{{ box_w - 10 }}" height="{{ box_h }}"
+          rx="4" fill="#E8F4FF" stroke="#336699"/>
+    <text x="{{ vx + (box_w - 10) // 2 }}" y="164" text-anchor="middle"
+          font-family="sans-serif" font-size="11">{{ vp.title }}</text>
+    <text x="{{ vx + (box_w - 10) // 2 }}" y="182" text-anchor="middle"
+          font-family="monospace" font-size="9" fill="#666">{{ vp.value_type or '' }}{% if vp.default_value %} = {{ vp.default_value }}{% endif %}</text>
+  </a>
+  {% endfor %}
+  {% for b in bindings %}
+  {% set src_param = needs.get(b.source_parameter) %}
+  {% set dst_value = needs.get(b.target_value) %}
+  {% if src_param and dst_value %}
+  {% set src_idx = param_ids.index(src_param.id) + 1 if src_param.id in param_ids else -1 %}
+  {% set dst_idx = -1 %}
+  {% for i, vp in enumerate(value_props) %}
+  {% if vp.id == dst_value.id %}{% set dst_idx = i %}{% endif %}
+  {% endfor %}
+  {% if src_idx > 0 and dst_idx >= 0 %}
+  {% set sx = 20 + src_idx * box_w + box_w // 2 %}
+  {% set dx = 20 + (param_count + 1 + dst_idx) * box_w + (box_w - 10) // 2 %}
+  <line x1="{{ sx }}" y1="58" x2="{{ dx }}" y2="140"
+        stroke="#444" stroke-dasharray="4 3" stroke-width="1.2"/>
+  {% if b.unit %}
+  <text x="{{ (sx + dx) // 2 }}" y="{{ (58 + 140) // 2 - 4 }}"
+        text-anchor="middle" font-family="sans-serif" font-size="10"
+        fill="#444" font-style="italic">{{ b.unit }}</text>
+  {% endif %}
+  {% endif %}
+  {% endif %}
+  {% endfor %}
+  {% else %}
+  <text x="360" y="140" text-anchor="middle"
+        font-family="sans-serif" font-size="12" fill="red">
+    Unknown root constraint: {{ root_id }}
   </text>
   {% endif %}
 </svg>

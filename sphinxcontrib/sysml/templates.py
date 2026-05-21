@@ -111,10 +111,10 @@ PKG_FULL_TEMPLATE = """\
 {% set root_id = "{root_id}" %}
 {% set root = needs.get(root_id) %}
 {% if root %}
-{% set level1 = filter("type == 'Package' and parent_package == '" + root_id + "'") | list %}
+{% set level1 = filter("type == 'package' and parent_package == '" + root_id + "'") | list %}
 package "{{ root.title }}" as {{ root.id }} [[{{ ref(root.id) }}]] {
 {% for c1 in level1 %}
-{% set level2 = filter("type == 'Package' and parent_package == '" + c1.id + "'") | list %}
+{% set level2 = filter("type == 'package' and parent_package == '" + c1.id + "'") | list %}
 {% if (level2 | length) > 0 %}
 package "{{ c1.title }}" as {{ c1.id }} [[{{ ref(c1.id) }}]] {
 {% for c2 in level2 %}
@@ -322,5 +322,38 @@ state "{{ s.title }}" as {{ s.id }} [[{{ ref(s.id) }}]]
 
 {% endif %}
 {% endfor %}
+@enduml
+"""
+
+
+# Parametric — class-diagram approximation (PlantUML has no native parametric
+# mode). Renders the constraint block as a <<constraint>>-stereotyped class
+# with a parameter compartment, then dashed binding arrows to value-property
+# boxes labelled with their unit.
+PAR_FULL_TEMPLATE = """\
+@startuml
+{% set root_id = "{root_id}" %}
+{% set root = needs.get(root_id) %}
+{% if root %}
+class "{{ root.title }}" as {{ root.id }} {
+<<constraint>>
+{{ root.expression or 'no expression' }}
+}
+{% if root.parameters %}
+{% for pid in root.parameters.split(",") %}
+{% set param = needs.get(pid | trim) %}
+{% if param %}
+note right of {{ root.id }} : {{ param.title }}
+{% endif %}
+{% endfor %}
+{% endif %}
+{% set bindings = filter("type == 'bindingconnector'") | list %}
+{% for b in bindings %}
+{% set dst_value = needs.get(b.target_value) %}
+{% if dst_value %}
+note bottom of {{ root.id }} : → {{ dst_value.title }}{% if b.unit %} ({{ b.unit }}){% endif %}
+{% endif %}
+{% endfor %}
+{% endif %}
 @enduml
 """

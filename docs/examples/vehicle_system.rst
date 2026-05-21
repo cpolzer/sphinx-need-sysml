@@ -886,3 +886,83 @@ SysML element:
 .. needtable::
    :filter: type == 'part'
    :columns: id, title, definition, owned_by
+
+Allocation Matrix (v1.1)
+------------------------
+
+The ``needsysml-alloc`` directive renders a traceability table showing
+which requirements allocate to which parts. Rows are needs with
+non-empty ``allocates``; columns are the unique part IDs referenced.
+
+.. needsysml-alloc::
+
+You can also filter explicitly:
+
+.. code-block:: rst
+
+   .. needsysml-alloc::
+      :rows: type == 'requirement'
+      :columns: type == 'part'
+
+Parametric Diagram (v1.1)
+-------------------------
+
+Parametric diagrams show constraint blocks with their parameters and
+binding connectors to value properties. PlantUML uses a class-diagram
+approximation.
+
+First, define the constraint parameters and block:
+
+.. constraintparameter:: fuel_output_param
+   :id: PARAM-010
+
+.. constraintparameter:: fuel_duration_param
+   :id: PARAM-011
+
+.. constraintparameter:: fuel_efficiency_param
+   :id: PARAM-012
+
+.. constraintblock:: FuelConsumptionEquation
+   :id: CONSTRAINT-010
+   :parameters: PARAM-010, PARAM-011, PARAM-012
+   :expression: fuel_used = output * duration / efficiency
+
+Then define value properties on parts and bind them:
+
+.. valueproperty:: engine_power
+   :id: VALUE-010
+   :owned_by: P-002
+   :value_type: kW
+   :default_value: "150"
+
+.. valueproperty:: trip_time
+   :id: VALUE-011
+   :owned_by: P-001
+   :value_type: h
+
+.. valueproperty:: engine_efficiency
+   :id: VALUE-012
+   :owned_by: P-002
+   :value_type: ""
+
+.. bindingconnector:: bind_output
+   :id: BIND-010
+   :source_parameter: PARAM-010
+   :target_value: VALUE-010
+   :unit: kW
+
+.. bindingconnector:: bind_duration
+   :id: BIND-011
+   :source_parameter: PARAM-011
+   :target_value: VALUE-011
+   :unit: h
+
+.. bindingconnector:: bind_efficiency
+   :id: BIND-012
+   :source_parameter: PARAM-012
+   :target_value: VALUE-012
+
+Render the parametric diagram:
+
+.. needsysml-par:: CONSTRAINT-010
+   :align: center
