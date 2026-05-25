@@ -1,4 +1,4 @@
-"""Pytest configuration for sphinxcontrib-sysml tests."""
+"""Pytest configuration for sphinx-need-sysml tests."""
 
 import shutil
 from pathlib import Path

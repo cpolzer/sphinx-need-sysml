@@ -1,6 +1,6 @@
 # Contributors
 
-sphinxcontrib-sysml is developed by the following contributors:
+sphinx-need-sysml is developed by the following contributors:
 
 | Name | Role |
 |------|------|
@@ -17,8 +17,8 @@ sphinxcontrib-sysml is developed by the following contributors:
 
 ```bash
 # Clone the repository
-git clone https://github.com/user/sphinxcontrib-sysml.git
-cd sphinxcontrib-sysml
+git clone https://github.com/user/sphinx-need-sysml.git
+cd sphinx-need-sysml
 
 # Create a virtual environment
 python -m venv .venv
@@ -46,7 +46,7 @@ pytest tests/ -v
 pytest tests/test_need_types.py -v
 
 # Run tests with coverage
-pytest tests/ --cov=sphinxcontrib.sysml --cov-report=html
+pytest tests/ --cov=sphinx_need_sysml --cov-report=html
 ```
 
 ### Running Nox Sessions
@@ -77,22 +77,22 @@ This project uses **ruff** for linting and formatting:
 
 ```bash
 # Check for lint issues
-ruff check sphinxcontrib/ tests/
+ruff check sphinx_need_sysml/ tests/
 
 # Auto-fix fixable issues
-ruff check --fix sphinxcontrib/ tests/
+ruff check --fix sphinx_need_sysml/ tests/
 
 # Check formatting
-ruff format --check sphinxcontrib/ tests/
+ruff format --check sphinx_need_sysml/ tests/
 
 # Apply formatting
-ruff format sphinxcontrib/ tests/
+ruff format sphinx_need_sysml/ tests/
 ```
 
 ### Type Checking
 
 ```bash
-mypy sphinxcontrib/sysml/
+mypy sphinx_need_sysml/
 ```
 
 ## CI Flow
@@ -103,7 +103,7 @@ runs on every push to `main` and on all pull requests.
 ### Pipeline Stages
 
 1. **Lint** — `ruff check` and `ruff format --check` on all Python files
-2. **Type Check** — `mypy sphinxcontrib/sysml/` with strict mode
+2. **Type Check** — `mypy sphinx_need_sysml/` with strict mode
 3. **Test** — `nox -s tests` runs the test matrix:
    - Python 3.10, 3.12
    - Sphinx 5.0, 7.2.5, 8.1.3
@@ -130,14 +130,14 @@ pre-commit run --all-files
 
 1. Create a feature branch from `main`
 2. Make your changes and add/update tests
-3. Run `pytest tests/ -v` and `ruff check sphinxcontrib/ tests/` locally
+3. Run `pytest tests/ -v` and `ruff check sphinx_need_sysml/ tests/` locally
 4. Push your branch and open a pull request
 5. Ensure all CI checks pass
 6. Request review from a maintainer
 
 ## Release Process
 
-1. Update `VERSION` in `sphinxcontrib/sysml/__init__.py`
+1. Update `VERSION` in `sphinx_need_sysml/__init__.py`
 2. Update `CHANGELOG.md` with release notes
 3. Create a git tag: `git tag v0.1.0`
 4. Push the tag: `git push origin v0.1.0`

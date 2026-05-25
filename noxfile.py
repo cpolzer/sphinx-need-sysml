@@ -23,8 +23,8 @@ def tests(session, sphinx_needs, sphinx):
 @session(python="3.12")
 def lint(session):
     session.install("ruff")
-    session.run("ruff", "check", "sphinxcontrib/", "tests/")
-    session.run("ruff", "format", "--check", "sphinxcontrib/", "tests/")
+    session.run("ruff", "check", "sphinx_need_sysml/", "tests/")
+    session.run("ruff", "format", "--check", "sphinx_need_sysml/", "tests/")
 
 
 @session(python="3.12")

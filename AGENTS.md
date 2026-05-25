@@ -1,4 +1,4 @@
-# AGENTS.md — sphinxcontrib-sysml
+# AGENTS.md — sphinx-need-sysml
 
 ## Project
 
@@ -15,15 +15,15 @@ pip install -e ".[test,docs]"
 pytest tests/ -v
 
 # Lint + format check
-ruff check sphinxcontrib/ tests/
-ruff format --check sphinxcontrib/ tests/
+ruff check sphinx_need_sysml/ tests/
+ruff format --check sphinx_need_sysml/ tests/
 
 # Auto-fix
-ruff check --fix sphinxcontrib/ tests/
-ruff format sphinxcontrib/ tests/
+ruff check --fix sphinx_need_sysml/ tests/
+ruff format sphinx_need_sysml/ tests/
 
 # Type check
-mypy sphinxcontrib/sysml/
+mypy sphinx_need_sysml/
 
 # Build docs
 sphinx-build -b html -W docs docs/_build/html
@@ -33,9 +33,9 @@ CI order: **lint → test → docs-build**. All must pass on PRs.
 
 ## Architecture
 
-- **Package**: `sphinxcontrib/sysml/` — namespace package (no `sphinxcontrib/__init__.py`)
-- **Build**: flit (`[tool.flit.module] name = "sphinxcontrib.sysml"`)
-- **Entry point**: `sphinxcontrib/sysml/__init__.py` → `setup(app)`
+- **Package**: `sphinx_need_sysml/` — top-level Python package
+- **Build**: flit (`[tool.flit.module] name = "sphinx_need_sysml"`)
+- **Entry point**: `sphinx_need_sysml/__init__.py` → `setup(app)`
 - **Registration flow**: `config-inited` event registers need types + fields via `add_need_type` / `add_field` with `add_extra_option` fallback shim
 - **Flow configs**: merged into `needs_flow_configs` at `builder-inited`; user keys take precedence
 - **Diagram directives**: each wraps `NeedumlDirective` with a config key + Jinja2 template from `templates.py`
@@ -43,7 +43,6 @@ CI order: **lint → test → docs-build**. All must pass on PRs.
 
 ## Key Gotchas
 
-- **No `sphinxcontrib/__init__.py`** — relies on implicit namespace packages. Creating one breaks the install.
 - **`needs_id_regex`** — default sphinx-needs regex rejects hyphenated IDs like `PD-001`. Test projects need `needs_id_regex = "^[A-Z0-9_-]+"`.
 - **`needs_fields`** (sphinx-needs ≥ 6) expects a dict, not a list. Don't set it in test conf.py unless needed.
 - **`_needs_all_needs`** — sphinx-needs stores needs on `env._needs_all_needs` (private attr). Tests use `# noqa: SLF001`.
@@ -59,7 +58,7 @@ CI order: **lint → test → docs-build**. All must pass on PRs.
 
 ## Release
 
-- Version in `pyproject.toml` and `sphinxcontrib/sysml/__init__.py:VERSION`
+- Version in `pyproject.toml` and `sphinx_need_sysml/__init__.py:VERSION`
 - `cz bump` (commitizen) auto-bumps on push to main if conventional commits warrant it
 - Push `v*` tag → GitHub Actions builds and publishes to PyPI
 

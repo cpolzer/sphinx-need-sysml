@@ -9,7 +9,7 @@ This quickstart shows an engineer the shortest path from a fresh Sphinx project 
 ## Install
 
 ```bash
-pip install "sphinxcontrib-sysml>=0.3.0" sphinxcontrib-plantuml sphinx-need-svg
+pip install "sphinx-need-sysml>=0.3.0" sphinxcontrib-plantuml sphinx-need-svg
 ```
 
 `sphinx-need-svg` is optional but unlocks the `-svg` companion directives.
@@ -20,7 +20,7 @@ pip install "sphinxcontrib-sysml>=0.3.0" sphinxcontrib-plantuml sphinx-need-svg
 extensions = [
     "sphinx_needs",
     "sphinxcontrib.plantuml",
-    "sphinxcontrib.sysml",
+    "sphinx_need_sysml",
     "sphinx_need_svg",      # optional
 ]
 plantuml_output_format = "svg"

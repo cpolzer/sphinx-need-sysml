@@ -2,7 +2,7 @@ Vehicle System: Full SysML v2 Demo
 ==================================
 
 A complete worked example showing every major SysML v2 element type and
-every diagram path provided by ``sphinxcontrib-sysml`` — both the
+every diagram path provided by ``sphinx-need-sysml`` — both the
 PlantUML directives (``needsysml-bdd``, ``needsysml-ibd``,
 ``needsysml-req``) and the inline-SVG variants powered by
 ``sphinx-need-svg`` (``needsysml-bdd-svg`` and raw ``needsvg``
@@ -22,7 +22,7 @@ Enable the extensions in ``docs/conf.py``:
    extensions = [
        "sphinx_needs",
        "sphinxcontrib.plantuml",
-       "sphinxcontrib.sysml",
+       "sphinx_need_sysml",
        "sphinx_need_svg",  # optional, enables SVG diagrams
    ]
 

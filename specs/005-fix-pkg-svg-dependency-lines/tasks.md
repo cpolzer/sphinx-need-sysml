@@ -39,10 +39,10 @@ description: "Task list for feature 005-fix-pkg-svg-dependency-lines"
 
 ### Implementation for User Story 1
 
-- [ ] T003 [US1] In `sphinxcontrib/sysml/svg_templates.py`, change `child_pos` storage from `{id: [cx, 200]}` to `{id: {x, y, w, h}}` where `x=cx`, `y=80`, `w=cw-20`, `h=220` — matching the actual `<rect>` element attributes in the template
+- [ ] T003 [US1] In `sphinx_need_sysml/svg_templates.py`, change `child_pos` storage from `{id: [cx, 200]}` to `{id: {x, y, w, h}}` where `x=cx`, `y=80`, `w=cw-20`, `h=220` — matching the actual `<rect>` element attributes in the template
 - [ ] T004 [US1] Update the dependency line `<line>` element coordinates: compute source endpoint at the right edge of the source rect (`x+w, y+h/2`) and target endpoint at the left edge of the target rect (`x, y+h/2`). For right-to-left dependencies (source index > target index), swap edges: source left edge → target right edge
 - [ ] T005 [US1] Update the stereotype label `<text>` position to align with the new line midpoint. Apply a small vertical offset per dependency (`loop.index0 * 12`) to prevent overlapping labels when multiple dependencies exist between the same pair of packages
-- [ ] T006 [P] [US1] Run `git diff -- sphinxcontrib/sysml/templates.py` — produces no output, confirming `PKG_FULL_TEMPLATE` is unchanged (FR-006)
+- [ ] T006 [P] [US1] Run `git diff -- sphinx_need_sysml/templates.py` — produces no output, confirming `PKG_FULL_TEMPLATE` is unchanged (FR-006)
 
 ---
 
@@ -96,6 +96,6 @@ Total: 9 tasks, estimated ~30 minutes.
 
 - **Total tasks**: 9
 - **Parallel-marked tasks**: 4
-- **Files touched**: 2 (`sphinxcontrib/sysml/svg_templates.py`, `tests/test_pkg_directive.py`)
+- **Files touched**: 2 (`sphinx_need_sysml/svg_templates.py`, `tests/test_pkg_directive.py`)
 - **New files**: 0
 - **Regression risk**: Low — only dependency line coordinates change; rectangle layout unchanged

@@ -7,7 +7,7 @@ from docutils.statemachine import StringList
 from sphinx.application import Sphinx
 from sphinx.util.docutils import SphinxDirective
 
-from sphinxcontrib.sysml.templates import REQ_FULL_TEMPLATE
+from sphinx_need_sysml.templates import REQ_FULL_TEMPLATE
 
 
 class NeedsymlReqDirective(SphinxDirective):

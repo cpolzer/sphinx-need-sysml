@@ -4,7 +4,7 @@
 
 ## Summary
 
-Build `sphinxcontrib-sysml` — a sphinx-needs extension that registers 14 SysML v2 need types (PartDef, Part, PortDef, Port, InterfaceDef, Interface, ConnectionDef, Connection, RequirementDef, Requirement, ActionDef, Action, StateDef, StateUsage), associated extra fields, PlantUML skinparam flow configs, and three high-level diagram directives (`needsysml-bdd`, `needsysml-ibd`, `needsysml-req`) that generate auto-layout PlantUML diagrams via needuml. Optional `sphinx-need-svg` integration provides SVG-native clickable diagrams as an alternative rendering path.
+Build `sphinx-need-sysml` — a sphinx-needs extension that registers 14 SysML v2 need types (PartDef, Part, PortDef, Port, InterfaceDef, Interface, ConnectionDef, Connection, RequirementDef, Requirement, ActionDef, Action, StateDef, StateUsage), associated extra fields, PlantUML skinparam flow configs, and three high-level diagram directives (`needsysml-bdd`, `needsysml-ibd`, `needsysml-req`) that generate auto-layout PlantUML diagrams via needuml. Optional `sphinx-need-svg` integration provides SVG-native clickable diagrams as an alternative rendering path.
 
 ## Technical Context
 
@@ -104,7 +104,7 @@ pyproject.toml
 noxfile.py
 ```
 
-**Structure Decision**: Single-package extension in `sphinxcontrib/sysml/`, mirroring `sphinx-test-reports` layout. Directives split into individual files for clarity. No backend/frontend split — pure Sphinx extension.
+**Structure Decision**: Single-package extension in `sphinx_need_sysml/`, mirroring `sphinx-test-reports` layout. Directives split into individual files for clarity. No backend/frontend split — pure Sphinx extension.
 
 ## Complexity Tracking
 

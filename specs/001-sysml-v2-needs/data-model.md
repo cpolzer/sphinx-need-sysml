@@ -78,7 +78,7 @@ Registered by mutating `app.config.needs_flow_configs` at `builder-inited`.
 
 ## Jinja2 Template Constants
 
-Python string constants exported from `sphinxcontrib.sysml.templates` for use inside `.. needuml::` bodies. Not rendered automatically — users include them as building blocks.
+Python string constants exported from `sphinx_need_sysml.templates` for use inside `.. needuml::` bodies. Not rendered automatically — users include them as building blocks.
 
 | Constant | Description |
 |----------|-------------|

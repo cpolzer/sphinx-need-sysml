@@ -1,4 +1,4 @@
-"""Needsyml activity directive (PlantUML + SVG variants)."""
+"""Needsyml package diagram directive (PlantUML + SVG variants)."""
 
 from typing import Any
 
@@ -7,47 +7,45 @@ from docutils.statemachine import StringList
 from sphinx.application import Sphinx
 from sphinx.util.docutils import SphinxDirective
 
-from sphinxcontrib.sysml.svg_templates import ACT_SVG_TEMPLATE
-from sphinxcontrib.sysml.templates import ACT_FULL_TEMPLATE
+from sphinx_need_sysml.svg_templates import PKG_SVG_TEMPLATE
+from sphinx_need_sysml.templates import PKG_FULL_TEMPLATE
 
 
-class NeedsymlActDirective(SphinxDirective):
-    """Generate an activity diagram for a given ActionDef.
+class NeedsymlPkgDirective(SphinxDirective):
+    """Generate a package diagram from a root Package need.
 
-    Wraps ``.. needuml::`` with ``:config: sysml_act`` and the
-    ``ACT_FULL_TEMPLATE`` body. Walks all ``Action`` needs whose
-    ``definition`` equals the root, groups by ``partition`` into
-    swimlane packages, and emits ``ControlFlow`` and ``ObjectFlow``
-    arrows between them.
+    Walks the package tree under the root via the ``parent_package``
+    field, emits nested PlantUML ``package`` blocks, and draws
+    ``Dependency`` arrows between any two packages in the rendered tree.
     """
 
     required_arguments = 1
     optional_arguments = 0
     final_argument_whitespace = True
     option_spec = {
-        "show-partitions": directives.unchanged,
+        "depth": directives.unchanged,
         "scale": directives.unchanged,
         "align": directives.unchanged,
     }
 
     def run(self) -> list[Any]:
         root_id = self.arguments[0]
-        show_partitions = self.options.get("show-partitions", "true").lower()
+        depth = self.options.get("depth", "3")
         scale = self.options.get("scale")
         align = self.options.get("align", "center")
 
-        content = ACT_FULL_TEMPLATE.replace("{root_id}", root_id).replace(
-            "{show_partitions}", "'" + show_partitions + "'"
+        content = PKG_FULL_TEMPLATE.replace("{root_id}", root_id).replace(
+            "{depth}", depth
         )
 
         from sphinx_needs.directives.needuml import NeedumlDirective
 
-        content_list = StringList(content.splitlines(), source="needsysml-act")
+        content_list = StringList(content.splitlines(), source="needsysml-pkg")
         needuml = NeedumlDirective(
             name="needuml",
             arguments=[],
             options={
-                "config": "sysml_act",
+                "config": "sysml_pkg",
                 "scale": scale or "",
                 "align": align,
             },
@@ -61,8 +59,8 @@ class NeedsymlActDirective(SphinxDirective):
         return needuml.run()  # type: ignore[no-any-return]
 
 
-class NeedsymlActSvgDirective(SphinxDirective):
-    """Generate an activity diagram as inline SVG."""
+class NeedsymlPkgSvgDirective(SphinxDirective):
+    """Generate a package diagram as inline SVG."""
 
     required_arguments = 1
     optional_arguments = 0
@@ -73,7 +71,7 @@ class NeedsymlActSvgDirective(SphinxDirective):
     }
 
     def run(self) -> list[Any]:
-        from sphinxcontrib.sysml.directives.needsysml_svg import (
+        from sphinx_need_sysml.directives.needsysml_svg import (
             _emit_needsvg_node,
             _substitute,
         )
@@ -81,11 +79,11 @@ class NeedsymlActSvgDirective(SphinxDirective):
         root_id = self.arguments[0]
         align = self.options.get("align", "center")
         width = self.options.get("width", "100%")
-        content = _substitute(ACT_SVG_TEMPLATE, root_id)
+        content = _substitute(PKG_SVG_TEMPLATE, root_id)
         return _emit_needsvg_node(self, content, width, align)
 
 
 def setup(app: Sphinx) -> None:
-    """Register the needsysml-act and needsysml-act-svg directives."""
-    app.add_directive("needsysml-act", NeedsymlActDirective)
-    app.add_directive("needsysml-act-svg", NeedsymlActSvgDirective)
+    """Register the needsysml-pkg and needsysml-pkg-svg directives."""
+    app.add_directive("needsysml-pkg", NeedsymlPkgDirective)
+    app.add_directive("needsysml-pkg-svg", NeedsymlPkgSvgDirective)

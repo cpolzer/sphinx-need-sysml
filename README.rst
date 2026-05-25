@@ -1,10 +1,10 @@
-sphinxcontrib-sysml
+sphinx-need-sysml
 ===================
 
 Sphinx extension that registers **14 SysML v2 need types**, **15 extra fields**, and **4 diagram directives** on top of `sphinx-needs <https://sphinx-needs.readthedocs.io/>`_ and `PlantUML <https://plantuml.com/>`_.
 
-.. image:: https://img.shields.io/pypi/v/sphinxcontrib-sysml.svg
-   :target: https://pypi.org/project/sphinxcontrib-sysml/
+.. image:: https://img.shields.io/pypi/v/sphinx-need-sysml.svg
+   :target: https://pypi.org/project/sphinx-need-sysml/
    :alt: PyPI
 
 .. image:: https://github.com/cpolzer/sphinx-need-sysml/actions/workflows/ci.yml/badge.svg
@@ -16,7 +16,7 @@ Installation
 
 .. code-block:: bash
 
-   pip install sphinxcontrib-sysml
+   pip install sphinx-need-sysml
 
 Requires ``sphinx-needs >= 1.0`` and Python >= 3.10.
 
@@ -29,7 +29,7 @@ Quick Start
 
    extensions = [
        "sphinx_needs",
-       "sphinxcontrib.sysml",
+       "sphinx_need_sysml",
    ]
 
 2. Document SysML elements using the registered directives:
@@ -290,7 +290,7 @@ Compatibility
 Links
 -----
 
-- `PyPI <https://pypi.org/project/sphinxcontrib-sysml/>`_
+- `PyPI <https://pypi.org/project/sphinx-need-sysml/>`_
 - `GitHub <https://github.com/cpolzer/sphinx-need-sysml>`_
 - `Documentation <https://cpolzer.github.io/sphinx-need-sysml/>`_
 - `sphinx-needs <https://sphinx-needs.readthedocs.io/>`_

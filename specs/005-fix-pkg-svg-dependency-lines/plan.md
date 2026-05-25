@@ -24,7 +24,7 @@ Fix the dependency line positioning in `PKG_SVG_TEMPLATE` so that dashed arrows 
 
 **Constraints**: Must not change rectangle layout; only dependency line coordinates change. Template must remain valid Jinja2 for sphinx-need-svg's `SvgJinjaContext`.
 
-**Scale/Scope**: Single template section (`PKG_SVG_TEMPLATE`, lines 250-259) in `sphinxcontrib/sysml/svg_templates.py`
+**Scale/Scope**: Single template section (`PKG_SVG_TEMPLATE`, lines 250-259) in `sphinx_need_sysml/svg_templates.py`
 
 ## Constitution Check
 
@@ -53,7 +53,7 @@ specs/005-fix-pkg-svg-dependency-lines/
 ### Source Code (repository root)
 
 ```text
-sphinxcontrib/sysml/
+sphinx_need_sysml/
 └── svg_templates.py     # Single file change: PKG_SVG_TEMPLATE dependency line section (lines 250-259)
 
 tests/
@@ -61,7 +61,7 @@ tests/
 └── test_pkg_directive.py # Existing smoke test — validates fix
 ```
 
-**Structure Decision**: No new files. The fix is confined to the dependency line rendering block inside `PKG_SVG_TEMPLATE` in `sphinxcontrib/sysml/svg_templates.py`.
+**Structure Decision**: No new files. The fix is confined to the dependency line rendering block inside `PKG_SVG_TEMPLATE` in `sphinx_need_sysml/svg_templates.py`.
 
 ## Complexity Tracking
 

@@ -129,7 +129,7 @@ The placeholder keys `sysml_act` and `sysml_stm` reserved in feature 001 are now
 
 ## New Jinja2 Template Constants
 
-Added to `sphinxcontrib/sysml/templates.py`:
+Added to `sphinx_need_sysml/templates.py`:
 
 - `STM_FULL_TEMPLATE` — root state defining element → all owned states + pseudostates + transitions.
 - `ACT_FULL_TEMPLATE` — root action defining element → all owned actions (grouped by `partition`) + control/object flows + decision/fork nodes.
@@ -138,7 +138,7 @@ Added to `sphinxcontrib/sysml/templates.py`:
 - `PKG_FULL_TEMPLATE` — root package → nested packages + dependency arrows.
 - `PAR_FULL_TEMPLATE` (v1.1) — constraint block + parameters + bound value properties.
 
-Added to a new `sphinxcontrib/sysml/svg_templates.py`:
+Added to a new `sphinx_need_sysml/svg_templates.py`:
 
 - `STM_SVG_TEMPLATE`, `ACT_SVG_TEMPLATE`, `SD_SVG_TEMPLATE`, `UC_SVG_TEMPLATE`, `PKG_SVG_TEMPLATE`, `IBD_SVG_TEMPLATE` (promotion), `PAR_SVG_TEMPLATE` (v1.1) — each rendered through the `Needsvg` placeholder pipeline as documented in `research.md § 2`.
 

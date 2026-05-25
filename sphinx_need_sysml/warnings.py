@@ -1,4 +1,4 @@
-"""Warning emission helpers for sphinxcontrib-sysml."""
+"""Warning emission helpers for sphinx-need-sysml."""
 
 import logging
 
@@ -20,7 +20,7 @@ def warn_plantuml_format(app: Sphinx) -> None:
     if fmt != "svg":
         _PLANTUML_WARNING_EMITTED = True
         _get_logger().warning(
-            "sphinxcontrib-sysml: PlantUML hyperlinks require "
+            "sphinx-need-sysml: PlantUML hyperlinks require "
             "plantuml_output_format = 'svg'. Set this in conf.py for clickable diagrams."
         )
 

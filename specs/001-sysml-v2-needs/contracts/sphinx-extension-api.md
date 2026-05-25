@@ -8,10 +8,10 @@
 ## Installation Contract
 
 ```
-pip install sphinxcontrib-sysml
+pip install sphinx-need-sysml
 ```
 
-Installs the `sphinxcontrib.sysml` package. Requires:
+Installs the `sphinx_need_sysml` package. Requires:
 - `sphinx-needs >= 1.0`
 - `sphinx >= 4.0`
 - `sphinxcontrib-plantuml` (optional — needed for PlantUML diagram rendering)
@@ -27,7 +27,7 @@ Minimum configuration to activate the extension:
 extensions = [
     "sphinx_needs",
     "sphinxcontrib.plantuml",  # optional but recommended
-    "sphinxcontrib.sysml",
+    "sphinx_need_sysml",
 ]
 
 # Recommended for clickable diagrams in HTML:
@@ -85,10 +85,10 @@ Directives: `partdef`, `part`, `portdef`, `port`, `interfacedef`, `interface`,
 
 ## Jinja2 Template Constants Contract
 
-Importable from `sphinxcontrib.sysml.templates`:
+Importable from `sphinx_need_sysml.templates`:
 
 ```python
-from sphinxcontrib.sysml.templates import (
+from sphinx_need_sysml.templates import (
     BDD_FULL_TEMPLATE,
     IBD_FULL_TEMPLATE,
     REQ_FULL_TEMPLATE,

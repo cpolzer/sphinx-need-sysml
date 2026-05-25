@@ -4,7 +4,7 @@
 
 ## Summary
 
-Extend `sphinxcontrib-sysml` from three diagram views (bdd, ibd, req) to full SysML v2 coverage: six additional diagram directives — `needsysml-stm` (state machine), `needsysml-act` (activity), `needsysml-sd` (sequence), `needsysml-uc` (use case), `needsysml-pkg` (package), `needsysml-par` (parametric) — plus an `needsysml-alloc` allocation-matrix directive, each with a matching SVG-rendered companion (`-svg` suffix) built on the existing `sphinx-need-svg` `Needsvg` placeholder pattern. Register thirteen new SysML need types (`Transition`, `ControlFlow`, `ObjectFlow`, `Package`, `Dependency`, `UseCase`, `Actor`, `ConstraintBlock`, `ConstraintParameter`, `ValueProperty`, `BindingConnector`, `Lifeline`, `Message`) with word-like ID prefixes (`TRANS-`, `PKG-`, `USECASE-`, …) and the supporting attribute fields. Extend the existing `StateDef` / `StateUsage` types with a `pseudo_kind` field (initial / final / shallowHistory / deepHistory / choice / junction). Ship as a **two-phase release**: v1 = state machine + activity + sequence + use case + package (User Stories 1–5); v1.1 = allocation matrix + parametric (User Stories 6–7). The vehicle example is extended to demonstrate every diagram with PlantUML and SVG variants side by side, and each new directive gets a smoke test matching the existing `test_bdd_directive.py` pattern.
+Extend `sphinx-need-sysml` from three diagram views (bdd, ibd, req) to full SysML v2 coverage: six additional diagram directives — `needsysml-stm` (state machine), `needsysml-act` (activity), `needsysml-sd` (sequence), `needsysml-uc` (use case), `needsysml-pkg` (package), `needsysml-par` (parametric) — plus an `needsysml-alloc` allocation-matrix directive, each with a matching SVG-rendered companion (`-svg` suffix) built on the existing `sphinx-need-svg` `Needsvg` placeholder pattern. Register thirteen new SysML need types (`Transition`, `ControlFlow`, `ObjectFlow`, `Package`, `Dependency`, `UseCase`, `Actor`, `ConstraintBlock`, `ConstraintParameter`, `ValueProperty`, `BindingConnector`, `Lifeline`, `Message`) with word-like ID prefixes (`TRANS-`, `PKG-`, `USECASE-`, …) and the supporting attribute fields. Extend the existing `StateDef` / `StateUsage` types with a `pseudo_kind` field (initial / final / shallowHistory / deepHistory / choice / junction). Ship as a **two-phase release**: v1 = state machine + activity + sequence + use case + package (User Stories 1–5); v1.1 = allocation matrix + parametric (User Stories 6–7). The vehicle example is extended to demonstrate every diagram with PlantUML and SVG variants side by side, and each new directive gets a smoke test matching the existing `test_bdd_directive.py` pattern.
 
 ## Technical Context
 
@@ -14,7 +14,7 @@ Extend `sphinxcontrib-sysml` from three diagram views (bdd, ibd, req) to full Sy
 - `sphinx-needs >= 1.0` — need type / field registration, needuml Jinja context
 - `sphinx >= 4.0`
 - `sphinxcontrib-plantuml` — auto-layout renderer (still optional; warning emitted if absent)
-- `sphinx-need-svg >= 0.3` — precise-layout renderer; optional, registers SVG variants only when present (same gating pattern as `_HAS_NEED_SVG` in `sphinxcontrib/sysml/__init__.py`)
+- `sphinx-need-svg >= 0.3` — precise-layout renderer; optional, registers SVG variants only when present (same gating pattern as `_HAS_NEED_SVG` in `sphinx_need_sysml/__init__.py`)
 
 **Storage**: N/A — Sphinx extension; all model state lives in `sphinx_needs.data.SphinxNeedsData`.
 
@@ -48,8 +48,8 @@ Extend `sphinxcontrib-sysml` from three diagram views (bdd, ibd, req) to full Sy
 
 `.specify/memory/constitution.md` contains only the unfilled template (no project-specific principles ratified). No constitutional gates to enforce. The plan follows the conventions already established by feature `001-sysml-v2-needs` and by the existing codebase:
 
-- Single-package layout (`sphinxcontrib/sysml/`) with sub-packages per concern.
-- One directive per file under `sphinxcontrib/sysml/directives/`.
+- Single-package layout (`sphinx_need_sysml/`) with sub-packages per concern.
+- One directive per file under `sphinx_need_sysml/directives/`.
 - Template constants colocated in `templates.py` (PlantUML) and a new `svg_templates.py` (SVG).
 - One pytest file per directive.
 - Backward-compatible API surface; deprecation only when explicitly approved.

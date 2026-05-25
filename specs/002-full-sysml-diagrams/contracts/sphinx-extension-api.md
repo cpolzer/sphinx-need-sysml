@@ -14,7 +14,7 @@ Engineers using this feature need no new entries in `conf.py` beyond what 001 al
 extensions = [
     "sphinx_needs",
     "sphinxcontrib.plantuml",
-    "sphinxcontrib.sysml",
+    "sphinx_need_sysml",
     "sphinx_need_svg",   # optional — only needed for *-svg directives
 ]
 plantuml_output_format = "svg"
@@ -219,7 +219,7 @@ Row and column headers in the matrix link to the corresponding need anchors. Int
 
 ## 6. Extension setup function
 
-`sphinxcontrib.sysml.setup(app)` is extended:
+`sphinx_need_sysml.setup(app)` is extended:
 
 ```python
 def setup(app: Sphinx) -> dict[str, object]:
@@ -270,7 +270,7 @@ def setup(app: Sphinx) -> dict[str, object]:
 
 | Release | Version | Contents |
 |---|---|---|
-| v1 | `sphinxcontrib-sysml 0.3.0` | All 13 new need types, ~25 new fields, 6 new flow configs, all six v1 PlantUML directives, all six v1 SVG companions, `needsysml-req` `:filter:` option, `needsysml-ibd-svg` promotion. v1.1 element types (ConstraintBlock, ConstraintParameter, ValueProperty, BindingConnector) registered but their directives NOT yet added. |
-| v1.1 | `sphinxcontrib-sysml 0.4.0` | `needsysml-alloc` matrix, `needsysml-par` + `needsysml-par-svg` directives. Their templates added. No new types/fields beyond v1. |
+| v1 | `sphinx-need-sysml 0.3.0` | All 13 new need types, ~25 new fields, 6 new flow configs, all six v1 PlantUML directives, all six v1 SVG companions, `needsysml-req` `:filter:` option, `needsysml-ibd-svg` promotion. v1.1 element types (ConstraintBlock, ConstraintParameter, ValueProperty, BindingConnector) registered but their directives NOT yet added. |
+| v1.1 | `sphinx-need-sysml 0.4.0` | `needsysml-alloc` matrix, `needsysml-par` + `needsysml-par-svg` directives. Their templates added. No new types/fields beyond v1. |
 
-Bump `sphinxcontrib/sysml/__init__.py:VERSION` and `pyproject.toml:[project] version` in lockstep; `tool.commitizen.version_files` already lists both. Commit message style: `feat: full SysML diagram coverage (v1)` etc., per the project's existing commitizen config.
+Bump `sphinx_need_sysml/__init__.py:VERSION` and `pyproject.toml:[project] version` in lockstep; `tool.commitizen.version_files` already lists both. Commit message style: `feat: full SysML diagram coverage (v1)` etc., per the project's existing commitizen config.

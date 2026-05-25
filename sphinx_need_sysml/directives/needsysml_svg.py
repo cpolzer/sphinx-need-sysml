@@ -18,7 +18,7 @@ from docutils.parsers.rst import directives
 from sphinx.application import Sphinx
 from sphinx.util.docutils import SphinxDirective
 
-from sphinxcontrib.sysml.svg_templates import (
+from sphinx_need_sysml.svg_templates import (
     BDD_SVG_TEMPLATE,
     IBD_SVG_TEMPLATE,
 )

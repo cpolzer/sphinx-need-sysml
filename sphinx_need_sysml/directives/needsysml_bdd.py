@@ -1,4 +1,4 @@
-"""Needsyml IBD directive — wraps needuml with pre-baked IBD template."""
+"""Needsyml BDD directive — wraps needuml with pre-baked BDD template."""
 
 from typing import Any
 
@@ -7,44 +7,47 @@ from docutils.statemachine import StringList
 from sphinx.application import Sphinx
 from sphinx.util.docutils import SphinxDirective
 
-from sphinxcontrib.sysml.templates import IBD_FULL_TEMPLATE
+from sphinx_need_sysml.templates import BDD_FULL_TEMPLATE
 
 
-class NeedsymlIbdDirective(SphinxDirective):
-    """Generate an Internal Block Diagram for a given PartDef need.
+class NeedsymlBddDirective(SphinxDirective):
+    """Generate a Block Definition Diagram for a given PartDef need.
 
-    Wraps ``.. needuml::`` with ``:config: sysml_ibd`` and the
-    ``IBD_FULL_TEMPLATE`` body.
-
-    Note: IBD diagrams are approximations using PlantUML component diagram
-    syntax. Port placement is not locked to specific block edges.
+    Wraps ``.. needuml::`` with ``:config: sysml_bdd`` and the
+    ``BDD_FULL_TEMPLATE`` body.
     """
 
     required_arguments = 1
     optional_arguments = 0
     final_argument_whitespace = True
     option_spec = {
-        "show-ports": directives.unchanged,
+        "depth": directives.unchanged,
+        "filter": directives.unchanged,
         "scale": directives.unchanged,
         "align": directives.unchanged,
     }
 
     def run(self) -> list[Any]:
         root_id = self.arguments[0]
+        depth = self.options.get("depth", "2")
         scale = self.options.get("scale")
         align = self.options.get("align", "center")
 
-        # Render the IBD template with context variables
-        content = IBD_FULL_TEMPLATE.replace("{root_id}", root_id)
+        # Render the BDD template with context variables
+        content = BDD_FULL_TEMPLATE.replace("{root_id}", root_id).replace(
+            "{depth}", depth
+        )
 
+        # Create needuml directive options
         from sphinx_needs.directives.needuml import NeedumlDirective
 
-        content_list = StringList(content.splitlines(), source="needsysml-ibd")
+        # Create and configure a NeedumlDirective instance
+        content_list = StringList(content.splitlines(), source="needsysml-bdd")
         needuml = NeedumlDirective(
             name="needuml",
             arguments=[],
             options={
-                "config": "sysml_ibd",
+                "config": "sysml_bdd",
                 "scale": scale or "",
                 "align": align,
             },
@@ -60,5 +63,5 @@ class NeedsymlIbdDirective(SphinxDirective):
 
 
 def setup(app: Sphinx) -> None:
-    """Register the needsysml-ibd directive."""
-    app.add_directive("needsysml-ibd", NeedsymlIbdDirective)
+    """Register the needsysml-bdd directive."""
+    app.add_directive("needsysml-bdd", NeedsymlBddDirective)

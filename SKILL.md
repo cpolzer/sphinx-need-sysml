@@ -1,4 +1,4 @@
-# SKILL: sphinxcontrib-sysml
+# SKILL: sphinx-need-sysml
 
 Sphinx extension for SysML v2 need types and diagrams.
 
@@ -9,7 +9,7 @@ Sphinx extension for SysML v2 need types and diagrams.
 extensions = [
     "sphinx_needs",
     "sphinxcontrib.plantuml",  # optional
-    "sphinxcontrib.sysml",
+    "sphinx_need_sysml",
 ]
 plantuml_output_format = "svg"  # required for clickable diagrams
 ```
@@ -88,10 +88,10 @@ Available in `.. needuml::` bodies:
 
 ## Template Constants
 
-Importable from `sphinxcontrib.sysml.templates`:
+Importable from `sphinx_need_sysml.templates`:
 
 ```python
-from sphinxcontrib.sysml.templates import (
+from sphinx_need_sysml.templates import (
     BDD_FULL_TEMPLATE, IBD_FULL_TEMPLATE, REQ_FULL_TEMPLATE,
     BLOCK_DEF_TEMPLATE, BLOCK_INST_TEMPLATE, REQ_BOX_TEMPLATE,
 )

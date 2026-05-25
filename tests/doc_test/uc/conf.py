@@ -3,7 +3,7 @@
 extensions = [
     "sphinx_needs",
     "sphinxcontrib.plantuml",
-    "sphinxcontrib.sysml",
+    "sphinx_need_sysml",
 ]
 
 needs_id_regex = "^[A-Z0-9_-]+"

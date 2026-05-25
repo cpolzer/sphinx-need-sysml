@@ -4,7 +4,7 @@
 
 ## Summary
 
-Fix a case-sensitivity bug in `PKG_FULL_TEMPLATE` where `filter()` expressions use `type == 'Package'` (capital P) instead of `type == 'package'` (lowercase), causing the PlantUML package diagram to render zero child packages while the SVG companion renders them correctly. The fix is a two-line change in `sphinxcontrib/sysml/templates.py`.
+Fix a case-sensitivity bug in `PKG_FULL_TEMPLATE` where `filter()` expressions use `type == 'Package'` (capital P) instead of `type == 'package'` (lowercase), causing the PlantUML package diagram to render zero child packages while the SVG companion renders them correctly. The fix is a two-line change in `sphinx_need_sysml/templates.py`.
 
 ## Technical Context
 
@@ -24,7 +24,7 @@ Fix a case-sensitivity bug in `PKG_FULL_TEMPLATE` where `filter()` expressions u
 
 **Constraints**: Must remain backward-compatible; no other templates affected
 
-**Scale/Scope**: Single template file (`sphinxcontrib/sysml/templates.py`), two filter expression strings
+**Scale/Scope**: Single template file (`sphinx_need_sysml/templates.py`), two filter expression strings
 
 ## Constitution Check
 
@@ -53,7 +53,7 @@ specs/004-fix-package-uml-svg/
 ### Source Code (repository root)
 
 ```text
-sphinxcontrib/sysml/
+sphinx_need_sysml/
 └── templates.py         # Single file change: PKG_FULL_TEMPLATE filter expressions
 
 tests/
@@ -61,7 +61,7 @@ tests/
 └── test_pkg_directive.py # Existing smoke test — validates fix
 ```
 
-**Structure Decision**: No new files. The fix is confined to two `filter()` expressions inside `PKG_FULL_TEMPLATE` in `sphinxcontrib/sysml/templates.py`, changing `'Package'` → `'package'` on lines 114 and 117.
+**Structure Decision**: No new files. The fix is confined to two `filter()` expressions inside `PKG_FULL_TEMPLATE` in `sphinx_need_sysml/templates.py`, changing `'Package'` → `'package'` on lines 114 and 117.
 
 ## Complexity Tracking
 

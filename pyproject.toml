@@ -3,7 +3,7 @@ requires = ["flit_core >=3.4,<4"]
 build-backend = "flit_core.buildapi"
 
 [project]
-name = "sphinxcontrib-sysml"
+name = "sphinx-need-sysml"
 version = "0.3.0"
 description = "Sphinx extension for SysML v2 need types and diagrams via sphinx-needs and PlantUML"
 readme = "README.rst"
@@ -25,7 +25,7 @@ classifiers = [
 keywords = ["sphinx", "sysml", "sysml-v2", "plantuml", "sphinx-needs"]
 requires-python = ">=3.10"
 dependencies = [
-  "sphinx>=4.0",
+  "sphinx<9",
   "sphinx-needs>=1.0",
 ]
 
@@ -56,12 +56,12 @@ dev = [
 ]
 
 [tool.flit.module]
-name = "sphinxcontrib.sysml"
+name = "sphinx_need_sysml"
 
 [project.urls]
 Homepage = "https://github.com/cpolzer/sphinx-need-sysml"
 Repository = "https://github.com/cpolzer/sphinx-need-sysml.git"
-Documentation = "https://sphinxcontrib-sysml.readthedocs.io/"
+Documentation = "https://sphinx-need-sysml.readthedocs.io/"
 
 [tool.ruff.lint]
 extend-select = [
@@ -79,7 +79,7 @@ extend-select = [
 ]
 
 [tool.mypy]
-packages = ["sphinxcontrib.sysml"]
+packages = ["sphinx_need_sysml"]
 strict = true
 show_error_codes = true
 disallow_any_generics = true
@@ -110,7 +110,7 @@ name = "cz_conventional_commits"
 version = "0.3.0"
 version_files = [
   "pyproject.toml:^version",
-  "sphinxcontrib/sysml/__init__.py:VERSION",
+  "sphinx_need_sysml/__init__.py:VERSION",
 ]
 tag_format = "v$version"
 update_changelog_on_bump = true

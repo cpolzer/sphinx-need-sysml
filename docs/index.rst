@@ -1,4 +1,4 @@
-sphinxcontrib-sysml
+sphinx-need-sysml
 ===================
 
 Sphinx extension for SysML v2 need types and diagrams via sphinx-needs and PlantUML.
@@ -25,7 +25,7 @@ Sphinx extension for SysML v2 need types and diagrams via sphinx-needs and Plant
 Overview
 --------
 
-``sphinxcontrib-sysml`` registers 14 SysML v2 need types and 15 extra fields
+``sphinx-need-sysml`` registers 14 SysML v2 need types and 15 extra fields
 with sphinx-needs, enabling you to write SysML v2 structural and behavioral
 elements directly in reStructuredText. It also provides three high-level
 diagram directives that generate PlantUML diagrams:

@@ -1,10 +1,10 @@
-# Tasks: sphinxcontrib-sysml
+# Tasks: sphinx-need-sysml
 
 **Input**: Design documents from `specs/001-sysml-v2-needs/`
 
 **Tech stack**: Python ≥ 3.10, flit, pytest + nox, sphinx-needs ≥ 1.0, sphinxcontrib-plantuml (optional), sphinx-need-svg (optional)
 
-**Package layout**: `sphinxcontrib/sysml/` at repo root — single-package extension following `sphinx-test-reports` conventions.
+**Package layout**: `sphinx_need_sysml/` at repo root — single-package extension following `sphinx-test-reports` conventions.
 
 ## Format: `[ID] [P?] [Story] Description`
 
@@ -19,12 +19,12 @@
 
 - [x] T001 Create `pyproject.toml` with flit build backend, project metadata, dependencies (`sphinx-needs>=1.0`, `sphinx>=4.0`), optional deps (`sphinxcontrib-plantuml`, `sphinx-need-svg`), and dev/test extras
 - [x] T002 Create `sphinxcontrib/__init__.py` (namespace package — empty, with namespace declaration)
-- [x] T003 Create `sphinxcontrib/sysml/__init__.py` with stub `setup(app)` returning `{"version": "0.1.0", "parallel_read_safe": True}`
+- [x] T003 Create `sphinx_need_sysml/__init__.py` with stub `setup(app)` returning `{"version": "0.1.0", "parallel_read_safe": True}`
 - [x] T004 [P] Create `noxfile.py` with `tests`, `lint`, and `docs` sessions following `sphinx-test-reports` nox conventions
 - [x] T005 [P] Add ruff and mypy config sections to `pyproject.toml` mirroring `sphinx-test-reports` settings
 - [x] T006 [P] Create `.gitignore` for Python project (dist/, __pycache__, .venv/, *.egg-info, docs/_build/)
 
-**Checkpoint**: `pip install -e .` succeeds and `python -c "import sphinxcontrib.sysml"` works.
+**Checkpoint**: `pip install -e .` succeeds and `python -c "import sphinx_need_sysml"` works.
 
 ---
 
@@ -34,13 +34,13 @@
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete.
 
-- [x] T007 Create `sphinxcontrib/sysml/config.py` — define `SYSML_NEED_TYPES` list of dicts (directive, title, prefix, color, style) for all 14 types from data-model.md
-- [x] T008 Create `sphinxcontrib/sysml/fields.py` — define `SYSML_FIELDS` list of dicts (name, description, schema) for all 15 fields from data-model.md
-- [x] T009 Add `add_field` / `add_extra_option` compatibility shim to `sphinxcontrib/sysml/__init__.py` matching the exact pattern from `sphinx-test-reports/sphinxcontrib/test_reports/test_reports.py`
-- [x] T010 Implement `_register_types_and_fields(app, config)` in `sphinxcontrib/sysml/__init__.py` — calls `add_need_type` for each entry in `SYSML_NEED_TYPES` and the shim for each entry in `SYSML_FIELDS`; connect to `config-inited` event in `setup()`
-- [x] T011 Create `sphinxcontrib/sysml/warnings.py` — implement `warn_plantuml_format(app)` that emits a Sphinx warning if `plantuml_output_format != "svg"` (checks via `getattr(app.config, "plantuml_output_format", None)`)
-- [x] T012 Create `tests/conftest.py` — Sphinx app fixture using `sphinx.testing.app` that loads a minimal doc_test project with `sphinxcontrib.sysml` in extensions
-- [x] T013 Create `tests/doc_test/basic/conf.py` and `tests/doc_test/basic/index.rst` — minimal Sphinx project with `sphinx_needs` + `sphinxcontrib.sysml` in extensions (no plantuml required)
+- [x] T007 Create `sphinx_need_sysml/config.py` — define `SYSML_NEED_TYPES` list of dicts (directive, title, prefix, color, style) for all 14 types from data-model.md
+- [x] T008 Create `sphinx_need_sysml/fields.py` — define `SYSML_FIELDS` list of dicts (name, description, schema) for all 15 fields from data-model.md
+- [x] T009 Add `add_field` / `add_extra_option` compatibility shim to `sphinx_need_sysml/__init__.py` matching the exact pattern from `sphinx-test-reports/sphinxcontrib/test_reports/test_reports.py`
+- [x] T010 Implement `_register_types_and_fields(app, config)` in `sphinx_need_sysml/__init__.py` — calls `add_need_type` for each entry in `SYSML_NEED_TYPES` and the shim for each entry in `SYSML_FIELDS`; connect to `config-inited` event in `setup()`
+- [x] T011 Create `sphinx_need_sysml/warnings.py` — implement `warn_plantuml_format(app)` that emits a Sphinx warning if `plantuml_output_format != "svg"` (checks via `getattr(app.config, "plantuml_output_format", None)`)
+- [x] T012 Create `tests/conftest.py` — Sphinx app fixture using `sphinx.testing.app` that loads a minimal doc_test project with `sphinx_need_sysml` in extensions
+- [x] T013 Create `tests/doc_test/basic/conf.py` and `tests/doc_test/basic/index.rst` — minimal Sphinx project with `sphinx_needs` + `sphinx_need_sysml` in extensions (no plantuml required)
 
 **Checkpoint**: `pytest tests/` passes with zero tests collected (fixtures work, no errors on import).
 
@@ -71,13 +71,13 @@
 
 ### Implementation for US2 + US5
 
-- [x] T018 [US2] Create `sphinxcontrib/sysml/flow_configs.py` — define `SYSML_FLOW_CONFIGS` dict with `sysml_bdd` skinparam string (class `<<PartDef>>` background/border colors, `hide empty members` default off, `left to right direction` as optional)
-- [x] T019 [US2] Implement `_register_flow_configs(app)` in `sphinxcontrib/sysml/__init__.py` — merges `SYSML_FLOW_CONFIGS` into `app.config.needs_flow_configs` at `builder-inited`, user keys take precedence; connect event in `setup()`
-- [x] T020 [P] [US2] Create `sphinxcontrib/sysml/templates.py` — implement `BLOCK_DEF_TEMPLATE` string: Jinja2 snippet that renders a single `PartDef` need as a PlantUML class with `<<PartDef>>` stereotype, compartments for owned Ports and attribute values, and `[[{docname}.html#{id}{{{title}}}]]` hyperlink syntax using `ref()`
-- [x] T021 [P] [US2] Add `BDD_FULL_TEMPLATE` to `sphinxcontrib/sysml/templates.py` — complete Jinja2 `@startuml/@enduml` body that: renders the root PartDef via `BLOCK_DEF_TEMPLATE`, uses `filter("type == 'Part' and owned_by == '{root_id}'")`to find child Parts, renders each child with a composition arrow `root_id *-- child_id`, supports `:depth:` parameter
-- [x] T022 [US2] Create `sphinxcontrib/sysml/directives/__init__.py` (empty)
-- [x] T023 [US2] Create `sphinxcontrib/sysml/directives/needsysml_bdd.py` — implement `NeedsymlBddDirective(SphinxDirective)` with `required_arguments=1`, `option_spec` for `:depth:`, `:filter:`, `:scale:`, `:align:`; `run()` method that creates a `Needuml` node with content set to `BDD_FULL_TEMPLATE` rendered with the given need ID and depth
-- [x] T024 [US2] Register `needsysml-bdd` directive and connect `plantuml_output_format` warning check in `setup()` in `sphinxcontrib/sysml/__init__.py`
+- [x] T018 [US2] Create `sphinx_need_sysml/flow_configs.py` — define `SYSML_FLOW_CONFIGS` dict with `sysml_bdd` skinparam string (class `<<PartDef>>` background/border colors, `hide empty members` default off, `left to right direction` as optional)
+- [x] T019 [US2] Implement `_register_flow_configs(app)` in `sphinx_need_sysml/__init__.py` — merges `SYSML_FLOW_CONFIGS` into `app.config.needs_flow_configs` at `builder-inited`, user keys take precedence; connect event in `setup()`
+- [x] T020 [P] [US2] Create `sphinx_need_sysml/templates.py` — implement `BLOCK_DEF_TEMPLATE` string: Jinja2 snippet that renders a single `PartDef` need as a PlantUML class with `<<PartDef>>` stereotype, compartments for owned Ports and attribute values, and `[[{docname}.html#{id}{{{title}}}]]` hyperlink syntax using `ref()`
+- [x] T021 [P] [US2] Add `BDD_FULL_TEMPLATE` to `sphinx_need_sysml/templates.py` — complete Jinja2 `@startuml/@enduml` body that: renders the root PartDef via `BLOCK_DEF_TEMPLATE`, uses `filter("type == 'Part' and owned_by == '{root_id}'")`to find child Parts, renders each child with a composition arrow `root_id *-- child_id`, supports `:depth:` parameter
+- [x] T022 [US2] Create `sphinx_need_sysml/directives/__init__.py` (empty)
+- [x] T023 [US2] Create `sphinx_need_sysml/directives/needsysml_bdd.py` — implement `NeedsymlBddDirective(SphinxDirective)` with `required_arguments=1`, `option_spec` for `:depth:`, `:filter:`, `:scale:`, `:align:`; `run()` method that creates a `Needuml` node with content set to `BDD_FULL_TEMPLATE` rendered with the given need ID and depth
+- [x] T024 [US2] Register `needsysml-bdd` directive and connect `plantuml_output_format` warning check in `setup()` in `sphinx_need_sysml/__init__.py`
 - [x] T025 [US2] Add `plantuml_output_format = "svg"` to `tests/doc_test/basic/conf.py` and add a `.. needsysml-bdd::` example to `tests/doc_test/basic/index.rst` using the `PD-` need defined in T014
 - [x] T026 [P] [US2] Write `tests/test_bdd_directive.py` — tests verifying: (a) directive builds without error, (b) HTML output contains `<object` element (SVG rendered), (c) a warning is emitted if `plantuml_output_format` is not `svg`
 - [x] T027 [P] [US2] Write `tests/test_flow_configs.py` — test that `sysml_bdd` key exists in `app.config.needs_flow_configs` after build, and that user-defined key is not overwritten
@@ -94,10 +94,10 @@
 
 ### Implementation for US3
 
-- [x] T028 [US3] Add `sysml_req` skinparam string to `sphinxcontrib/sysml/flow_configs.py` — style `<<requirement>>` class elements with yellow background/gold border
-- [x] T029 [P] [US3] Add `REQ_BOX_TEMPLATE` and `REQ_FULL_TEMPLATE` to `sphinxcontrib/sysml/templates.py` — `REQ_BOX_TEMPLATE` renders one requirement as `<<requirement>>` class with `id`/`text` compartments and hyperlink; `REQ_FULL_TEMPLATE` iterates needs matching a filter expression, renders each box, then adds `..>` arrows for `satisfies`, `refines`, and `allocates` links
-- [x] T030 [US3] Create `sphinxcontrib/sysml/directives/needsysml_req.py` — `NeedsymlReqDirective` with `required_arguments=1` (filter expression), `option_spec` for `:show-satisfy:`, `:show-refine:`, `:show-allocate:`, `:scale:`, `:align:`; `run()` renders `REQ_FULL_TEMPLATE` with the filter and show-* flags
-- [x] T031 [US3] Register `needsysml-req` directive in `setup()` in `sphinxcontrib/sysml/__init__.py`
+- [x] T028 [US3] Add `sysml_req` skinparam string to `sphinx_need_sysml/flow_configs.py` — style `<<requirement>>` class elements with yellow background/gold border
+- [x] T029 [P] [US3] Add `REQ_BOX_TEMPLATE` and `REQ_FULL_TEMPLATE` to `sphinx_need_sysml/templates.py` — `REQ_BOX_TEMPLATE` renders one requirement as `<<requirement>>` class with `id`/`text` compartments and hyperlink; `REQ_FULL_TEMPLATE` iterates needs matching a filter expression, renders each box, then adds `..>` arrows for `satisfies`, `refines`, and `allocates` links
+- [x] T030 [US3] Create `sphinx_need_sysml/directives/needsysml_req.py` — `NeedsymlReqDirective` with `required_arguments=1` (filter expression), `option_spec` for `:show-satisfy:`, `:show-refine:`, `:show-allocate:`, `:scale:`, `:align:`; `run()` renders `REQ_FULL_TEMPLATE` with the filter and show-* flags
+- [x] T031 [US3] Register `needsysml-req` directive in `setup()` in `sphinx_need_sysml/__init__.py`
 - [x] T032 [US3] Add `.. needsysml-req::` example to `tests/doc_test/basic/index.rst` using requirements with `satisfies` links defined in T014
 - [x] T033 [P] [US3] Write `tests/test_req_directive.py` — tests: (a) builds without error, (b) `<<satisfy>>` arrow text present in generated PlantUML source (via `:save:` option), (c) filter expression respected (only matching needs appear)
 
@@ -113,10 +113,10 @@
 
 ### Implementation for US4
 
-- [x] T034 [US4] Add `sysml_ibd` skinparam string to `sphinxcontrib/sysml/flow_configs.py` — style component `<<Part>>` elements, `<<ibd>>` rectangle boundary
-- [x] T035 [P] [US4] Add `BLOCK_INST_TEMPLATE` and `IBD_FULL_TEMPLATE` to `sphinxcontrib/sysml/templates.py` — `IBD_FULL_TEMPLATE` uses component diagram syntax: renders root PartDef as `rectangle` boundary, child Parts as `component` elements with `portin`/`portout` for owned Ports, then Connection needs as connector lines between ports; includes clear comment noting IBD is an approximation (no locked port placement)
-- [x] T036 [US4] Create `sphinxcontrib/sysml/directives/needsysml_ibd.py` — `NeedsymlIbdDirective` with `required_arguments=1`, `option_spec` for `:show-ports:` (default true), `:scale:`, `:align:`; `run()` renders `IBD_FULL_TEMPLATE`
-- [x] T037 [US4] Register `needsysml-ibd` directive in `setup()` in `sphinxcontrib/sysml/__init__.py`
+- [x] T034 [US4] Add `sysml_ibd` skinparam string to `sphinx_need_sysml/flow_configs.py` — style component `<<Part>>` elements, `<<ibd>>` rectangle boundary
+- [x] T035 [P] [US4] Add `BLOCK_INST_TEMPLATE` and `IBD_FULL_TEMPLATE` to `sphinx_need_sysml/templates.py` — `IBD_FULL_TEMPLATE` uses component diagram syntax: renders root PartDef as `rectangle` boundary, child Parts as `component` elements with `portin`/`portout` for owned Ports, then Connection needs as connector lines between ports; includes clear comment noting IBD is an approximation (no locked port placement)
+- [x] T036 [US4] Create `sphinx_need_sysml/directives/needsysml_ibd.py` — `NeedsymlIbdDirective` with `required_arguments=1`, `option_spec` for `:show-ports:` (default true), `:scale:`, `:align:`; `run()` renders `IBD_FULL_TEMPLATE`
+- [x] T037 [US4] Register `needsysml-ibd` directive in `setup()` in `sphinx_need_sysml/__init__.py`
 - [x] T038 [US4] Add `.. needsysml-ibd::` example and `connection` needs to `tests/doc_test/basic/index.rst`
 - [x] T039 [P] [US4] Write `tests/test_ibd_directive.py` — tests: (a) builds without error, (b) IBD diagram contains expected part names
 
@@ -129,7 +129,7 @@
 **Purpose**: Documentation, full example, and integration test.
 
 - [x] T040 [P] Create `tests/doc_test/full_example/conf.py` and `tests/doc_test/full_example/index.rst` — complete vehicle system example from `quickstart.md` using all three diagram types
-- [x] T041 Create `docs/conf.py` and `docs/index.rst` — Sphinx docs project with sphinx-needs + sphinxcontrib.plantuml + sphinxcontrib.sysml in extensions; uses sphinx-immaterial theme
+- [x] T041 Create `docs/conf.py` and `docs/index.rst` — Sphinx docs project with sphinx-needs + sphinxcontrib.plantuml + sphinx_need_sysml in extensions; uses sphinx-immaterial theme
 - [x] T042 [P] Create `docs/install.rst` — installation instructions mirroring `quickstart.md`
 - [x] T043 [P] Create `docs/directives/need_types.rst` — documents all 14 need types with their fields, ID prefixes, and usage examples
 - [x] T044 [P] Create `docs/directives/needsysml_bdd.rst` — documents `.. needsysml-bdd::` directive options and rendered output
@@ -142,8 +142,8 @@
 
 ### sphinx-need-svg Integration (optional rendering path)
 
-- [x] T051 Add `sphinx_need_svg` detection to `sphinxcontrib/sysml/__init__.py` — use `importlib.util.find_spec("sphinx_need_svg")` in `setup()`; set a module-level `_HAS_NEED_SVG` flag; only register SVG directives when True
-- [x] T052 [P] Create `sphinxcontrib/sysml/directives/needsysml_svg.py` — implement `NeedsymlSvgDirective(SphinxDirective)` that uses `sphinx_need_svg.jinja_context.SvgJinjaContext` to render an SVG BDD: iterates PartDef + owned Parts via `filter()`, draws `<rect>` blocks with `<a href="{{ ref(need.id) }}">` links, outputs via `nodes.raw("", svg_markup, format="html")`
+- [x] T051 Add `sphinx_need_svg` detection to `sphinx_need_sysml/__init__.py` — use `importlib.util.find_spec("sphinx_need_svg")` in `setup()`; set a module-level `_HAS_NEED_SVG` flag; only register SVG directives when True
+- [x] T052 [P] Create `sphinx_need_sysml/directives/needsysml_svg.py` — implement `NeedsymlSvgDirective(SphinxDirective)` that uses `sphinx_need_svg.jinja_context.SvgJinjaContext` to render an SVG BDD: iterates PartDef + owned Parts via `filter()`, draws `<rect>` blocks with `<a href="{{ ref(need.id) }}">` links, outputs via `nodes.raw("", svg_markup, format="html")`
 - [x] T053 Register `needsysml-bdd-svg` directive in `setup()` only when `_HAS_NEED_SVG` is True; emit a Sphinx info note (not warning) when the directive is used but `sphinx_need_svg` is not installed
 - [x] T054 [P] Write `tests/test_svg_directive.py` — tests: (a) directive is absent when `sphinx_need_svg` not importable (mock `find_spec` to return None), (b) when available, HTML output contains inline `<svg` with `<a href` links pointing to correct need anchors
 - [x] T055 [P] Add `.. needsysml-bdd-svg::` example to `tests/doc_test/full_example/index.rst` alongside the PlantUML BDD for visual comparison
@@ -184,8 +184,8 @@ Phases 5 and 6 can run in parallel with each other once Phase 3 is complete.
 
 ```
 # These can run simultaneously:
-Task T020: Implement BLOCK_DEF_TEMPLATE in sphinxcontrib/sysml/templates.py
-Task T021: Implement BDD_FULL_TEMPLATE in sphinxcontrib/sysml/templates.py
+Task T020: Implement BLOCK_DEF_TEMPLATE in sphinx_need_sysml/templates.py
+Task T021: Implement BDD_FULL_TEMPLATE in sphinx_need_sysml/templates.py
 
 # Then, these can run simultaneously:
 Task T026: Write tests/test_bdd_directive.py
